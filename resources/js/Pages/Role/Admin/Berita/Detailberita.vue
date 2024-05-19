@@ -1,0 +1,101 @@
+<template>
+    <div class="wrapper">
+        <!--start header -->
+        <header>
+            <div class="c-topbar">
+                <nav class="navbar navbar-expand">
+                    <!-- Navbar tambah untuk logo di kiri -->
+                    <div class="navbar-tambah">
+                        <div class="navbar-left" v-for="setting in settings">
+                            <a href="/">
+                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event">
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Mobile toggle menu -->
+                    <!-- Search bar -->
+                    <div class="search-bar flex-grow-1">
+                    </div>
+                    <!-- Top menu -->
+                    <div class="top-menu ms-auto">
+                        <ul class="navbar-nav align-items-center">
+                            <div class="user-info ps-3">
+                                <p class="user-name mb-0">{{ $page.props.name }}</p>
+                                <p class="user-role">{{ $page.props.username }}</p>
+                            </div>
+                            <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
+                            </div>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!--end header -->
+        <!--start page wrapper -->
+        <div class="page-wrapper-new">
+            <div class="page-content">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="mb-0">Detail Berita</h4>
+                        <hr />
+                        <div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>Judul</b></label>
+                                <div class="c-mb20">{{ form.judul }}</div>
+                            </div>
+                            <div>
+                                <label class="c-mb5-black"><b>Deskripsi Awal</b></label>
+                                <div class="c-mb20">{{ form.deskripsi_awal }}</div>
+                            </div>
+                            <div>
+                                <label class="c-mb5-black"><b>Deskripsi</b></label>
+                                <div class="c-mb20">{{ form.deskripsi }}</div>
+                            </div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>Penerbit</b></label>
+                                <div class="c-mb20">{{ form.penerbit }}</div>
+                            </div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>Tanggal Upload</b></label>
+                                <div class="c-mb20">{{ form.tanggal_upload }}</div>
+                            </div>
+                            <div class="c-mb10">
+                                <label class="c-mb5-black"><b>Gambar</b></label><br>
+                                <img :src="getImageUrl(form.images)" class="form-control c-maxw400">
+                            </div>
+
+                        </div>
+                        <div class="btn-posisi">
+                            <button class="btn btn-danger btn-kembali"
+                                onclick="window.location.href='/event/berita'">Kembali</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end page wrapper -->
+    </div>
+</template>
+
+<script setup>
+import { useForm } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3'
+
+const props = defineProps({
+    errors: Object,
+    berita: Object,
+    settings: Object,
+});
+
+const form = useForm({
+    judul: props.berita.judul,
+    deskripsi_awal: props.berita.deskripsi_awal,
+    deskripsi: props.berita.deskripsi,
+    penerbit: props.berita.penerbit,
+    tanggal_upload: props.berita.tanggal_upload,
+    images: props.berita.images,
+})
+const getImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/${imageName}` : '';
+};
+</script>
