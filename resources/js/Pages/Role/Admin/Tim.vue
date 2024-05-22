@@ -6,7 +6,7 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -123,51 +123,11 @@
                     <div class="container">
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                            <div class="col">
+                            <div class="col" v-for="lomba in lombas">
                                 <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/desain.jpg" alt="New Image"
+                                    <img :src="getLombaImageUrl(lomba.gambar)" :alt="lomba.nama_lomba"
                                         class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tim/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/ar-vr.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">AR / VR</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tim/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/aplikasi-mobile.jpg"
-                                        alt="New Image" class="border-radius">
-                                    <label class="judul-overview">APLIKASI MOBILE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tim/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/desain-website.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">DESAIN WEBSITE</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tim/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/sistem-keamanan-data.jpg"
-                                        alt="New Image" class="border-radius">
-                                    <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tim/tabeltim">Daftar Tim</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/membuat-game.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
+                                    <label class="judul-overview">{{ lomba.nama_lomba }}</label>
                                     <a class="btn btn-primary btn-landing-page2" href="/tim/tabeltim">Daftar Tim</a>
                                 </div>
                             </div>
@@ -188,14 +148,18 @@ defineProps({
     sponsors: Object,
     settings: Object,
     unreadCount: Number,
+    lombas: Object
 })
 
 function logout() {
     router.post('/logout');
 }
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getLombaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/lomba/${imageName}` : '';
+};
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 
 $(document).ready(function () {

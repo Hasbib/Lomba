@@ -122,7 +122,7 @@
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Berita</h4>
                         <hr class="c-mt10" />
-                        <button class="btn btn-success" style="margin-top: -7px;"
+                        <button class="btn btn-success jarak-top-kurang7"
                             onclick="window.location.href='/event/berita/tambah-berita'">Tambah Berita</button>
                         <!-- <div v-if="$page.props.flash.message" class="alert alert-success">
                             {{ $page.props.flash.message }}
@@ -215,7 +215,7 @@ function destroy(id) {
 }
 
 const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 
 $(document).ready(function () {

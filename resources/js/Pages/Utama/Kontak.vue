@@ -5,7 +5,7 @@
     <nav class="navbar navbar-expand-lg main_menu">
         <div class="container" v-for="setting in settings">
             <a class="navbar-brand" href="/">
-                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="img-fluid w-100">
+                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="img-fluid w-100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,12 +58,12 @@
         BREADCRUMB START
     ==================================-->
     <section class="tf__breadcrumb" v-for="setting in settings"
-        :style="'background: url(' + getImageUrl(setting.logo_2) + ');'">
+        :style="'background: url(' + getSettingImageUrl(setting.logo_2) + ');'">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <div class="tf__breadcrumb_text">
-                        <h2 style="color: #000000;">Kontak</h2>
+                        <h2 class="ckontak">Kontak</h2>
                     </div>
                 </div>
             </div>
@@ -138,8 +138,8 @@ const props = defineProps({
     isLoggedIn: Boolean
 });
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 
 const isLoggedIn = ref(props.isLoggedIn);

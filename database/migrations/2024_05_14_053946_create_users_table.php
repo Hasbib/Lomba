@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->enum('role', ['admin', 'petugas', 'juri', 'peserta']);
             $table->string('prodi')->nullable();
             $table->string('kontak')->nullable();
-            $table->integer('nik')->nullable()->unique();
+            $table->string('nik')->nullable()->unique();
             $table->string('images')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

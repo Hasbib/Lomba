@@ -8,7 +8,7 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event">
                             </a>
                         </div>
                     </div>
@@ -55,7 +55,6 @@
                                 <input class="form-control" type="file" id="formFile" v-on:change="onFileChange">
                                 <p class="keterangan-foto">Max 2 MB (200 x 200 px)</p>
                             </div>
-
                             <div class="btn-posisi">
                                 <button class="btn btn-primary button-tabel-right" type="submit">Tambah</button>
                                 <button class="btn btn-danger button-tabel-left"
@@ -104,7 +103,7 @@ function onFileChange(event) {
     selectedFile.value = event.target.files[0];
 }
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

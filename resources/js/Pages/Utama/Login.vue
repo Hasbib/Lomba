@@ -16,7 +16,7 @@
 								{{ $page.props.flash.message }}
 							</div>
 							<div class="col-12">
-								<input type="emailorusername" class="form-control" id="emailorusername"
+								<input type="username" class="form-control" id="emailorusername"
 									placeholder="Masukkan Email atau Username" v-model="form.username" required>
 							</div>
 							<div class="col-12 c-mlk10">

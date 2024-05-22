@@ -14,8 +14,8 @@ return new class extends Migration {
             $table->id();
             $table->string('reg_nama_tim');
             $table->string('reg_instansi');
-            $table->string('reg_nama_lomba')->unique();
-            $table->integer('reg_no_whatsapp');
+            $table->string('reg_nama_lomba');
+            $table->string('reg_no_whatsapp');
             $table->string('reg_email');
             $table->string('reg_bukti_pembayaran');
             $table->foreignId('reg_peserta_id')->constrained('users')->onDelete('cascade');

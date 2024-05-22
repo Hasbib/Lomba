@@ -198,6 +198,13 @@ class PagesController extends Controller
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
+            }),
+            'lombas' => Lomba::all()->map(function ($lomba) {
+                return [
+                    'id' => $lomba->id,
+                    'nama_lomba' => $lomba->nama_lomba,
+                    'gambar' => $lomba->gambar,
+                ];
             })
         ]);
     }

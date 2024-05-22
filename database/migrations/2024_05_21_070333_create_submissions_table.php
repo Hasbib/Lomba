@@ -10,13 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('pesans', function (Blueprint $table) {
+        Schema::create('submissions', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('email');
-            $table->string('nomor');
-            $table->string('pesan');
-            $table->enum('status', ['Sudah Dibaca', 'Belum Dibaca'])->default('Belum Dibaca');
+            $table->foreignId('sub_peserta_id')->constrained('users')->onDelete('cascade');
+            $table->string('sub_judul');
+            $table->text('sub_deskripsi');
+            $table->string('sub_link');
+            $table->string('sub_file');
             $table->timestamps();
         });
     }
@@ -26,6 +26,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('pesans');
+        Schema::dropIfExists('submissions');
+        Schema::dropIfExists('users');
     }
 };

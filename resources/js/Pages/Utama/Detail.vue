@@ -5,7 +5,8 @@
     <nav class="navbar navbar-expand-lg main_menu">
         <div class="container">
             <a class="navbar-brand" href="/" v-for="setting in settings">
-                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" alt="Olinas" class="img-fluid w-100">
+                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" alt="Olinas"
+                    class="img-fluid w-100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +68,7 @@
                         <p class="warna-p p-right c-mb50">Tanggal :{{ form.tanggal_upload }}</p>
                     </div>
                     <div class="tf__event_details_img ">
-                        <img :src="getImageUrl(berita.images)" alt="event details" class="w-100">
+                        <img :src="getBeritaImageUrl(berita.images)" alt="event details" class="w-100">
                     </div>
                     <div class="tf__event_details_text mt_35 wow fadeInUp">
                         <!-- <ul class="location d-flex flex-wrap c-mt50">
@@ -86,7 +87,7 @@
        FOOTER START
    ==================================-->
     <footer class="tf__footer mt_100">
-        <div class="text-center p-4" style="background-color: #191e24f5; color: white;">
+        <div class="text-center p-4 cfooter">
             Copyright ©2024 Tim Website OLINAS
         </div>
     </footer>
@@ -117,8 +118,12 @@ const form = useForm({
     tanggal_upload: props.berita.tanggal_upload,
     images: props.berita.images,
 })
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+
+const getBeritaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/berita/${imageName}` : '';
+};
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 
 </script>

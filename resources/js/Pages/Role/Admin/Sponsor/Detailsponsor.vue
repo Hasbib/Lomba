@@ -8,7 +8,7 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event">
                             </a>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Gambar</b></label><br>
-                                <img :src="getImageUrl(form.logo)" class="form-control c-maxw400">
+                                <img :src="getSponsorImageUrl(form.logo)" width="150">
                             </div>
                         </div>
                         <div class="btn-posisi">
@@ -81,8 +81,11 @@ const form = useForm({
     logo: props.sponsor.logo,
 })
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSponsorImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/sponsor/${imageName}` : '';
+};
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 
 </script>

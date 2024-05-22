@@ -75,7 +75,7 @@ class SponsorController extends Controller
         if ($request->hasFile('logo')) {
             $image = $request->file('logo');
             $imageName = $image->getClientOriginalName();
-            $imagePath = $image->storeAs('public/uploads', $imageName);
+            $imagePath = $image->storeAs('public/uploads/admin/sponsor', $imageName);
             $validated['logo'] = $imageName;
         }
 
@@ -87,7 +87,7 @@ class SponsorController extends Controller
     public function destroy(Sponsor $sponsor)
     {
         if ($sponsor->logo) {
-            Storage::delete('public/uploads/' . $sponsor->logo);
+            Storage::delete('public/uploads/admin/sponsor/' . $sponsor->logo);
         }
 
         $sponsor->delete();
@@ -137,12 +137,12 @@ class SponsorController extends Controller
         if ($request->hasFile('form.logo')) {
             // Jika ada file baru yang diunggah, hapus foto lama
             if ($sponsor->logo) {
-                Storage::delete('public/uploads/' . $sponsor->logo);
+                Storage::delete('public/uploads/admin/sponsor/' . $sponsor->logo);
             }
             $image = $request->file('form.logo');
             $imageName = $image->getClientOriginalName();
             // Menggunakan hanya nama file sebagai nama yang disimpan
-            $imagePath = $request->file('form.logo')->storeAs('public/uploads', $imageName);
+            $imagePath = $request->file('form.logo')->storeAs('public/uploads/admin/sponsor', $imageName);
             $validated['form']['logo'] = $imageName;
         } else {
             $validated['form']['logo'] = $sponsor->logo;

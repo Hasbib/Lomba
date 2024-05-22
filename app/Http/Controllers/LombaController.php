@@ -87,13 +87,13 @@ class LombaController extends Controller
         if ($request->hasFile('gambar')) {
             $image = $request->file('gambar');
             $imageName = $image->getClientOriginalName();
-            $imagePath = $image->storeAs('public/uploads', $imageName);
+            $imagePath = $image->storeAs('public/uploads/admin/lomba', $imageName);
             $validated['gambar'] = $imageName;
         }
         if ($request->hasFile('sertifikat')) {
             $image = $request->file('sertifikat');
             $imageName = $image->getClientOriginalName();
-            $imagePath = $image->storeAs('public/uploads', $imageName);
+            $imagePath = $image->storeAs('public/uploads/admin/lomba/', $imageName);
             $validated['sertifikat'] = $imageName;
         }
 
@@ -158,12 +158,12 @@ class LombaController extends Controller
         if ($request->hasFile('form.gambar')) {
             // Jika ada file baru yang diunggah, hapus foto lama
             if ($lomba->gambar) {
-                Storage::delete('public/uploads/' . $lomba->gambar);
+                Storage::delete('public/uploads/admin/lomba/' . $lomba->gambar);
             }
             $image = $request->file('form.gambar');
             $imageName = $image->getClientOriginalName();
             // Menggunakan hanya nama file sebagai nama yang disimpan
-            $imagePath = $request->file('form.gambar')->storeAs('public/uploads', $imageName);
+            $imagePath = $request->file('form.gambar')->storeAs('public/uploads/admin/lomba', $imageName);
             $validated['form']['gambar'] = $imageName;
         } else {
             $validated['form']['gambar'] = $lomba->gambar;
@@ -172,12 +172,12 @@ class LombaController extends Controller
         if ($request->hasFile('form.sertifikat')) {
             // Jika ada file baru yang diunggah, hapus foto lama
             if ($lomba->sertifikat) {
-                Storage::delete('public/uploads/' . $lomba->sertifikat);
+                Storage::delete('public/uploads/admin/lomba/' . $lomba->sertifikat);
             }
             $image = $request->file('form.sertifikat');
             $imageName = $image->getClientOriginalName();
             // Menggunakan hanya nama file sebagai nama yang disimpan
-            $imagePath = $request->file('form.sertifikat')->storeAs('public/uploads', $imageName);
+            $imagePath = $request->file('form.sertifikat')->storeAs('public/uploads/admin/lomba', $imageName);
             $validated['form']['sertifikat'] = $imageName;
         } else {
             $validated['form']['sertifikat'] = $lomba->sertifikat;
@@ -214,10 +214,10 @@ class LombaController extends Controller
     public function destroy(Lomba $lomba)
     {
         if ($lomba->images) {
-            Storage::delete('public/uploads/' . $lomba->images);
+            Storage::delete('public/uploads/admin/lomba/' . $lomba->images);
         }
         if ($lomba->sertifikat) {
-            Storage::delete('public/uploads/' . $lomba->sertifikat);
+            Storage::delete('public/uploads/admin/lomba/' . $lomba->sertifikat);
         }
 
         $lomba->delete();

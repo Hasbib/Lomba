@@ -46,7 +46,7 @@ class BeritaController extends Controller
         if ($request->hasFile('images')) {
             $image = $request->file('images');
             $imageName = $image->getClientOriginalName();
-            $imagePath = $image->storeAs('public/uploads', $imageName);
+            $imagePath = $image->storeAs('public/uploads/admin/berita', $imageName);
             $validated['images'] = $imageName;
         }
         $validated['tanggal_upload'] = Carbon::createFromFormat('Y-m-d', $validated['tanggal_upload']);
@@ -91,7 +91,7 @@ class BeritaController extends Controller
     public function destroy(Berita $berita)
     {
         if ($berita->images) {
-            Storage::delete('public/uploads/' . $berita->images);
+            Storage::delete('public/uploads/admin/berita/' . $berita->images);
         }
 
         $berita->delete();
@@ -148,12 +148,12 @@ class BeritaController extends Controller
         if ($request->hasFile('form.images')) {
             // Jika ada file baru yang diunggah, hapus foto lama
             if ($berita->images) {
-                Storage::delete('public/uploads/' . $berita->images);
+                Storage::delete('public/uploads/admin/berita/' . $berita->images);
             }
             $image = $request->file('form.images');
             $imageName = $image->getClientOriginalName();
             // Menggunakan hanya nama file sebagai nama yang disimpan
-            $imagePath = $request->file('form.images')->storeAs('public/uploads', $imageName);
+            $imagePath = $request->file('form.images')->storeAs('public/uploads/admin/berita', $imageName);
             $validated['form']['images'] = $imageName;
         } else {
             $validated['form']['images'] = $berita->images;

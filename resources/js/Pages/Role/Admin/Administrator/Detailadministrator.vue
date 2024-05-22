@@ -8,7 +8,7 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event">
                             </a>
                         </div>
                     </div>
@@ -101,8 +101,8 @@ const form = useForm({
     created_at: props.user.created_at,
 })
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 
 </script>

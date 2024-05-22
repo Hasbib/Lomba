@@ -6,7 +6,7 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -116,13 +116,13 @@
                                         <div class="card-body">
                                             <div class="d-flex flex-column align-items-center text-center">
                                                 <div class="ukuran-foto">
-                                                    <img :src="getImageUrl(form.images)" :alt="user.name"
-                                                        class="rounded-circle p-1 bg-primary" width="190" height="150">
+                                                    <img ref="profileImage" :src="getProfilImageUrl(form.images)"
+                                                        :alt="user.name" class="rounded-circle p-1 bg-primary"
+                                                        width="190" height="150">
                                                 </div>
                                                 <div>
                                                     <input class="form-control form-control-sm btn-profil2"
-                                                        id="formFileSm" type="file"
-                                                        @input="form.images = $event.target.files[0]">
+                                                        id="formFileSm" type="file" @input="handleFileChange">
                                                 </div>
                                             </div>
                                         </div>
@@ -223,12 +223,29 @@ const form = useForm({
     images: props.user.images,
 })
 
+const profileImage = ref(null)
+
+function handleFileChange(event) {
+    form.images = event.target.files[0]
+}
+
 function submit(id) {
     router.post('/profil/' + id, {
         _method: 'put',
         form
+    }, {
+        onSuccess: () => {
+            if (form.images) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    profileImage.value.src = e.target.result;
+                };
+                reader.readAsDataURL(form.images);
+            }
+        }
     })
 }
+
 // function submit(id) {
 //     router.put('/profil/' + id, form)
 // }
@@ -236,7 +253,10 @@ function logout() {
     router.post('/logout');
 }
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getProfilImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/peserta/profil/${imageName}` : '';
+};
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

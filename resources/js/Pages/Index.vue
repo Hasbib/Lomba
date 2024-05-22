@@ -5,7 +5,7 @@
     <nav class="navbar navbar-expand-lg main_menu">
         <div class="container" v-for="setting in settings">
             <a class="navbar-brand" href="#">
-                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="img-fluid w-100">
+                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="img-fluid w-100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,13 +58,13 @@
        BANNER START
    ==================================-->
     <section class="tf__banner" v-for="setting in settings"
-        :style="'background: url(' + getImageUrl(setting.logo_2) + ');'">
+        :style="'background: url(' + getSettingImageUrl(setting.logo_2) + ');'">
         <div class="container">
             <div class="row">
                 <div class="col-xl-7 col-lg-8">
                     <div class="tf__banner_text wow fadeInUp">
-                        <h1 style="font-size: 26px;"><b>{{ setting.judul }}</b></h1>
-                        <h1 style="font-size: 40px;"><b>{{ setting.sub_judul }}</b></h1>
+                        <h1 class="cfs-26"><b>{{ setting.judul }}</b></h1>
+                        <h1 class="cfs-40"><b>{{ setting.sub_judul }}</b></h1>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,8 @@
             <div class="row">
                 <div class="col-xl-6 col-lg-6 wow fadeInLeft">
                     <div class="tf__home_2_about_img" v-for="setting in settings">
-                        <img :src="getImageUrl(setting.logo_3)" :alt="setting.nama_event" class="img-fluid w-100">
+                        <img :src="getSettingImageUrl(setting.logo_3)" :alt="setting.nama_event"
+                            class="img-fluid w-100">
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 wow fadeInRight">
@@ -121,7 +122,7 @@
                 <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                     <div class="col" v-for="lomba in lombas">
                         <div class="card radius-15 card-overview">
-                            <img :src="getImageUrl(lomba.gambar)" :alt="lomba.nama_lomba" class="border-radius">
+                            <img :src="getLombaImageUrl(lomba.gambar)" :alt="lomba.nama_lomba" class="border-radius">
                             <button class="btn btn-danger btn-landing-page" @click.prevent="detaillomba(lomba.id)">{{
                                 lomba.nama_lomba }}</button>
                         </div>
@@ -172,7 +173,7 @@
                     <div class="tf__single_event">
                         <button @click.prevent="detail(berita.id)">
                             <div class="tf__single_courses_img">
-                                <img :src="getImageUrl(berita.images)" alt="event" class="img-fluid w-100">
+                                <img :src="getBeritaImageUrl(berita.images)" alt="event" class="img-fluid w-100">
                             </div>
                             <div class="tf__single_event_text">
                                 <a class="title">{{ berita.judul }}</a>
@@ -199,7 +200,7 @@
                     <div class="sponsor-grid">
                         <div v-for="sponsor in sponsors">
                             <a :href="sponsor.link">
-                                <img :src="getImageUrl(sponsor.logo)" :alt="sponsor.name" class="img-fluid">
+                                <img :src="getSponsorImageUrl(sponsor.logo)" :alt="sponsor.name" class="img-fluid">
                                 <!-- img 250 -->
                             </a>
                         </div>
@@ -214,7 +215,7 @@
        FOOTER START
    ==================================-->
     <footer class="tf__footer mt_100">
-        <div class="text-center p-4" style="background-color: #191e24f5; color: white;">
+        <div class="text-center p-4 cfooter">
             Copyright ©2024 Tim Website OLINAS
         </div>
     </footer>
@@ -245,8 +246,21 @@ function detail(id) {
 // const form = useForm({
 //     logo: props.sponsor.logo,
 // })
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+// const getImageUrl = (imageName) => {
+//     return imageName ? `/storage/uploads/${imageName}` : '';
+// };
+
+const getLombaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/lomba/${imageName}` : '';
+};
+const getBeritaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/berita/${imageName}` : '';
+};
+const getSponsorImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/sponsor/${imageName}` : '';
+};
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 
 const isLoggedIn = ref(props.isLoggedIn);

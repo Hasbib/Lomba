@@ -6,7 +6,7 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -105,7 +105,8 @@
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                             <div class="col" v-for="lomba in lombas">
                                 <div class="card radius-15 card-overview">
-                                    <img :src="getImageUrl(lomba.gambar)" :alt="lomba.nama_lomba" class="border-radius">
+                                    <img :src="getLombaImageUrl(lomba.gambar)" :alt="lomba.nama_lomba"
+                                        class="border-radius">
                                     <label class="judul-overview">{{ lomba.nama_lomba }}</label>
                                     <button @click.prevent="detail(lomba.id)"
                                         class="btn btn-primary btn-landing-page2">Detail</button>
@@ -140,7 +141,10 @@ function logout() {
     router.post('/logout');
 }
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
-};  
+const getLombaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/lomba/${imageName}` : '';
+};
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
+};
 </script>

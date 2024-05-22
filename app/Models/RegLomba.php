@@ -18,7 +18,7 @@ class RegLomba extends Model
         'reg_no_whatsapp',
         'reg_email',
         'reg_bukti_pembayaran',
-        'reg_peserta_id'
+        'reg_peserta_id',
     ];
 
     public function lomba()

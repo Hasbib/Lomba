@@ -50,19 +50,19 @@ class SettingController extends Controller
         if ($request->hasFile('logo_1')) {
             $image = $request->file('logo_1');
             $imageName = $image->getClientOriginalName();
-            $imagePath = $image->storeAs('public/uploads', $imageName);
+            $imagePath = $image->storeAs('public/uploads/admin/setting', $imageName);
             $validated['logo_1'] = $imageName;
         }
         if ($request->hasFile('logo_2')) {
             $image = $request->file('logo_2');
             $imageName = $image->getClientOriginalName();
-            $imagePath = $image->storeAs('public/uploads', $imageName);
+            $imagePath = $image->storeAs('public/uploads/admin/setting', $imageName);
             $validated['logo_2'] = $imageName;
         }
         if ($request->hasFile('logo_3')) {
             $image = $request->file('logo_3');
             $imageName = $image->getClientOriginalName();
-            $imagePath = $image->storeAs('public/uploads', $imageName);
+            $imagePath = $image->storeAs('public/uploads/admin/setting', $imageName);
             $validated['logo_3'] = $imageName;
         }
 
@@ -150,12 +150,12 @@ class SettingController extends Controller
         if ($request->hasFile('form.logo_1')) {
             // Jika ada file baru yang diunggah, hapus foto lama
             if ($setting->logo_1) {
-                Storage::delete('public/uploads/' . $setting->logo_1);
+                Storage::delete('public/uploads/admin/setting/' . $setting->logo_1);
             }
             $image = $request->file('form.logo_1');
             $imageName = $image->getClientOriginalName();
             // Menggunakan hanya nama file sebagai nama yang disimpan
-            $imagePath = $request->file('form.logo_1')->storeAs('public/uploads', $imageName);
+            $imagePath = $request->file('form.logo_1')->storeAs('public/uploads/admin/setting', $imageName);
             $validated['form']['logo_1'] = $imageName;
         } else {
             $validated['form']['logo_1'] = $setting->logo_1;
@@ -164,12 +164,12 @@ class SettingController extends Controller
         if ($request->hasFile('form.logo_2')) {
             // Jika ada file baru yang diunggah, hapus foto lama
             if ($setting->logo_2) {
-                Storage::delete('public/uploads/' . $setting->logo_2);
+                Storage::delete('public/uploads/admin/setting/' . $setting->logo_2);
             }
             $image = $request->file('form.logo_2');
             $imageName = $image->getClientOriginalName();
             // Menggunakan hanya nama file sebagai nama yang disimpan
-            $imagePath = $request->file('form.logo_2')->storeAs('public/uploads', $imageName);
+            $imagePath = $request->file('form.logo_2')->storeAs('public/uploads/admin/setting', $imageName);
             $validated['form']['logo_2'] = $imageName;
         } else {
             $validated['form']['logo_2'] = $setting->logo_2;
@@ -178,12 +178,12 @@ class SettingController extends Controller
         if ($request->hasFile('form.logo_3')) {
             // Jika ada file baru yang diunggah, hapus foto lama
             if ($setting->logo_3) {
-                Storage::delete('public/uploads/' . $setting->logo_3);
+                Storage::delete('public/uploads/admin/setting/' . $setting->logo_3);
             }
             $image = $request->file('form.logo_3');
             $imageName = $image->getClientOriginalName();
             // Menggunakan hanya nama file sebagai nama yang disimpan
-            $imagePath = $request->file('form.logo_3')->storeAs('public/uploads', $imageName);
+            $imagePath = $request->file('form.logo_3')->storeAs('public/uploads/admin/setting', $imageName);
             $validated['form']['logo_3'] = $imageName;
         } else {
             $validated['form']['logo_3'] = $setting->logo_3;

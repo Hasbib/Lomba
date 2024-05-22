@@ -126,6 +126,6 @@ function onFileChange(event) {
 }
 
 const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

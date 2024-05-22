@@ -100,7 +100,6 @@
                 </div>
             </div>
         </div>
-
         <!--end page wrapper -->
     </div>
 </template>
@@ -144,6 +143,6 @@ function submit(id) {
 }
 
 const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

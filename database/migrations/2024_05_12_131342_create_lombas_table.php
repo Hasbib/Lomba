@@ -15,9 +15,9 @@ return new class extends Migration {
             $table->string('nama_lomba')->unique();
             $table->longText('deskripsi');
             $table->string('nama_pj');
-            $table->integer('kontak_pj');
+            $table->string('kontak_pj');
             $table->string('tempat');
-            $table->integer('biaya_pendaftaran');
+            $table->string('biaya_pendaftaran');
             $table->string('gambar');
             $table->string('sertifikat');
             $table->timestamps();

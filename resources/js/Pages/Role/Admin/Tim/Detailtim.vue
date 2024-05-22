@@ -6,9 +6,10 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div v-for="setting in settings">
+                        <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                                    class="logo-icon">
                             </a>
                         </div>
                     </div>
@@ -181,7 +182,7 @@
 <script setup>
 defineProps({ settings: Object })
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

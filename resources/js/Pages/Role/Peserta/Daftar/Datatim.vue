@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo_icon">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                                    class="logo_icon">
                             </a>
                         </div>
                     </div>
@@ -38,7 +39,8 @@
                     <div class="card-body">
                         <h4 class="mb-0">INFO TIM LOMBA</h4>
                         <hr />
-                        <form @submit.prevent="submit(props.reglomba.id)">
+                        <form @submit.prevent="submit()">
+                            <!-- <form @submit.prevent="submit(props.reglomba.id)"> -->
                             <div class="row">
                                 <div class="col-md-6 c-mb10">
                                     <label class="jarak-input"><b>Nama Tim</b></label>
@@ -64,19 +66,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label class="jarak-input"><b>Email</b></label>
-                                    <input type="text" class="form-control" v-model="form.reg_email">
+                                    <input type="email" class="form-control" v-model="form.reg_email">
                                 </div>
-                                <!-- <div class="col-md-6">
-                                <label for="formFile" class="form-label jarak-teks11"><b>Surat</b></label>
-								<input class="form-control" type="file" id="formFile">
-                            </div> -->
                                 <div class="col-md-6">
                                     <label for="formFile" class="form-label jarak-teks12"><b>Bukti
                                             Pembayaran</b></label>
                                     <input class="form-control" type="file" id="formFile" v-on:change="onFileChange">
                                 </div>
                             </div>
-                            <div style="display: flex;">
+                            <div class="btn-posisi">
                                 <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
                                 <button class="btn btn-danger button-tabel-left"
                                     onclick="window.location.href='/daftar-lomba'">Batal</button>
@@ -99,17 +97,18 @@ const props = defineProps({
     settings: Object,
     user: Object,
     reglomba: Object,
-    lombas: Array,
+    lombas: Object,
     userId: Number
 })
 
 const form = useForm({
-    reg_nama_tim: null,
-    reg_instansi: null,
+    reg_nama_tim: props.reglomba?.reg_nama_tim,
+    reg_instansi: props.reglomba?.reg_instansi,
+    // reg_nama_lomba: props.reglomba?.reg_nama_lomba,
     reg_nama_lomba: props.lombas.length > 0 ? props.lombas[0].nama_lomba : null,
-    reg_no_whatsapp: null,
-    reg_email: null,
-    reg_bukti_pembayaran: null,
+    reg_no_whatsapp: props.reglomba?.reg_no_whatsapp,
+    reg_email: props.reglomba?.reg_email,
+    reg_bukti_pembayaran: props.reglomba?.reg_bukti_pembayaran,
     reg_peserta_id: props.userId
 })
 
@@ -117,6 +116,7 @@ const selectedFile = ref(null)
 
 function submit() {
     const formData = new FormData();
+    formData.append('id', props.reglomba?.id);
     formData.append('reg_nama_tim', form.reg_nama_tim);
     formData.append('reg_instansi', form.reg_instansi);
     formData.append('reg_nama_lomba', form.reg_nama_lomba);
@@ -132,8 +132,7 @@ function onFileChange(event) {
     selectedFile.value = event.target.files[0];
 }
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
-
 </script>

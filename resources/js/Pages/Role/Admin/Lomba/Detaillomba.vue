@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                                    class="logo-icon">
                             </a>
                         </div>
                     </div>
@@ -55,13 +56,13 @@
                                 <div class="col-md-6">
                                     <label class="c-mb5-black"><b>Gambar</b></label>
                                     <div class="col-12">
-                                        <img :src="getImageUrl(form.gambar)" width="150" />
+                                        <img :src="getLombaImageUrl(form.gambar)" width="150" />
                                     </div>
                                 </div>
                                 <div class="col-md-6 jarak-sertifikat">
                                     <label class="c-mb5-black"><b>Sertifikat</b></label>
                                     <div class="col-12">
-                                        <img :src="getImageUrl(form.sertifikat)" width="150" />
+                                        <img :src="getLombaImageUrl(form.sertifikat)" width="150" />
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +121,10 @@ const form = useForm({
     kriterias: props.lomba.kriterias
 })
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getLombaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/lomba/${imageName}` : '';
+};
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

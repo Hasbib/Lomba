@@ -177,11 +177,11 @@ class UsersController extends Controller
 
         if ($request->hasFile('form.images')) {
             if ($user->images) {
-                Storage::delete('public/uploads/' . $user->images);
+                Storage::delete('public/uploads/peserta/profil/' . $user->images);
             }
             $image = $request->file('form.images');
             $imageName = $image->getClientOriginalName();
-            $imagePath = $request->file('form.images')->storeAs('public/uploads', $imageName);
+            $imagePath = $request->file('form.images')->storeAs('public/uploads/peserta/profil', $imageName);
             $validated['form']['images'] = $imageName;
         } else {
             $validated['form']['images'] = $user->images;
@@ -265,5 +265,13 @@ class UsersController extends Controller
     //         'users' => User::all(),
     //     ]);
     // }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $users = User::where('name', 'like', "%{$query}%")->get();
+
+        return response()->json($users);
+    }
+
 
 }

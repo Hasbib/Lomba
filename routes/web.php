@@ -160,8 +160,10 @@ Route::middleware(['peserta', 'auth', 'verified'])->group(function () {
     Route::get('/data-tim', [RegLombaController::class, 'datatim']);
     Route::get('/daftar-lomba', [RegLombaController::class, 'daftarlomba'])->name('reglomba.index');
     Route::post('/daftar-lomba', [RegLombaController::class, 'store']);
+    Route::post('/tambah-member', [RegLombaController::class, 'addmember']);
+    Route::post('/pengumpulan-karya', [RegLombaController::class, 'kirim']);
     Route::get('/pengumpulan-karya', [RegLombaController::class, 'pengumpulankarya']);
 });
 
-
+Route::get('/search', [UsersController::class, 'search'])->name('users.search');
 Route::get('/proses', [PagesController::class, 'proses']);

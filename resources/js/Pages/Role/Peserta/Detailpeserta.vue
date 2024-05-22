@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo_icon">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                                    class="logo_icon">
                             </a>
                         </div>
                     </div>
@@ -81,8 +82,9 @@ const form = useForm({
     nama_lomba: props.lomba.nama_lomba,
     deskripsi: props.lomba.deskripsi
 })
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 
 </script>

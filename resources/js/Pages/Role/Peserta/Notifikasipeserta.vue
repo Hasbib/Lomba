@@ -6,7 +6,7 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -107,7 +107,6 @@
                         <label>Mey 21</label>
                         <label>Selamat TIM anda telah terdaftar lomba ui/ux </label>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -124,7 +123,7 @@ function logout() {
     router.post('/logout');
 }
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

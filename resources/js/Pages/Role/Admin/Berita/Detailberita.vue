@@ -8,7 +8,7 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event">
                             </a>
                         </div>
                     </div>
@@ -61,9 +61,8 @@
                             </div>
                             <div class="c-mb10">
                                 <label class="c-mb5-black"><b>Gambar</b></label><br>
-                                <img :src="getImageUrl(form.images)" class="form-control c-maxw400">
+                                <img :src="getBeritaImageUrl(form.images)" class="form-control c-maxw400">
                             </div>
-
                         </div>
                         <div class="btn-posisi">
                             <button class="btn btn-danger btn-kembali"
@@ -95,7 +94,11 @@ const form = useForm({
     tanggal_upload: props.berita.tanggal_upload,
     images: props.berita.images,
 })
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+
+const getBeritaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/berita/${imageName}` : '';
+};
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

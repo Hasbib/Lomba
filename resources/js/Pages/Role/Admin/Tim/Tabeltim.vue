@@ -6,7 +6,7 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
                     </a>
                 </div>
                 <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
@@ -122,7 +122,7 @@
                     <div class="card-body">
                         <h4 class="mb-0 jarak-top-kurang5">Tabel Tim</h4>
                         <hr class="c-mt10" />
-                        <button class="btn btn-primary btn-export">Export Excel</button>
+                        <button class="btn btn-primary btn-export" id="exportExcel">Export Excel</button>
                         <label class="dropdown-crud">Filter by Status</label>
                         <select class="form-select2">
                             <option selected>Semua</option>
@@ -131,7 +131,7 @@
                         </select>
                         <br><br>
                         <div class="table-responsive">
-                            <table id="example" class="table table-bordered">
+                            <table id="example2" class="table table-bordered">
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
@@ -182,7 +182,26 @@ function logout() {
     router.post('/logout');
 }
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
+
+$(document).ready(function () {
+    var table = $('#example2').DataTable({
+        lengthChange: false,
+        buttons: ['excel']
+    });
+
+    table.buttons().container().appendTo('.export-buttons');
+
+    // Export Excel
+    $('#exportExcel').on('click', function () {
+        table.buttons('.buttons-excel').trigger();
+    });
+
+    // Export PDF
+    $('#exportPdf').on('click', function () {
+        table.buttons('.buttons-pdf').trigger();
+    });
+});
 </script>

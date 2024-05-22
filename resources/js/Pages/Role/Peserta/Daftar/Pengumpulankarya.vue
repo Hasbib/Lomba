@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo_icon">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                                    class="logo_icon">
                             </a>
                         </div>
                     </div>
@@ -38,33 +39,34 @@
                     <div class="card-body">
                         <h4 class="mb-0">PENGUMPULAN KARYA</h4>
                         <hr />
-                        <div class="row">
-                            <div>
-                                <label class="jarak-input"><b>Judul</b></label>
-                                <input type="email" class="form-control">
-                            </div>
-                            <div>
-                                <label class="jarak-input"><b>Deskripsi</b></label>
-                                <div class="col-12">
-                                    <textarea class="form-control" id="inputProductDescription" rows="4"
-                                        style="margin-bottom: 10px;"></textarea>
+                        <form @submit.prevent="submit()">
+                            <div class="row">
+                                <div>
+                                    <label class="jarak-input"><b>Judul</b></label>
+                                    <input type="text" class="form-control" v-model="form.sub_judul">
+                                </div>
+                                <div>
+                                    <label class="jarak-input"><b>Deskripsi</b></label>
+                                    <div class="col-12">
+                                        <textarea class="form-control c-mb10" id="inputProductDescription" rows="4"
+                                            v-model="form.sub_deskripsi"></textarea>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="jarak-input"><b>Link</b></label>
+                                    <input type="text" class="form-control label-8" v-model="form.sub_link">
+                                </div>
+                                <div>
+                                    <label for="formFile" class="form-label jarak-teks12"><b>File</b></label>
+                                    <input class="form-control" type="file" id="formFile" v-on:change="onFileChange">
                                 </div>
                             </div>
-                            <div>
-                                <label class="jarak-input"><b>Link</b></label>
-                                <input type="email" class="form-control" style="margin-bottom: 8px;">
+                            <div class="btn-posisi">
+                                <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
+                                <button class="btn btn-danger button-tabel-left"
+                                    onclick="window.location.href='/daftar-lomba'">Batal</button>
                             </div>
-                            <div>
-                                <label for="formFile" class="form-label jarak-teks12"><b>File</b></label>
-                                <input class="form-control" type="file" id="formFile">
-                            </div>
-                        </div>
-                        <div style="display: flex;">
-                            <button class="btn btn-primary button-tabel-right"
-                                onclick="window.location.href='/daftar-lomba'">Simpan</button>
-                            <button class="btn btn-danger button-tabel-left"
-                                onclick="window.location.href='/daftar-lomba'">Batal</button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -75,11 +77,45 @@
 
 
 <script setup>
+import { reactive, ref } from 'vue'
+import { router } from '@inertiajs/vue3'
+import { useForm } from '@inertiajs/inertia-vue3';
 
-defineProps({ settings: Object })
+const props = defineProps({
+    settings: Object,
+    user: Object,
+    submission: Object,
+    lombas: Object,
+    userId: Number
+})
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const form = useForm({
+    sub_judul: props.submission?.sub_judul,
+    sub_deskripsi: props.submission?.sub_deskripsi,
+    sub_link: props.submission?.sub_link,
+    sub_file: props.submission?.sub_file,
+    sub_peserta_id: props.userId
+})
+
+const selectedFile = ref(null);
+
+function submit() {
+    const formData = new FormData();
+    formData.append('id', props.submission?.id);
+    formData.append('sub_judul', form.sub_judul);
+    formData.append('sub_deskripsi', form.sub_deskripsi);
+    formData.append('sub_link', form.sub_link);
+    formData.append('sub_file', selectedFile.value);
+    formData.append('sub_peserta_id', form.sub_peserta_id);
+
+    router.post('/pengumpulan-karya', formData);
+}
+
+function onFileChange(event) {
+    selectedFile.value = event.target.files[0];
+}
+
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
-
 </script>
