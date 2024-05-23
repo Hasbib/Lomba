@@ -142,106 +142,102 @@
                                 </div>
                             </div>
                         </div>
-                        <form @submit.prevent="submit()">
-                            <div class="card">
-                                <h5 class="p-3">Input Anggota Tim</h5>
-                                <div class="row row-cards jarak-data-peserta">
-                                    <div class="col-md-6 col-lg-3 crud-max-width260">
-                                        <div class="card">
-                                            <div class="card-header btn-crud">
-                                                <h6><b>Ketua</b></h6>
+                        <div class="card">
+                            <h5 class="p-3">Input Anggota Tim</h5>
+                            <div class="row row-cards jarak-data-peserta">
+                                <div class="col-md-6 col-lg-3 crud-max-width260">
+                                    <div class="card">
+                                        <div class="card-header btn-crud">
+                                            <h6><b>Ketua</b></h6>
+                                        </div>
+                                        <div class="card-body p-4 text-center posisi-mb23">
+                                            <div class="btn-crud">
+                                                <img :src="getProfilImageUrl(form.images)" :alt="user.name"
+                                                    class="img-fluidc rounded">
                                             </div>
-                                            <div class="card-body p-4 text-center posisi-mb23">
-                                                <div class="btn-crud">
-                                                    <img :src="getProfilImageUrl(form.images)" :alt="user.name"
-                                                        class="img-fluidc rounded">
-                                                    <!-- class="img-fluid rounded" -->
-                                                </div>
-                                                <br>
-                                                <h6><b>{{ form.name }}</b></h6>
-                                                <br>
-                                                <div class="posisi-mb7">{{ form.nik }}</div>
-                                                <div class="text-muted">{{ form.prodi }}</div>
-                                            </div>
+                                            <br>
+                                            <h6><b>{{ form.name }}</b></h6>
+                                            <br>
+                                            <div class="posisi-mb7">{{ form.nik }}</div>
+                                            <div class="text-muted">{{ form.prodi }}</div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-3 crud-max-width260" v-for="(member, index) in members"
-                                        :key="index">
-                                        <div class="card position-relative">
-                                            <div class="card-header btn-crud">
-                                                <h6><b>Anggota {{ index + 1 }}</b></h6>
-                                                <button class="btn-close posisi-close" @click="removeMember(index)"
-                                                    aria-label="Close">
-                                                    &times;
+                                </div>
+                                <div class="col-md-6 col-lg-3 crud-max-width260" v-for="(member, index) in members"
+                                    :key="index">
+                                    <div class="card position-relative">
+                                        <div class="card-header btn-crud">
+                                            <h6><b>Anggota {{ index + 1 }}</b></h6>
+                                            <button class="btn-close posisi-close" @click="removeMember(index)"
+                                                aria-label="Close">
+                                                &times;
+                                            </button>
+                                        </div>
+                                        <div class="card-body p-4 text-center posisi-mb23">
+                                            <div class="btn-crud">
+                                                <img :src="getProfilImageUrl(member.images)" height="120"
+                                                    :alt="member.name" class="img-fluidc rounded">
+                                            </div>
+                                            <br>
+                                            <h6><b>{{ member.name }}</b></h6>
+                                            <br>
+                                            <div class="posisi-mb7">{{ member.nik }}</div>
+                                            <div class="text-muted">{{ member.prodi }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3 crud-max-width260">
+                                    <div class="card">
+                                        <div class="card-header btn-crud">
+                                            <h6><b>Anggota {{ members.length + 1 }}</b></h6>
+                                        </div>
+                                        <div class="card-body p-4 text-center posisi-mb23">
+                                            <div class="btn-crud">
+                                                <button class="btn btn-white btn-putih" @click="showPopup"> +
                                                 </button>
                                             </div>
-                                            <div class="card-body p-4 text-center posisi-mb23">
-                                                <div class="btn-crud">
-                                                    <img :src="getProfilImageUrl(member.images)" height="120"
-                                                        :alt="member.name" class="img-fluidc rounded">
-                                                    <!-- class="img-fluid rounded" -->
-                                                </div>
-                                                <br>
-                                                <h6><b>{{ member.name }}</b></h6>
-                                                <br>
-                                                <div class="posisi-mb7">{{ member.nik }}</div>
-                                                <div class="text-muted">{{ member.prodi }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3 crud-max-width260">
-                                        <div class="card">
-                                            <div class="card-header btn-crud">
-                                                <h6><b>Anggota {{ members.length + 1 }}</b></h6>
-                                            </div>
-                                            <div class="card-body p-4 text-center posisi-mb23">
-                                                <div class="btn-crud">
-                                                    <button class="btn btn-white btn-putih" @click="showPopup"> +
-                                                    </button>
-                                                </div>
-                                                <br>
-                                            </div>
+                                            <br>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <br><br>
-                                    <button type="submit" @click="saveTeamMembers"
-                                        class="btn btn-primary radius-5 isi-data2 ">Kirim</button>
-                                </div>
                             </div>
-                            <div v-if="isPopupVisible" class="popup">
-                                <div class="popup-content">
-                                    <span class="close" @click="hidePopup">&times;</span>
-                                    <h5>Input Anggota Tim</h5>
-                                    <hr />
-                                    <div class="position-relative">
-                                        <input type="text" class="form-control ps-5" placeholder="Search by name"
-                                            v-model="searchQuery">
-                                        <span class="position-absolute top-50 product-show-edit translate-middle-y">
-                                            <i class="bx bx-search"></i>
-                                        </span>
-                                    </div>
-                                    <div class="overflow-auto">
-                                        <ul v-if="searchResults.length" class="search-results">
-                                            <li v-for="user in searchResults" :key="user.id" @click="selectUser(user)"
-                                                :class="{ 'selected': user.id === selectedUser?.id }">
-                                                <div class="user-item">
-                                                    <div class="user-info csearch">
-                                                        {{ user.name }}<br> {{ user.email }}
-                                                    </div>
+                            <div>
+                                <br><br>
+                                <button type="submit" @click="saveTeamMembers"
+                                    class="btn btn-primary radius-5 isi-data2">Kirim</button>
+                            </div>
+                        </div>
+                        <div v-if="isPopupVisible" class="popup">
+                            <div class="popup-content">
+                                <span class="close" @click="hidePopup">&times;</span>
+                                <h5>Input Anggota Tim</h5>
+                                <hr />
+                                <div class="position-relative">
+                                    <input type="text" class="form-control ps-5" placeholder="Search by name"
+                                        v-model="searchQuery">
+                                    <span class="position-absolute top-50 product-show-edit translate-middle-y">
+                                        <i class="bx bx-search"></i>
+                                    </span>
+                                </div>
+                                <div class="overflow-auto">
+                                    <ul v-if="searchResults.length" class="search-results">
+                                        <li v-for="user in searchResults" :key="user.id" @click="selectUser(user)"
+                                            :class="{ 'selected': user.id === selectedUser?.id }">
+                                            <div class="user-item">
+                                                <div class="user-info csearch">
+                                                    {{ user.name }}<br> {{ user.email }}
                                                 </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="border-top btn-crud pt-3">
-                                        <button type="submit" class="btn-success btn btn-block" @click="addMember">
-                                            Tambah anggota
-                                        </button>
-                                    </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="border-top btn-crud pt-3">
+                                    <button type="submit" class="btn-success btn btn-block" @click="addMember">
+                                        Tambah anggota
+                                    </button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                         <div class="card">
                             <h5 class="p-3">PENGUMPULAN KARYA</h5>
                             <div class="card-body p-4 text-center">
@@ -377,7 +373,34 @@ function addMember() {
         searchResults.value = []; // Clear the search results
     }
 }
+function saveTeamMembers() {
+    const teamData = {
+        ketua: {
+            name: form.name,
+            nik: form.nik,
+            prodi: form.prodi,
+            images: form.images,
+            role: 'ketua'
+        },
+        members: members.value.map((member, index) => ({
+            name: member.name,
+            nik: member.nik,
+            prodi: member.prodi,
+            images: member.images,
+            role: `anggota ${index + 1}`
+        }))
+    };
 
+    axios.post('/tambah-member', teamData)
+        .then(response => {
+            alert(response.data.message);
+            // Handle success response
+        })
+        .catch(error => {
+            console.error(error);
+            // Handle error response
+        });
+}
 function removeMember(index) {
     members.value.splice(index, 1);
 }

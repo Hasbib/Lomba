@@ -26,29 +26,78 @@ class RegLombaController extends Controller
             $name = session('name');
             $regLomba = RegLomba::where('reg_peserta_id', $user->id)->first();
             $SUBmission = Submission::where('sub_peserta_id', $user->id)->first();
+            $teamMembers = TeamMember::where('team_peserta_id', $user->id)->get();
             return Inertia::render('Role/Peserta/Daftarlomba', [
                 'user' => $user,
                 'username' => $username,
                 'name' => $name,
                 'reglomba' => $regLomba,
                 'submission' => $SUBmission,
+                'members' => $teamMembers,
                 'settings' => Setting::all()->map(function ($setting) {
                     return [
                         'id' => $setting->id,
                         'nama_event' => $setting->nama_event,
                         'logo_1' => $setting->logo_1,
                     ];
-                })
+                }),
             ]);
         } else {
             return;
         }
     }
 
-    public function addmember()
+    public function addmember(Request $request)
     {
+        $ketua = $request->input('ketua');
+        $ketuaImage = $ketua['images'];
+        $ketuaImagePath = null;
+        if ($ketuaImage) {
+            $ketuaImagePath = $this->copyImage($ketuaImage);
+        }
+        TeamMember::create([
+            'team_peserta_id' => session('id'),
+            'team_member_name' => $ketua['name'],
+            'team_member_nik' => $ketua['nik'],
+            'team_member_prodi' => $ketua['prodi'],
+            'team_member_role' => $ketua['role'],
+            'team_member_picture' => $ketuaImagePath
+        ]);
 
+        // Simpan data anggota
+        $members = $request->input('members');
+        foreach ($members as $member) {
+            $memberImage = $member['images'];
+            $memberImagePath = null;
+            if ($memberImage) {
+                $memberImagePath = $this->copyImage($memberImage);
+            }
+            TeamMember::create([
+                'team_peserta_id' => session('id'),
+                'team_member_name' => $member['name'],
+                'team_member_nik' => $member['nik'],
+                'team_member_prodi' => $member['prodi'],
+                'team_member_role' => $member['role'],
+                'team_member_picture' => $memberImagePath
+            ]);
+        }
+
+        return response()->json(['message' => 'Team members added successfully.']);
     }
+
+    private function copyImage($imageName)
+    {
+        $oldPath = 'public/uploads/peserta/profil/' . $imageName;
+        $newPath = 'public/uploads/teammember/' . basename($imageName);
+        // Salin gambar
+        Storage::copy($oldPath, $newPath);
+        return basename($imageName);
+    }
+
+
+
+
+
 
     public function datatim()
     {
