@@ -126,6 +126,29 @@ function submit() {
     formData.append('reg_peserta_id', form.reg_peserta_id);
 
     router.post('/daftar-lomba', formData);
+
+    // ISID DATA
+    //     Swal.fire({
+    //         position: "top-end",
+    //         icon: "success",
+    //         title: "Your work has been saved",
+    //         showConfirmButton: false,
+    //         timer: 1500
+    //     });
+
+    // UPDATE DATA
+    //     Swal.fire({
+    //         title: "Do you want to save the changes?",
+    //         showDenyButton: true,
+    //         confirmButtonText: "Save",
+    //         denyButtonText: `Don't save`
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             Swal.fire("Saved!", "", "success");
+    //         } else if (result.isDenied) {
+    //             Swal.fire("Changes are not saved", "", "info");
+    //         }
+    //     });
 }
 
 function onFileChange(event) {

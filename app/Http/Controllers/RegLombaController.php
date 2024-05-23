@@ -94,11 +94,6 @@ class RegLombaController extends Controller
         return basename($imageName);
     }
 
-
-
-
-
-
     public function datatim()
     {
         $user = User::findOrFail(session('id'));

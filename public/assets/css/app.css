@@ -2726,6 +2726,7 @@ input.search-control-2::placeholder {
 
 .jarak-data-peserta {
 	margin-left: 5px;
+	margin-right: 10px;
 }
 
 .jarak-isi-data {
@@ -4131,3 +4132,6 @@ button.menu-title {
 	width: auto; 
 	height: auto;
 }
+
+
+

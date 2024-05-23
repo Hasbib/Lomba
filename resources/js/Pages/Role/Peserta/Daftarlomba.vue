@@ -416,6 +416,20 @@ const getSettingImageUrl = (imageName) => {
 };
 </script>
 
+<style scoped>
+/* DAFTAR LOMBA EDIT */
+.crud-max-width260 {
+    /* flex: 1 1 calc(25% - 1rem); */
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+</style>
 
 <!-- <script>
 export default {
