@@ -33,7 +33,7 @@ class RegLombaController extends Controller
                 'name' => $name,
                 'reglomba' => $regLomba,
                 'submission' => $SUBmission,
-                'members' => $teamMembers,
+                // 'members' => $teamMembers,
                 'settings' => Setting::all()->map(function ($setting) {
                     return [
                         'id' => $setting->id,

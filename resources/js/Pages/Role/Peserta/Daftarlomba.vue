@@ -98,6 +98,9 @@
         <!--start page wrapper -->
         <div class="page-wrapper">
             <div class="page-content">
+                <div v-if="$page.props.flash.message" class="alert alert-success">
+                    {{ $page.props.flash.message }}
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <h4 class="mb-0 jarak-teks1">Daftar lomba</h4>

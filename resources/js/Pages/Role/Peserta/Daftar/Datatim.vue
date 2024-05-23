@@ -92,6 +92,7 @@
 import { reactive, ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/inertia-vue3';
+import Swal from 'sweetalert2';
 
 const props = defineProps({
     settings: Object,
@@ -128,13 +129,13 @@ function submit() {
     router.post('/daftar-lomba', formData);
 
     // ISID DATA
-    //     Swal.fire({
-    //         position: "top-end",
-    //         icon: "success",
-    //         title: "Your work has been saved",
-    //         showConfirmButton: false,
-    //         timer: 1500
-    //     });
+    // Swal.fire({
+    //     position: "top-end",
+    //     icon: "success",
+    //     title: "Your work has been saved",
+    //     showConfirmButton: false,
+    //     timer: 1500
+    // });
 
     // UPDATE DATA
     //     Swal.fire({

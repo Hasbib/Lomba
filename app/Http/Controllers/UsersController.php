@@ -268,9 +268,16 @@ class UsersController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        $users = User::where('name', 'like', "%{$query}%")->get();
 
-        return response()->json($users);
+        $results = User::where('name', 'LIKE', "%{$query}%")
+            ->where('role', 'peserta') // Tambahkan filter peran
+            ->get();
+
+        return response()->json($results);
+        // $query = $request->input('query');
+        // $users = User::where('name', 'like', "%{$query}%")->get();
+
+        // return response()->json($users);
     }
 
 
