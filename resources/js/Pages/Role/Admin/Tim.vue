@@ -123,12 +123,13 @@
                     <div class="container">
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                            <div class="col" v-for="lomba in lombas">
+                            <div class="col" v-for="lomba in lombas" :key="lomba.id">
                                 <div class="card radius-15 card-overview">
                                     <img :src="getLombaImageUrl(lomba.gambar)" :alt="lomba.nama_lomba"
                                         class="border-radius">
                                     <label class="judul-overview">{{ lomba.nama_lomba }}</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/tim/tabeltim">Daftar Tim</a>
+                                    <button class="btn btn-primary btn-landing-page2"
+                                        @click.prevent="detail(lomba.nama_lomba)">Daftar Tim</button>
                                 </div>
                             </div>
                         </div>
@@ -148,11 +149,16 @@ defineProps({
     sponsors: Object,
     settings: Object,
     unreadCount: Number,
-    lombas: Object
+    lombas: Object,
+    reglombas: Object
 })
 
 function logout() {
     router.post('/logout');
+}
+
+function detail(nama_lomba) {
+    router.get('/tim/' + nama_lomba + '/tabel-tim')
 }
 
 const getLombaImageUrl = (imageName) => {

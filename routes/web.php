@@ -117,8 +117,8 @@ Route::middleware(['admin'])->group(function () {
     Route::put('event/setting/{setting}', [SettingController::class, 'update']);
 
     Route::get('/tim', [PagesController::class, 'tim']);
-    Route::get('/tim/tabeltim', [PagesController::class, 'tabeltim']);
-    Route::get('/tim/detailtim', [PagesController::class, 'detailtim']);
+    Route::get('/tim/{lomba}/tabel-tim', [PagesController::class, 'tabeltim']);
+    Route::get('/tim/tabel-tim/{reglomba}/detail-tim', [PagesController::class, 'detailtim']);
 
     Route::get('/rangking', [PagesController::class, 'rangking']);
     Route::get('/rangking/tabelrangking', [PagesController::class, 'tabelrangking']);
@@ -129,12 +129,12 @@ Route::middleware(['admin'])->group(function () {
 Route::middleware(['juri'])->group(function () {
     Route::get('/dashboard-juri', [PagesController::class, 'dashboardjuri'])->name('dashboardjuri');
     Route::get('/lomba-juri', [PagesController::class, 'lombajuri']);
-    Route::get('/lomba-juri/tabel-lomba', [PagesController::class, 'tabellomba']);
+    Route::get('/lomba-juri/{lomba}/tabel-lomba', [PagesController::class, 'tabellomba']);
     Route::get('/rangking-juri', [PagesController::class, 'rangkingjuri']);
     Route::get('/rangking-juri/tabel-rangking-juri', [PagesController::class, 'tabelrangkingjuri']);
     Route::get('/lomba-juri/tabel-lomba/nilai', [PagesController::class, 'nilai']);
     Route::get('/lomba-juri/tabel-lomba/edit-nilai', [PagesController::class, 'editnilai']);
-    Route::get('/lomba-juri/tabel-lomba/tim-detail', [PagesController::class, 'timdetailjuri']);
+    Route::get('/lomba-juri/tabel-lomba/{reglomba}/tim-detail', [PagesController::class, 'timdetailjuri']);
 });
 
 // Petugas hanya bisa mengakses dashboardadmin
@@ -142,11 +142,11 @@ Route::middleware(['petugas'])->group(function () {
     Route::get('/dashboard-petugas', [PagesController::class, 'dashboardpetugas'])->name('dashboardpetugas');
     Route::get('/partisipan-petugas', [PagesController::class, 'partisipanpetugas']);
     Route::get('/tim-petugas', [PagesController::class, 'timpetugas']);
-    Route::get('/tim-petugas/tim-detail', [PagesController::class, 'timdetail']);
+    Route::get('/tim-petugas/{reglomba}/tim-detail', [PagesController::class, 'timdetail']);
     Route::get('/pesan-petugas', [PagesController::class, 'pesanpetugas']);
     Route::post('/pesan-petugas/update-status/{id}', [PagesController::class, 'updateStatus'])->name('pesan.updateStatus');
     Route::get('/rangking-petugas', [PagesController::class, 'rangkingpetugas']);
-    Route::get('/rangking-petugas/petugas-rangking', [PagesController::class, 'petugasrangking']);
+    Route::get('/rangking-petugas/petugas-rangking/{lomba}', [PagesController::class, 'petugasrangking']);
 });
 
 // Peserta hanya bisa mengakses peserta

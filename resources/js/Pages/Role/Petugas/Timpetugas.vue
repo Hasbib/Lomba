@@ -126,17 +126,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Start Green</td>
-                                        <td>Lomba Desain</td>
-                                        <td>0850000000</td>
-                                        <td>goat@gmail.com</td>
-                                        <td>Universitas</td>
+                                    <tr v-for="reglomba in reglombas">
+                                        <td>{{ reglomba.id }}</td>
+                                        <td>{{ reglomba.reg_nama_tim }}</td>
+                                        <td>{{ reglomba.reg_nama_lomba }}</td>
+                                        <td>{{ reglomba.reg_no_whatsapp }}</td>
+                                        <td>{{ reglomba.reg_email }}</td>
+                                        <td>{{ reglomba.reg_instansi }}</td>
                                         <td>Verified</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary"
-                                                onclick="window.location.href='/tim-petugas/tim-detail'"><i
+                                            <button class="btn btn-secondary" @click.prevent="detailtim(reglomba.id)"><i
                                                     class="bi bi-eye"></i></button>
                                         </td>
                                     </tr>
@@ -157,7 +156,13 @@ import { router } from '@inertiajs/vue3'
 defineProps({
     settings: Object,
     unreadCount: Number,
+    reglombas: Object
 })
+
+function detailtim(id) {
+    router.get('/tim-petugas/' + id + '/tim-detail')
+}
+
 
 function logout() {
     router.post('/logout');

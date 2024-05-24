@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Submission;
+use App\Models\TeamMember;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Sponsor;
@@ -9,6 +11,7 @@ use App\Models\Berita;
 use App\Models\Setting;
 use Inertia\Inertia;
 use App\Models\Pesan;
+use App\Models\RegLomba;
 use App\Models\Lomba;
 use Illuminate\Http\Request;
 
@@ -205,36 +208,48 @@ class PagesController extends Controller
                     'nama_lomba' => $lomba->nama_lomba,
                     'gambar' => $lomba->gambar,
                 ];
-            })
+            }),
         ]);
     }
-
-    public function tabeltim()
+    public function tabeltim($lomba)
     {
         $username = session('username');
         $name = session('name');
 
         $unreadCount = Pesan::where('status', 'Belum Dibaca')->count();
+        $reglombas = RegLomba::where('reg_nama_lomba', $lomba)->get();
 
         return Inertia::render('Role/Admin/Tim/Tabeltim', [
             'username' => $username,
             'name' => $name,
-
             'unreadCount' => $unreadCount,
-
             'settings' => Setting::all()->map(function ($setting) {
                 return [
                     'id' => $setting->id,
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
+            }),
+            'reglombas' => $reglombas->map(function ($reglomba) {
+                return [
+                    'id' => $reglomba->id,
+                    'reg_nama_tim' => $reglomba->reg_nama_tim,
+                    'reg_nama_lomba' => $reglomba->reg_nama_lomba,
+                    'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
+                    'reg_instansi' => $reglomba->reg_instansi,
+                    'reg_email' => $reglomba->reg_email,
+                ];
             })
         ]);
     }
-    public function detailtim()
+
+    public function detailtim(RegLomba $reglomba)
     {
         $username = session('username');
         $name = session('name');
+        $submission = Submission::where('sub_peserta_id', $reglomba->reg_peserta_id)->first();
+        $teammembers = TeamMember::where('team_peserta_id', $reglomba->reg_peserta_id)->get();
+
         return Inertia::render('Role/Admin/Tim/Detailtim', [
             'username' => $username,
             'name' => $name,
@@ -245,9 +260,27 @@ class PagesController extends Controller
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
-            })
+            }),
+            'reglomba' => [
+                'id' => $reglomba->id,
+                'reg_nama_tim' => $reglomba->reg_nama_tim,
+                'reg_instansi' => $reglomba->reg_instansi,
+                'reg_nama_lomba' => $reglomba->reg_nama_lomba,
+                'reg_email' => $reglomba->reg_email,
+                'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
+                'reg_bukti_pembayaaran' => $reglomba->reg_bukti_pembayaran,
+            ],
+            'submission' => [
+                'id' => $submission->id,
+                'sub_judul' => $submission->sub_judul,
+                'sub_deskripsi' => $submission->sub_deskripsi,
+                'sub_link' => $submission->sub_link,
+                'sub_file' => $submission->sub_file,
+            ],
+            'teammembers' => $teammembers,
         ]);
     }
+
 
     public function rangking()
     {
@@ -300,7 +333,6 @@ class PagesController extends Controller
             })
         ]);
     }
-
 
 
     public function dashboardjuri()
@@ -378,9 +410,26 @@ class PagesController extends Controller
             })
         ]);
     }
-    public function tabellomba()
+    public function tabellomba($lomba)
     {
         $username = session('username');
+
+        $reglombas = RegLomba::where('reg_nama_lomba', $lomba)->get();
+        $submissions = Submission::all();
+        $data = $reglombas->map(function ($reglomba) use ($submissions) {
+            $submission = $submissions->firstWhere('sub_peserta_id', $reglomba->reg_peserta_id);
+
+            return [
+                'id' => $reglomba->id,
+                'reg_nama_tim' => $reglomba->reg_nama_tim,
+                'reg_nama_lomba' => $reglomba->reg_nama_lomba,
+                'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
+                'reg_instansi' => $reglomba->reg_instansi,
+                'reg_email' => $reglomba->reg_email,
+                'sub_judul' => $submission ? $submission->sub_judul : 'No Submission',
+            ];
+        });
+
         return Inertia::render('Role/Juri/Lomba/Tabellomba', [
             'username' => $username,
 
@@ -390,7 +439,18 @@ class PagesController extends Controller
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
-            })
+            }),
+            'reglombas' => $reglombas->map(function ($reglomba) {
+                return [
+                    'id' => $reglomba->id,
+                    'reg_nama_tim' => $reglomba->reg_nama_tim,
+                    'reg_nama_lomba' => $reglomba->reg_nama_lomba,
+                    'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
+                    'reg_instansi' => $reglomba->reg_instansi,
+                    'reg_email' => $reglomba->reg_email,
+                ];
+            }),
+            'data' => $data,
         ]);
     }
     public function nilai()
@@ -423,9 +483,12 @@ class PagesController extends Controller
             })
         ]);
     }
-    public function timdetailjuri()
+    public function timdetailjuri(RegLomba $reglomba)
     {
         $username = session('username');
+        $submission = Submission::where('sub_peserta_id', $reglomba->reg_peserta_id)->first();
+        $teammembers = TeamMember::where('team_peserta_id', $reglomba->reg_peserta_id)->get();
+
         return Inertia::render('Role/Juri/Lomba/Timdetailjuri', [
             'username' => $username,
 
@@ -435,7 +498,24 @@ class PagesController extends Controller
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
-            })
+            }),
+            'reglomba' => [
+                'id' => $reglomba->id,
+                'reg_nama_tim' => $reglomba->reg_nama_tim,
+                'reg_instansi' => $reglomba->reg_instansi,
+                'reg_nama_lomba' => $reglomba->reg_nama_lomba,
+                'reg_email' => $reglomba->reg_email,
+                'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
+                'reg_bukti_pembayaaran' => $reglomba->reg_bukti_pembayaran,
+            ],
+            'submission' => [
+                'id' => $submission->id,
+                'sub_judul' => $submission->sub_judul,
+                'sub_deskripsi' => $submission->sub_deskripsi,
+                'sub_link' => $submission->sub_link,
+                'sub_file' => $submission->sub_file,
+            ],
+            'teammembers' => $teammembers,
         ]);
     }
 
@@ -510,12 +590,26 @@ class PagesController extends Controller
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
+            }),
+            'reglombas' => RegLomba::all()->map(function ($reglomba) {
+                return [
+                    'id' => $reglomba->id,
+                    'reg_nama_tim' => $reglomba->reg_nama_tim,
+                    'reg_nama_lomba' => $reglomba->reg_nama_lomba,
+                    'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
+                    'reg_instansi' => $reglomba->reg_instansi,
+                    'reg_email' => $reglomba->reg_email,
+
+                ];
             })
         ]);
     }
-    public function timdetail()
+    public function timdetail(RegLomba $reglomba)
     {
         $username = session('username');
+        $submission = Submission::where('sub_peserta_id', $reglomba->reg_peserta_id)->first();
+        $teammembers = TeamMember::where('team_peserta_id', $reglomba->reg_peserta_id)->get();
+
         return Inertia::render('Role/Petugas/Tim/Timdetail', [
             'username' => $username,
 
@@ -525,7 +619,24 @@ class PagesController extends Controller
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
-            })
+            }),
+            'reglomba' => [
+                'id' => $reglomba->id,
+                'reg_nama_tim' => $reglomba->reg_nama_tim,
+                'reg_instansi' => $reglomba->reg_instansi,
+                'reg_nama_lomba' => $reglomba->reg_nama_lomba,
+                'reg_email' => $reglomba->reg_email,
+                'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
+                'reg_bukti_pembayaaran' => $reglomba->reg_bukti_pembayaran,
+            ],
+            'submission' => [
+                'id' => $submission->id,
+                'sub_judul' => $submission->sub_judul,
+                'sub_deskripsi' => $submission->sub_deskripsi,
+                'sub_link' => $submission->sub_link,
+                'sub_file' => $submission->sub_file,
+            ],
+            'teammembers' => $teammembers,
         ]);
     }
     public function pesanpetugas()
@@ -536,7 +647,6 @@ class PagesController extends Controller
 
         return Inertia::render('Role/Petugas/Pesanpetugas', [
             'username' => $username,
-
             'unreadCount' => $unreadCount,
 
             'settings' => Setting::all()->map(function ($setting) {
@@ -584,6 +694,13 @@ class PagesController extends Controller
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
+            }),
+            'lombas' => Lomba::all()->map(function ($lomba) {
+                return [
+                    'id' => $lomba->id,
+                    'nama_lomba' => $lomba->nama_lomba,
+                    'gambar' => $lomba->gambar,
+                ];
             })
         ]);
     }
@@ -604,7 +721,7 @@ class PagesController extends Controller
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
-            })
+            }),
         ]);
     }
 

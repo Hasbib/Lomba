@@ -94,9 +94,9 @@
                                     <img :src="getLombaImageUrl(lomba.gambar)" :alt="lomba.nama_lomba"
                                         class="border-radius">
                                     <label class="judul-overview">{{ lomba.nama_lomba }}</label>
-                                    <a class="btn btn-primary btn-landing-page2" href="/lomba-juri/tabel-lomba">{{
-                                        lomba.nama_lomba }}
-                                    </a>
+                                    <button class="btn btn-primary btn-landing-page2"
+                                        @click.prevent="detail(lomba.nama_lomba)">{{ lomba.nama_lomba }}
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -121,6 +121,9 @@ function logout() {
     router.post('/logout');
 }
 
+function detail(nama_lomba) {
+    router.get('/lomba-juri/' + nama_lomba + '/tabel-lomba')
+}
 const getLombaImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/admin/lomba/${imageName}` : '';
 };

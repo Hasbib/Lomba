@@ -103,64 +103,14 @@
                     <div class="container">
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                            <div class="col">
+                            <div class="col" v-for="lomba in lombas">
                                 <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/desain.jpg" alt="New Image"
+                                    <img :src="getLombaImageUrl(lomba.gambar)" :alt="lomba.nama_lomba"
                                         class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2"
-                                        href="/rangking-petugas/petugas-rangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/ar-vr.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">AR / VR</label>
-                                    <a class="btn btn-primary btn-landing-page2"
-                                        href="/rangking-petugas/petugas-rangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/aplikasi-mobile.jpg"
-                                        alt="New Image" class="border-radius">
-                                    <label class="judul-overview">APLIKASI MOBILE</label>
-                                    <a class="btn btn-primary btn-landing-page2"
-                                        href="/rangking-petugas/petugas-rangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/desain-website.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">DESAIN WEBSITE</label>
-                                    <a class="btn btn-primary btn-landing-page2"
-                                        href="/rangking-petugas/petugas-rangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/sistem-keamanan-data.jpg"
-                                        alt="New Image" class="border-radius">
-                                    <label class="judul-overview">SISTEM KEAMANAN DATA</label>
-                                    <a class="btn btn-primary btn-landing-page2"
-                                        href="/rangking-petugas/petugas-rangking">Lihat
-                                        Rangking</a>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card radius-15 card-overview">
-                                    <img src="../../../../../public/bootstrap/images/membuat-game.jpg" alt="New Image"
-                                        class="border-radius">
-                                    <label class="judul-overview">UI / UX</label>
-                                    <a class="btn btn-primary btn-landing-page2"
-                                        href="/rangking-petugas/petugas-rangking">Lihat
-                                        Rangking</a>
+                                    <label class="judul-overview">{{ lomba.nama_lomba }}</label>
+                                    <button @click.prevent="detail(lomba.id)"
+                                        class="btn btn-primary btn-landing-page2">Lihat
+                                        Rangking</button>
                                 </div>
                             </div>
                         </div>
@@ -170,7 +120,6 @@
                 <!--end row-->
             </div>
         </div>
-
     </div>
     <!--end switcher-->
 </template>
@@ -181,12 +130,21 @@ import { router } from '@inertiajs/vue3'
 defineProps({
     settings: Object,
     unreadCount: Number,
+    lombas: Object
 })
 
 function logout() {
     router.post('/logout');
 }
 
+function detail(id) {
+    router.get('/rangking-petugas/petugas-rangking/' + id)
+}
+
+
+const getLombaImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/lomba/${imageName}` : '';
+};
 const getSettingImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };

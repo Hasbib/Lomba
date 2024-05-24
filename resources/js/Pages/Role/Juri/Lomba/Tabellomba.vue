@@ -115,15 +115,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Tim Design</td>
-                                        <td>Platform Pendidikan Interaktif</td>
+                                    <tr v-for="item in data">
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.reg_nama_tim }}</td>
+                                        <td>{{ item.sub_judul }}</td>
                                         <td>Belum Nilai</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary"
-                                                onclick="window.location.href='/lomba-juri/tabel-lomba/tim-detail'"><i
-                                                    class="bi bi-eye"></i></button>
+                                            <button class="btn btn-secondary" @click.prevent="detail(item.id)">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
                                             <button class="btn btn-primary"
                                                 onclick="window.location.href='/lomba-juri/tabel-lomba/edit-nilai'"><i
                                                     class="bi bi-pencil-square"></i></button>
@@ -147,10 +147,17 @@
 <script setup>
 import { router } from '@inertiajs/vue3'
 
-defineProps({ settings: Object })
+defineProps({
+    settings: Object,
+    data: Object,
+})
 
 function logout() {
     router.post('/logout');
+}
+
+function detail(id) {
+    router.get('/lomba-juri/tabel-lomba/' + id + '/tim-detail')
 }
 
 const getSettingImageUrl = (imageName) => {

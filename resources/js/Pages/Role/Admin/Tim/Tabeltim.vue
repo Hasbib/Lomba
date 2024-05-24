@@ -145,17 +145,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Start Green</td>
-                                        <td>Lomba Desain</td>
-                                        <td>0850000000</td>
-                                        <td>goat@gmail.com</td>
-                                        <td>Universitas</td>
+                                    <tr v-for="reglomba in reglombas">
+                                        <td>{{ reglomba.id }}</td>
+                                        <td>{{ reglomba.reg_nama_tim }}</td>
+                                        <td>{{ reglomba.reg_nama_lomba }}</td>
+                                        <td>{{ reglomba.reg_no_whatsapp }}</td>
+                                        <td>{{ reglomba.reg_email }}</td>
+                                        <td>{{ reglomba.reg_instansi }}</td>
                                         <td>Verified</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary"
-                                                onclick="window.location.href='/tim/detailtim'"><i
+                                            <button class="btn btn-secondary" @click.prevent="detail(reglomba.id)"><i
                                                     class="bi bi-eye"></i></button>
                                         </td>
                                     </tr>
@@ -176,11 +175,17 @@ import { router } from '@inertiajs/vue3'
 defineProps({
     settings: Object,
     unreadCount: Number,
+    reglombas: Object
 })
 
 function logout() {
     router.post('/logout');
 }
+
+function detail(id) {
+    router.get('/tim/tabel-tim/' + id + '/detail-tim')
+}
+
 
 const getSettingImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
