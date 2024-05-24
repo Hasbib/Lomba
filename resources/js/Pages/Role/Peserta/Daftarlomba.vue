@@ -271,7 +271,8 @@
                             </div>
                         </div>
                         <div class="btn-dl">
-                            <button href="#" class="btn btn-primary radius-5 lebar-btn">Submit</button>
+                            <button @click.prevent="() => save()"
+                                class="btn btn-primary radius-5 lebar-btn">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -284,7 +285,7 @@
 <script setup>
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/inertia-vue3';
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import axios from 'axios';
 
 const props = defineProps({
@@ -374,8 +375,28 @@ function addMember() {
         hidePopup();
         searchQuery.value = ''; // Clear the search query
         searchResults.value = []; // Clear the search results
+        localStorage.setItem('teamMembers', JSON.stringify(members.value));
     }
 }
+onMounted(() => {
+    const storedMembers = localStorage.getItem('teamMembers');
+    if (storedMembers) {
+        members.value = JSON.parse(storedMembers);
+    }
+});
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+});
+
 function saveTeamMembers() {
     const teamData = {
         ketua: {
@@ -383,20 +404,23 @@ function saveTeamMembers() {
             nik: form.nik,
             prodi: form.prodi,
             images: form.images,
-            role: 'ketua'
+            role: 'Ketua'
         },
         members: members.value.map((member, index) => ({
             name: member.name,
             nik: member.nik,
             prodi: member.prodi,
             images: member.images,
-            role: `anggota ${index + 1}`
+            role: `Anggota ${index + 1}`
         }))
     };
 
     axios.post('/tambah-member', teamData)
         .then(response => {
-            alert(response.data.message);
+            Toast.fire({
+                icon: "success",
+                title: response.data.message
+            });
             // Handle success response
         })
         .catch(error => {
@@ -404,9 +428,29 @@ function saveTeamMembers() {
             // Handle error response
         });
 }
+
+
 function removeMember(index) {
     members.value.splice(index, 1);
 }
+
+function save() {
+    Swal.fire({
+        title: "Apakah anda yakin untuk mengirim?",
+        showDenyButton: true,
+        confirmButtonText: "Ya",
+        denyButtonText: `Tidak`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Lakukan sesuatu jika pengguna ingin menyimpan perubahan
+            Swal.fire("Karya anda berhasil dikirim!", "", "success");
+        } else if (result.isDenied) {
+            // Lakukan sesuatu jika pengguna memilih untuk tidak menyimpan perubahan
+            Swal.fire("Karya anda gagal dikirim", "", "info");
+        }
+    });
+}
+
 
 const getRegistrasiImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/peserta/registrasi/${imageName}` : '';

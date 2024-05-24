@@ -49,6 +49,12 @@ class RegLombaController extends Controller
 
     public function addmember(Request $request)
     {
+        $teamId = session('id');
+
+        // Hapus semua anggota tim yang sudah ada
+        TeamMember::where('team_peserta_id', $teamId)->delete();
+
+        // Tambahkan ketua tim
         $ketua = $request->input('ketua');
         $ketuaImage = $ketua['images'];
         $ketuaImagePath = null;
@@ -56,7 +62,7 @@ class RegLombaController extends Controller
             $ketuaImagePath = $this->copyImage($ketuaImage);
         }
         TeamMember::create([
-            'team_peserta_id' => session('id'),
+            'team_peserta_id' => $teamId,
             'team_member_name' => $ketua['name'],
             'team_member_nik' => $ketua['nik'],
             'team_member_prodi' => $ketua['prodi'],
@@ -64,7 +70,7 @@ class RegLombaController extends Controller
             'team_member_picture' => $ketuaImagePath
         ]);
 
-        // Simpan data anggota
+        // Tambahkan anggota baru yang ada dalam form
         $members = $request->input('members');
         foreach ($members as $member) {
             $memberImage = $member['images'];
@@ -73,7 +79,7 @@ class RegLombaController extends Controller
                 $memberImagePath = $this->copyImage($memberImage);
             }
             TeamMember::create([
-                'team_peserta_id' => session('id'),
+                'team_peserta_id' => $teamId,
                 'team_member_name' => $member['name'],
                 'team_member_nik' => $member['nik'],
                 'team_member_prodi' => $member['prodi'],
@@ -82,8 +88,9 @@ class RegLombaController extends Controller
             ]);
         }
 
-        return response()->json(['message' => 'Team members added successfully.']);
+        return response()->json(['message' => 'Team member berhasil disimpan']);
     }
+
 
     private function copyImage($imageName)
     {
