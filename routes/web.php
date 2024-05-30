@@ -147,6 +147,7 @@ Route::middleware(['petugas'])->group(function () {
     Route::post('/pesan-petugas/update-status/{id}', [PagesController::class, 'updateStatus'])->name('pesan.updateStatus');
     Route::get('/rangking-petugas', [PagesController::class, 'rangkingpetugas']);
     Route::get('/rangking-petugas/petugas-rangking/{lomba}', [PagesController::class, 'petugasrangking']);
+    Route::get('/detailtimpetugas', [PagesController::class, 'detailtimpetugas']);
 });
 
 // Peserta hanya bisa mengakses peserta
@@ -160,6 +161,7 @@ Route::middleware(['peserta', 'auth', 'verified'])->group(function () {
     Route::get('/data-tim', [RegLombaController::class, 'datatim']);
     Route::get('/daftar-lomba', [RegLombaController::class, 'daftarlomba'])->name('reglomba.index');
     Route::post('/daftar-lomba', [RegLombaController::class, 'store']);
+    Route::put('/kirim-hasil', [RegLombaController::class, 'kirimHasil']);
     Route::post('/tambah-member', [RegLombaController::class, 'addmember']);
     Route::post('/pengumpulan-karya', [RegLombaController::class, 'kirim']);
     Route::get('/pengumpulan-karya', [RegLombaController::class, 'pengumpulankarya']);

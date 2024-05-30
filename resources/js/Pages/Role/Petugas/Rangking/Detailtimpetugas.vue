@@ -6,10 +6,9 @@
                 <nav class="navbar navbar-expand">
                     <!-- Navbar tambah untuk logo di kiri -->
                     <div class="navbar-tambah">
-                        <div class="navbar-left" v-for="setting in settings">
+                        <div class="navbar-left">
                             <a href="/">
-                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
-                                    class="logo_icon">
+                                <img src="../../../../../public/bootstrap/images/logocb.png" alt="Logo">
                             </a>
                         </div>
                     </div>
@@ -21,8 +20,7 @@
                     <div class="top-menu ms-auto">
                         <ul class="navbar-nav align-items-center">
                             <div class="user-info ps-3">
-                                <p class="user-name mb-0">{{ $page.props.name }}</p>
-                                <p class="user-role">{{ $page.props.username }}</p>
+                                <p class="user-name mb-0">Habib Shohiburrotib</p>
                             </div>
                             <div class="parent-icon posisi-icon"><i class="bx bx-user-circle c-font48"></i>
                             </div>
@@ -46,7 +44,7 @@
                             </div>
                             <div class="col-md-2">
                                 <label class="c-mb5-black"><b>INSTASNSI</b></label>
-                                <div class="c-mb20">Start Green</div>
+                                <div class="c-mb20">Universitas</div>
                             </div>
                             <div class="col-md-2">
                                 <label class="c-mb5-black"><b>LOMBA</b></label>
@@ -146,7 +144,7 @@
                         </div>
                         <div class="card card-height400">
                             <div class="card-body p-4 text-center">
-                                <h6 class="sub-judul-tim">PENGUMPULAN KARYA</h6>
+                                <h6 class="sub-judul-tim"><b>PENGUMPULAN KARYA</b></h6>
                                 <div class="row">
                                     <div class="col-md-3 label-left">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
@@ -172,62 +170,8 @@
             </div>
         </div>
         <!--end page wrapper -->
-
-        <h5 class="c-ml-160 jarak-top-kurang18 jarak-bottom-kurang13">Hasil Penilaian OLINAS</h5>
-        <div class="page-wrapper-report">
-            <div class="page-content">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="warna-abu">Tema Lomba</h6>
-                        <h6 class="c-mb20">Judul Karya</h6>
-                        <div class="card">
-                            <h5 class="p-3">Penilaian</h5>
-                            <div class="card-body p-4 text-center">
-                                <div class="row">
-                                    <table class="table table-bordered jarak-top-kurang25">
-                                        <thead class="table-dark">
-                                            <tr>
-                                                <th class="width-id">NO.</th>
-                                                <th class="crud-width-400 posisi-text">KRITERIA</th>
-                                                <th class="crud-width-40">NILAI</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td class="text-left">Kreativitas</td>
-                                                <td class="text-left"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td class="text-left">Estetika dan Komposisi</td>
-                                                <td class="text-left"></td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2" class="text-left">Total</th>
-                                                <td class="crud-width-40">0</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
-
-
-<script setup>
-
-defineProps({ settings: Object })
-
-const getSettingImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
-};
-</script>
 
 <style scoped>
 /* DAFTAR LOMBA EDIT */

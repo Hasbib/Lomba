@@ -59,7 +59,7 @@ class BeritaController extends Controller
     {
         $username = session('username');
         $name = session('name');
-
+        Carbon::setLocale('id');
         $unreadCount = Pesan::where('status', 'Belum Dibaca')->count();
 
         return Inertia::render('Role/Admin/Berita', [
@@ -167,6 +167,7 @@ class BeritaController extends Controller
     {
         $username = session('username');
         $name = session('name');
+        Carbon::setLocale('id');
         return Inertia::render('Role/Admin/Berita/Detailberita', [
             'username' => $username,
             'name' => $name,

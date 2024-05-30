@@ -2757,6 +2757,10 @@ input.search-control-2::placeholder {
 .jarak-dropdown {
 	padding-left: 35px;
 }
+/* .jarak-dropdown a {
+    text-indent: 20px;
+} */
+
 
 .data-tim {
 	margin-bottom: 20px
@@ -3094,9 +3098,21 @@ input.search-control-2::placeholder {
 	margin-right: 5px;
 }
 
+
+/* Aturan CSS untuk tampilan mobile */
+@media (max-width: 767px) {
 /* JARAK LEFT*/
-.c-ml-160 {
+  .c-ml-160 {
+	margin-left: 30px;
+	padding-bottom: 40px;
+}
+}
+/* Aturan CSS untuk tampilan desktop */
+@media (min-width: 768px) {
+/* JARAK LEFT*/
+  .c-ml-160 {
 	margin-left: 160px;
+}
 }
 
 /* LEFT */
@@ -3878,6 +3894,7 @@ input.search-control-2::placeholder {
 	}
 	.cnew {
 		margin-top: -80px;
+		/* margin-top: -120px; */
 	}
 	.crud-width150 {
 		width: 150px;
@@ -3887,7 +3904,8 @@ input.search-control-2::placeholder {
 /* Aturan CSS untuk tampilan mobile */
 @media (max-width: 767px) {
 	.card-height200 {
-		height: 260px;
+		height: 280px;
+		/* height: 310px; */
 	}
 	.btn-download {
 		margin-top: 150;
@@ -3909,25 +3927,55 @@ input.search-control-2::placeholder {
 	align-items: center; 
 	justify-content: center;
 }
-.keterangan-notif {
-    position: relative;
-    height: 60px; 
-    color: #000;
-    border-radius: 5px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: left;
-    padding-left: 30px;
+
+/* Aturan CSS untuk tampilan mobile */
+@media (max-width: 767px) {
+	.keterangan-notif {
+		position: relative;
+		height: 60px; 
+		color: #000;
+		border-radius: 5px; 
+		display: flex; 
+		align-items: center; 
+		justify-content: flex-start; /* Mengubah dari 'left' menjadi 'flex-start' untuk display flex */
+		padding-left: 10px;
+		text-align: left; /* Menambahkan properti ini */
+	}
+	
+	.keterangan-notif label:first-child {
+		position: absolute; 
+		top: 0;
+		right: 0;
+		margin: 10px;
+		color: white;
+	}
 }
 
-/* .keterangan-notif label:nth-child(1) { */
-.keterangan-notif label:first-child {
-    position: absolute; 
-    top: 0;
-    right: 0;
-    margin: 10px;
-	color: white;
+
+/* Aturan CSS untuk tampilan desktop */
+@media (min-width: 768px) {
+	.keterangan-notif {
+		position: relative;
+		height: 60px; 
+		color: #000;
+		border-radius: 5px; 
+		display: flex; 
+		align-items: center; 
+		justify-content: left;
+		padding-left: 30px;
+	}
+	
+	/* .keterangan-notif label:nth-child(1) { */
+	.keterangan-notif label:first-child {
+		position: absolute; 
+		top: 0;
+		right: 0;
+		margin: 10px;
+		color: white;
+	}
 }
+
+
 button.menu-title {
     background-color: transparent;
     border: none; /* Untuk menghilangkan garis tepi tombol jika ada */
@@ -4133,5 +4181,29 @@ button.menu-title {
 	height: auto;
 }
 
+body {
+    background-color: #E4EDF3;
+}
+.bg-index {
+	background-color: #F5FAFE;
+}
+/* #logo-img {
+    width: 60px;
+    transition: margin-left 0.3s ease;
+} */
 
+#logo-img.margin-toggled {
+    margin-left: -10px !important;
+}
 
+.lg-index {
+	width: 90px;
+}
+.lg2 {
+	width: 80px; 
+	margin-left: 60px;
+}
+.lg3 {
+	width: 100px; 
+	margin-left: -15px;
+}

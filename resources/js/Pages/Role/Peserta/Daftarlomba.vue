@@ -178,14 +178,14 @@
                                         </div>
                                         <div class="card-body p-4 text-center posisi-mb23">
                                             <div class="btn-crud">
-                                                <img :src="getProfilImageUrl(member.images)" height="120"
-                                                    :alt="member.name" class="img-fluidc rounded">
+                                                <img :src="getProfilImageUrl(member.team_member_picture)" height="120"
+                                                    :alt="member.team_member_name" class="img-fluidc rounded">
                                             </div>
                                             <br>
-                                            <h6><b>{{ member.name }}</b></h6>
+                                            <h6><b>{{ member.team_member_name }}</b></h6>
                                             <br>
-                                            <div class="posisi-mb7">{{ member.nik }}</div>
-                                            <div class="text-muted">{{ member.prodi }}</div>
+                                            <div class="posisi-mb7">{{ member.team_member_nik }}</div>
+                                            <div class="text-muted">{{ member.team_member_prodi }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -294,7 +294,6 @@ const props = defineProps({
     members: Object,
     reglomba: Object,
     submission: Object,
-    Teammember: Object
 })
 
 const form = useForm({
@@ -370,20 +369,20 @@ function addMember() {
             return;
         }
 
-        members.value.push({ ...selectedUser.value });
+        const newMember = {
+            team_member_name: selectedUser.value.name,
+            team_member_nik: selectedUser.value.nik,
+            team_member_prodi: selectedUser.value.prodi,
+            team_member_picture: selectedUser.value.images,
+        }
+
+        members.value.push(newMember);
         selectedUser.value = null;
         hidePopup();
         searchQuery.value = ''; // Clear the search query
         searchResults.value = []; // Clear the search results
-        localStorage.setItem('teamMembers', JSON.stringify(members.value));
     }
 }
-onMounted(() => {
-    const storedMembers = localStorage.getItem('teamMembers');
-    if (storedMembers) {
-        members.value = JSON.parse(storedMembers);
-    }
-});
 
 const Toast = Swal.mixin({
     toast: true,
@@ -407,10 +406,10 @@ function saveTeamMembers() {
             role: 'Ketua'
         },
         members: members.value.map((member, index) => ({
-            name: member.name,
-            nik: member.nik,
-            prodi: member.prodi,
-            images: member.images,
+            team_member_name: member.team_member_name,
+            team_member_nik: member.team_member_nik,
+            team_member_prodi: member.team_member_prodi,
+            team_member_picture: member.team_member_picture,
             role: `Anggota ${index + 1}`
         }))
     };
@@ -442,8 +441,25 @@ function save() {
         denyButtonText: `Tidak`
     }).then((result) => {
         if (result.isConfirmed) {
-            // Lakukan sesuatu jika pengguna ingin menyimpan perubahan
-            Swal.fire("Karya anda berhasil dikirim!", "", "success");
+            axios.put('/kirim-hasil', {
+                regLombaId: props.reglomba.id,
+                submissionId: props.submission.id
+            })
+                .then(response => {
+                    Toast.fire({
+                        icon: "success",
+                        title: response.data.message
+                    });
+                    // Handle success response
+                    if (response.data.isConfirmed) {
+                        Swal.fire("Karya anda berhasil dikirim!", "", "success");
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    Swal.fire("Karya anda gagal dikirim", "", "info");
+                    // Handle error response
+                });
         } else if (result.isDenied) {
             // Lakukan sesuatu jika pengguna memilih untuk tidak menyimpan perubahan
             Swal.fire("Karya anda gagal dikirim", "", "info");

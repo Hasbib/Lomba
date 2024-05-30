@@ -75,17 +75,9 @@
                                 <div class="c-mb20">{{ form.reg_no_whatsapp }}</div>
                             </div>
                             <div class="col-md-3">
-                                <label class="c-mb5-black"><b>SERTIFIKAT</b></label>
-                                <div class="c-mb20">Belum Ada</div>
-                            </div>
-                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>STATUS</b></label>
                                 <div class="c-mb20">Verified</div>
                             </div>
-                            <!-- <div class="col-md-2">
-                                <label class="c-mb5-black"><b>Surat</b></label>
-                                <div class="c-mb20"><a href="#">Lihat Surat</a></div>
-                            </div> -->
                             <div class="col-md-3">
                                 <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
                                 <div class="c-mb20"><a :href="getRegistrasiImageUrl(form.reg_bukti_pembayaaran)">Lihat

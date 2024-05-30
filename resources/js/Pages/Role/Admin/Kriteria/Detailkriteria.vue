@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                                    class="logo-icon">
                             </a>
                         </div>
                     </div>
@@ -36,11 +37,11 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Detail Kriteria Lomba</h4>
+                        <h4 class="mb-0">DETAIL KRITERIA LOMBA</h4>
                         <hr />
                         <div class="row">
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Kriteria</b></label>
+                                <label class="c-mb5-black"><b>NAMA KRITERIA</b></label>
                                 <div class="data-tim">{{ form.name }}</div>
                             </div>
                         </div>
@@ -67,7 +68,7 @@ const props = defineProps({
 const form = useForm({
     name: props.kriteria.name
 })
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

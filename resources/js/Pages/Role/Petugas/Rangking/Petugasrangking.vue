@@ -138,7 +138,8 @@
                                         <td>90</td>
                                         <td>Lolos</td>
                                         <td class="btn-crud">
-                                            <button class="btn btn-secondary" onclick="window.location.href=''"><i
+                                            <button class="btn btn-secondary"
+                                                onclick="window.location.href='/detailtimpetugas'"><i
                                                     class="bi bi-eye"></i></button>
                                         </td>
                                         <td>

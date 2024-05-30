@@ -40,32 +40,32 @@
                         <hr />
                         <div class="row">
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Lengkap</b></label>
+                                <label class="c-mb5-black"><b>NAMA LENGKAP</b></label>
                                 <div class="data-tim">{{ user.name }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Username</b></label>
+                                <label class="c-mb5-black"><b>USERNAME</b></label>
                                 <div class="data-tim">{{ user.username }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Password</b></label>
+                                <label class="c-mb5-black"><b>PASSWORD</b></label>
                                 <div class="data-tim">**********</div>
                                 <!-- {{ '•'.repeat(user.password.length) }} -->
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Email</b></label>
+                                <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="data-tim">{{ user.email }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Role</b></label>
+                                <label class="c-mb5-black"><b>ROLE</b></label>
                                 <div class="data-tim">{{ user.role }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Lomba</b></label>
+                                <label class="c-mb5-black"><b>LOMBA</b></label>
                                 <div class="data-tim">{{ user.lomba }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Tanggal</b></label>
+                                <label class="c-mb5-black"><b>TANGGAL</b></label>
                                 <div class="data-tim">{{ user.created_at }}</div>
                             </div>
                         </div>

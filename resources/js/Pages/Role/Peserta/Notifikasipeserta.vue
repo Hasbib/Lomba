@@ -22,13 +22,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/daftar-lomba">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                        </div>
-                        <div class="menu-title">Daftar Lomba</div>
-                    </a>
-                </li>
-                <li>
                     <a href="/profil">
                         <div class="parent-icon"><i class="bx bx-user-circle"></i>
                         </div>
@@ -100,11 +93,11 @@
             <div class="page-content">
                 <div class="card-body btn-crud">
                     <div class="keterangan-notif jarak-bottom-kurang20 c-mb30 bg-cred">
-                        <label>Mey 21</label>
+                        <label>Mei 21</label>
                         <label>Mohon maaf TIM anda gagal ke tahap selanjutnya untuk lomba ui/ux </label>
                     </div>
                     <div class="keterangan-notif jarak-bottom-kurang20 bg-cgreen">
-                        <label>Mey 21</label>
+                        <label>Mei 21</label>
                         <label>Selamat TIM anda telah terdaftar lomba ui/ux </label>
                     </div>
                 </div>

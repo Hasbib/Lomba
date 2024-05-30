@@ -38,4 +38,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->email_verified_at ? 'Verified' : 'Unverified';
     }
+
+    public function teamMembers()
+    {
+        return $this->hasMany(TeamMember::class, 'team_peserta_id')
+            ->where('team_member_role', '<>', 'ketua');
+    }
 }

@@ -35,7 +35,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Edit Sponsor</h4>
+                        <h4 class="mb-0">EDIT SPONSOR</h4>
                         <hr />
                         <form @submit.prevent="submit(sponsor.id)">
                             <div class="c-mb10">

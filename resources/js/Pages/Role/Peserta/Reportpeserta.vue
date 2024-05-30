@@ -22,13 +22,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/daftar-lomba">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                        </div>
-                        <div class="menu-title">Daftar Lomba</div>
-                    </a>
-                </li>
-                <li>
                     <a href="/profil">
                         <div class="parent-icon"><i class="bx bx-user-circle"></i>
                         </div>

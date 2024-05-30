@@ -36,7 +36,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Tambah Lomba</h4>
+                        <h4 class="mb-0">TAMBAH LOMBA</h4>
                         <hr />
                         <form @submit.prevent="submit">
                             <div class="row">

@@ -19,21 +19,20 @@ class RegLombaController extends Controller
     //
     public function daftarlomba(User $user)
     {
-        $user = User::findOrFail(session('id'));
+        $user = User::with('teamMembers')->findOrFail(session('id'));
 
         if ($user) {
             $username = session('username');
             $name = session('name');
-            $regLomba = RegLomba::where('reg_peserta_id', $user->id)->first();
-            $SUBmission = Submission::where('sub_peserta_id', $user->id)->first();
-            $teamMembers = TeamMember::where('team_peserta_id', $user->id)->get();
+            $regLomba = RegLomba::where('reg_peserta_id', $user->id)->whereStatus('draft')->first();
+            $submission = Submission::where('sub_peserta_id', $user->id)->whereStatus('draft')->first();
             return Inertia::render('Role/Peserta/Daftarlomba', [
                 'user' => $user,
                 'username' => $username,
                 'name' => $name,
                 'reglomba' => $regLomba,
-                'submission' => $SUBmission,
-                // 'members' => $teamMembers,
+                'submission' => $submission,
+                'members' => $user->teamMembers,
                 'settings' => Setting::all()->map(function ($setting) {
                     return [
                         'id' => $setting->id,
@@ -52,6 +51,13 @@ class RegLombaController extends Controller
         $teamId = session('id');
 
         // Hapus semua anggota tim yang sudah ada
+        $existingTeamMembers = TeamMember::where('team_peserta_id', $teamId)->get();
+
+        foreach ($existingTeamMembers as $member) {
+            if ($member->team_member_picture) {
+                $this->deleteImage($member->team_member_picture);
+            }
+        }
         TeamMember::where('team_peserta_id', $teamId)->delete();
 
         // Tambahkan ketua tim
@@ -61,6 +67,7 @@ class RegLombaController extends Controller
         if ($ketuaImage) {
             $ketuaImagePath = $this->copyImage($ketuaImage);
         }
+
         TeamMember::create([
             'team_peserta_id' => $teamId,
             'team_member_name' => $ketua['name'],
@@ -73,16 +80,19 @@ class RegLombaController extends Controller
         // Tambahkan anggota baru yang ada dalam form
         $members = $request->input('members');
         foreach ($members as $member) {
-            $memberImage = $member['images'];
+            // update only when has images
             $memberImagePath = null;
-            if ($memberImage) {
-                $memberImagePath = $this->copyImage($memberImage);
+            if (isset($member['team_member_picture'])) {
+                $memberImage = $member['team_member_picture'];
+                if ($memberImage) {
+                    $memberImagePath = $this->copyImage($memberImage);
+                }
             }
             TeamMember::create([
                 'team_peserta_id' => $teamId,
-                'team_member_name' => $member['name'],
-                'team_member_nik' => $member['nik'],
-                'team_member_prodi' => $member['prodi'],
+                'team_member_name' => $member['team_member_name'],
+                'team_member_nik' => $member['team_member_nik'],
+                'team_member_prodi' => $member['team_member_prodi'],
                 'team_member_role' => $member['role'],
                 'team_member_picture' => $memberImagePath
             ]);
@@ -101,10 +111,18 @@ class RegLombaController extends Controller
         return basename($imageName);
     }
 
+    private function deleteImage($imageName)
+    {
+        $path = 'public/uploads/teammember/' . $imageName;
+        if (Storage::exists($path)) {
+            Storage::delete($path);
+        }
+    }
+
     public function datatim()
     {
         $user = User::findOrFail(session('id'));
-        $regLomba = RegLomba::where('reg_peserta_id', $user->id)->first();
+        $regLomba = RegLomba::where('reg_peserta_id', $user->id)->whereStatus('draft')->first();
         if ($user) {
             return Inertia::render('Role/Peserta/Daftar/Datatim', [
                 'username' => $user->username,
@@ -196,7 +214,7 @@ class RegLombaController extends Controller
     public function pengumpulankarya()
     {
         $user = User::findOrFail(session('id'));
-        $SUBmission = Submission::where('sub_peserta_id', $user->id)->first();
+        $SUBmission = Submission::where('sub_peserta_id', $user->id)->whereStatus('draft')->first();
         if ($user) {
             return Inertia::render('Role/Peserta/Daftar/Pengumpulankarya', [
                 'username' => $user->username,
@@ -255,5 +273,22 @@ class RegLombaController extends Controller
             $message = 'Data tim berhasil diisi';
         }
         return Redirect::route('reglomba.index')->with('message', $message);
+    }
+
+    public function kirimHasil(Request $request)
+    {
+        $regLombaId = $request->input('regLombaId');
+        $submissionId = $request->input('submissionId');
+
+        $regLomba = RegLomba::findOrFail($regLombaId);
+        $submission = Submission::findOrFail($submissionId);
+
+        $regLomba->status = 'submitted';
+        $submission->status = 'submitted';
+
+        $regLomba->save();
+        $submission->save();
+
+        return response()->json(['isConfirmed' => true, 'message' => 'Karya berhasil dikirim']);
     }
 }

@@ -51,7 +51,8 @@
                                             PANDUAN</a>
                                         <a class="btn btn-success c-mtk margin-afkar1 warna-hitam" href="#">AJUKAN
                                             PERTANYAAN</a>
-                                        <a class="btn btn-primary c-mtk mg-t10 warna-hitam" href="/daftar-lomba">DAFTAR
+                                        <a class="btn btn-primary c-mtk mg-t10 warna-hitam"
+                                            @click.prevent="daftar(lomba.nama_lomba)">DAFTAR
                                             LOMBA</a>
                                     </div>
                                 </div>
@@ -77,6 +78,10 @@ const props = defineProps({
     settings: Object,
     lomba: Object
 })
+
+function daftar(nama_lomba) {
+    router.get('/' + nama_lomba + '/daftar-lomba')
+}
 
 const form = useForm({
     nama_lomba: props.lomba.nama_lomba,

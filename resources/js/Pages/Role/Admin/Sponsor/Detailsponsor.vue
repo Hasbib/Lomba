@@ -36,19 +36,19 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Detail Sponsor</h4>
+                        <h4 class="mb-0">DETAIL SPONSOR</h4>
                         <hr />
                         <div>
                             <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>Nama Sponsor</b></label>
+                                <label class="c-mb5-black"><b>NAMA SPONSOR</b></label>
                                 <div class="c-mb20">{{ form.name }}</div>
                             </div>
                             <div>
-                                <label class="col-md-6 c-mb10 warna-hitam"><b>Link</b></label>
+                                <label class="col-md-6 c-mb10 warna-hitam"><b>LINK</b></label>
                                 <div class="c-mb20"><a href="#">{{ form.link }}</a></div>
                             </div>
                             <div class="c-mb10">
-                                <label class="c-mb5-black"><b>Gambar</b></label><br>
+                                <label class="c-mb5-black"><b>LOGO</b></label><br>
                                 <img :src="getSponsorImageUrl(form.logo)" width="150">
                             </div>
                         </div>

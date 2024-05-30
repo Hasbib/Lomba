@@ -36,7 +36,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Edit Event</h4>
+                        <h4 class="mb-0">EDIT EVENT</h4>
                         <hr />
                         <form @submit.prevent="submit(setting.id)">
                             <div class="c-mb10">

@@ -99,8 +99,8 @@
                         <label class="jarak-filterstatus">Filter by Status</label>
                         <select class="form-select2">
                             <option selected>Semua</option>
-                            <option>Belum Dibaca</option>
-                            <option>Sudah Dibaca</option>
+                            <option>Belum Dinilai</option>
+                            <option>Sudah Dinilai</option>
                         </select>
                         <br><br>
                         <div class="table-responsive">

@@ -724,6 +724,11 @@ class PagesController extends Controller
             }),
         ]);
     }
+    public function detailtimpetugas()
+    {
+        return Inertia::render('Petugas/Rangking/Detailtimpetugas');
+    }
+
 
 
     public function overviewpeserta()

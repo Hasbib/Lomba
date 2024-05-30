@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                                    class="logo-icon">
                             </a>
                         </div>
                     </div>
@@ -36,7 +37,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Edit Kriteria Lomba</h4>
+                        <h4 class="mb-0">EDIT KRITERIA LOMBA</h4>
                         <hr />
                         <form @submit.prevent="submit(kriteria.id)">
                             <div class="row">
@@ -82,7 +83,7 @@ function submit(id) {
     });
 }
 
-const getImageUrl = (imageName) => {
-    return imageName ? `/storage/uploads/${imageName}` : '';
+const getSettingImageUrl = (imageName) => {
+    return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };
 </script>

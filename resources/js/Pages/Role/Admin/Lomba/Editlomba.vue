@@ -37,7 +37,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">Edit Lomba</h4>
+                        <h4 class="mb-0">EDIT LOMBA</h4>
                         <hr />
                         <form @submit.prevent="submit(lomba.id)">
                             <div class="row">
@@ -65,6 +65,7 @@
                                         <label for="formFile" class="form-label judul-form"><b>Sertifikat</b></label>
                                         <input class="form-control" type="file" id="formFile"
                                             @input="form.sertifikat = $event.target.files[0]">
+                                        <p class="keterangan-foto">Max 2 MB</p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
