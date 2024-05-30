@@ -159,7 +159,7 @@ Route::middleware(['peserta', 'auth', 'verified'])->group(function () {
     Route::get('/report', [PagesController::class, 'reportpeserta']);
     Route::get('/detail-tim', [PagesController::class, 'detailtimreport']);
     Route::get('/data-tim', [RegLombaController::class, 'datatim']);
-    Route::get('/daftar-lomba', [RegLombaController::class, 'daftarlomba'])->name('reglomba.index');
+    Route::get('/{lomba}/daftar-lomba', [RegLombaController::class, 'daftarlomba'])->name('reglomba.index');
     Route::post('/daftar-lomba', [RegLombaController::class, 'store']);
     Route::put('/kirim-hasil', [RegLombaController::class, 'kirimHasil']);
     Route::post('/tambah-member', [RegLombaController::class, 'addmember']);

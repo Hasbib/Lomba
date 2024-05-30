@@ -17,7 +17,7 @@ use Redirect;
 class RegLombaController extends Controller
 {
     //
-    public function daftarlomba(User $user)
+    public function daftarlomba(User $user, Lomba $lomba)
     {
         $user = User::with('teamMembers')->findOrFail(session('id'));
 
@@ -40,6 +40,11 @@ class RegLombaController extends Controller
                         'logo_1' => $setting->logo_1,
                     ];
                 }),
+                'lomba' => [
+                    'id' => $lomba->id,
+                    'nama_lomba' => $lomba->nama_lomba,
+                    'deskripsi' => $lomba->deskripsi,
+                ],
             ]);
         } else {
             return;

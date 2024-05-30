@@ -22,13 +22,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/daftar-lomba">
-                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
-                        </div>
-                        <div class="menu-title">Daftar Lomba</div>
-                    </a>
-                </li>
-                <li>
                     <a href="/profil">
                         <div class="parent-icon"><i class="bx bx-user-circle"></i>
                         </div>
@@ -103,7 +96,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-teks1">Daftar lomba</h4>
+                        <h4 class="mb-0 jarak-teks1">Daftar lomba {{ form.nama_lomba }}</h4>
                         <div class="card">
                             <h5 class="p-3">Info Tim Lomba</h5>
                             <hr class="garis">
@@ -118,7 +111,7 @@
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba">
                                     <label class="c-mb5-black"><b>LOMBA</b></label>
-                                    <div class="data-tim">{{ form.reg_nama_lomba }}</div>
+                                    <div class="data-tim">{{ form.nama_lomba }}</div>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba">
                                     <label class="c-mb5-black"><b>EMAIL</b></label>
@@ -294,6 +287,7 @@ const props = defineProps({
     members: Object,
     reglomba: Object,
     submission: Object,
+    lomba: Object,
 })
 
 const form = useForm({
@@ -314,6 +308,8 @@ const form = useForm({
     sub_deskripsi: props.submission ? props.submission.sub_deskripsi : null,
     sub_link: props.submission ? props.submission.sub_link : null,
     sub_file: props.submission ? props.submission.sub_file : null,
+
+    nama_lomba: props.lomba.nama_lomba,
 })
 
 function logout() {
