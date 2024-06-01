@@ -127,8 +127,7 @@ Route::middleware(['admin'])->group(function () {
 
 // juri hanya bisa mengakses
 Route::middleware(['juri'])->group(function () {
-    Route::get('/dashboard-juri', [PagesController::class, 'dashboardjuri'])->name('dashboardjuri');
-    Route::get('/lomba-juri', [PagesController::class, 'lombajuri']);
+    Route::get('/lomba-juri', [PagesController::class, 'lombajuri'])->name('dashboardjuri');
     Route::get('/lomba-juri/{lomba}/tabel-lomba', [PagesController::class, 'tabellomba']);
     Route::get('/rangking-juri', [PagesController::class, 'rangkingjuri']);
     Route::get('/rangking-juri/tabel-rangking-juri', [PagesController::class, 'tabelrangkingjuri']);
@@ -158,7 +157,7 @@ Route::middleware(['peserta', 'auth', 'verified'])->group(function () {
     Route::get('/notifikasi', [PagesController::class, 'notifikasipeserta']);
     Route::get('/report', [PagesController::class, 'reportpeserta']);
     Route::get('/detail-tim', [PagesController::class, 'detailtimreport']);
-    Route::get('/data-tim', [RegLombaController::class, 'datatim']);
+    Route::get('/{lomba}/daftar-lomba/data-tim', [RegLombaController::class, 'datatim']);
     Route::get('/{lomba}/daftar-lomba', [RegLombaController::class, 'daftarlomba'])->name('reglomba.index');
     Route::post('/daftar-lomba', [RegLombaController::class, 'store']);
     Route::put('/kirim-hasil', [RegLombaController::class, 'kirimHasil']);

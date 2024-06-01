@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
                                 <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
-                                    class="logo_icon">
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
             <div class="page-content">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0">INFO TIM LOMBA</h4>
+                        <h4 class="mb-0">LOMBA {{ form.nama_lomba }}</h4>
                         <hr />
                         <form @submit.prevent="submit()">
                             <!-- <form @submit.prevent="submit(props.reglomba.id)"> -->
@@ -50,7 +50,7 @@
                                     <label class="jarak-input"><b>Instansi</b></label>
                                     <input type="text" class="form-control" v-model="form.reg_instansi">
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <label class="c-mb5-black"><b>Nama Lomba</b></label>
                                     <div class="col-12">
                                         <select class="form-select" id="inputProductType" v-model="form.reg_nama_lomba">
@@ -59,8 +59,8 @@
                                             </option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div> -->
+                                <div class=" col-md-6">
                                     <label class="jarak-input"><b>No WhatsApp</b></label>
                                     <input type="number" class="form-control c-mb8" v-model="form.reg_no_whatsapp">
                                 </div>
@@ -72,6 +72,8 @@
                                     <label for="formFile" class="form-label jarak-teks12"><b>Bukti
                                             Pembayaran</b></label>
                                     <input class="form-control" type="file" id="formFile" v-on:change="onFileChange">
+                                    <p class="keterangan-foto f-italic">Max file size: 2MB (500 x 500 px)</p>
+                                    <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                 </div>
                             </div>
                             <div class="btn-posisi">
@@ -99,6 +101,7 @@ const props = defineProps({
     user: Object,
     reglomba: Object,
     lombas: Object,
+    lomba: Object,
     userId: Number
 })
 
@@ -110,7 +113,9 @@ const form = useForm({
     reg_no_whatsapp: props.reglomba?.reg_no_whatsapp,
     reg_email: props.reglomba?.reg_email,
     reg_bukti_pembayaran: props.reglomba?.reg_bukti_pembayaran,
-    reg_peserta_id: props.userId
+    reg_peserta_id: props.userId,
+
+    nama_lomba: props.lomba.nama_lomba,
 })
 
 const selectedFile = ref(null)

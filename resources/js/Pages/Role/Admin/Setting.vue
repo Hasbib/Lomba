@@ -6,11 +6,10 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getImageUrl(setting.logo_1)" class="logo-icon" alt="logo icon">
+                        <img id="logo-img" :src="getImageUrl(setting.logo_1)" :alt="setting.nama_event" class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">

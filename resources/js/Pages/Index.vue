@@ -3,7 +3,7 @@
         <nav class="navbar navbar-expand-lg main_menu">
             <div class="container" v-for="setting in settings">
                 <a class="navbar-brand" href="#">
-                    <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="img-fluid w-100">
+                    <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="lg-index">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -172,9 +172,6 @@
                 </div>
             </div>
         </section>
-        <!--=================================
-       EVENT END
-   ==================================-->
 
         <section id="sponsor-section" class="tf__categories mt_95">
             <div class="container">

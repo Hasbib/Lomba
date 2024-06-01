@@ -334,23 +334,6 @@ class PagesController extends Controller
         ]);
     }
 
-
-    public function dashboardjuri()
-    {
-        $username = session('username');
-        return Inertia::render('Role/Juri/Dashboardjuri', [
-            'username' => $username,
-
-            'settings' => Setting::all()->map(function ($setting) {
-                return [
-                    'id' => $setting->id,
-                    'nama_event' => $setting->nama_event,
-                    'logo_1' => $setting->logo_1,
-                ];
-            })
-        ]);
-
-    }
     public function rangkingjuri()
     {
         $username = session('username');

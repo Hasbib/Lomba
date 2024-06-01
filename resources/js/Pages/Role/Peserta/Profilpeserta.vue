@@ -6,11 +6,11 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img id="logo-img" :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                            class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -114,9 +114,13 @@
                                                         width="190" height="150">
                                                 </div>
                                                 <div>
-                                                    <input class="form-control form-control-sm btn-profil2"
+                                                    <input class="form-control form-control-sm btn-profil2 img-profil"
                                                         id="formFileSm" type="file" @input="handleFileChange">
                                                 </div>
+                                            </div>
+                                            <div class="c-mtk">
+                                                <p class="keterangan-foto f-italic">Max file size: 2MB</p>
+                                                <p class="keterangan-foto f-italic">Format: .jpg, .png, .jpeg</p>
                                             </div>
                                         </div>
                                     </div>

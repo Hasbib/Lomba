@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
                                 <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
-                                    class="logo_icon">
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -59,7 +59,15 @@
                                 <div>
                                     <label for="formFile" class="form-label jarak-teks12"><b>File</b></label>
                                     <input class="form-control" type="file" id="formFile" v-on:change="onFileChange">
+                                    <p class="keterangan-foto f-italic">Max file size: 20MB</p>
+                                    <p class="keterangan-foto f-italic">Format:????</p>
                                 </div>
+                                <div>
+                                    <label for="formFile" class="form-label jarak-teks12"><b>Surat</b></label>
+                                    <input class="form-control" type="file" name="file">
+                                </div>
+                                <p class="keterangan-foto f-italic">Max file size: 10MB</p>
+                                <p class="keterangan-foto f-italic">Format: .pdf</p>
                             </div>
                             <div class="btn-posisi">
                                 <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>

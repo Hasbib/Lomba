@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -56,13 +57,10 @@
                         </div>
                         <button class="btn btn-primary crud-width-150 btn-petugas btn-verifikasi posisi-ver"
                             onclick="window.location.href='/tim-petugas'">Verifikasi</button>
+                        <!-- <label class="keterangan-lolos posisi-ver2">VERIFIKASI SUKSES</label> -->
                         <hr class="posisi-hr" />
                         <div class="row">
                             <div class="col-md-3 c-mb10">
-                                <label class="c-mb5-black"><b>NAMA TIM</b></label>
-                                <div class="c-mb20">{{ form.reg_nama_tim }}</div>
-                            </div>
-                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>INSTASNSI</b></label>
                                 <div class="c-mb20">{{ form.reg_instansi }}</div>
                             </div>
@@ -70,15 +68,15 @@
                                 <label class="c-mb5-black"><b>LOMBA</b></label>
                                 <div class="c-mb20">{{ form.reg_nama_lomba }}</div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>EMAIL</b></label>
                                 <div class="c-mb20">{{ form.reg_email }}</div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label class="c-mb5-black"><b>NO WHATSAPP</b></label>
                                 <div class="c-mb20">{{ form.reg_no_whatsapp }}</div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label class="c-mb5-black"><b>STATUS</b></label>
                                 <div class="c-mb20">Verified</div>
                             </div>
@@ -112,24 +110,28 @@
                         </div>
                         <div class="card card-height400">
                             <div class="card-body p-4 text-center">
-                                <h6 class="sub-judul-tim">PENGUMPULAN KARYA</h6>
+                                <h6 class="sub-judul-tim"><b>KARYA TIM</b></h6>
                                 <div class="row">
-                                    <div class="col-md-3 label-left">
+                                    <div class="col-md-4 label-left">
                                         <label class="jarak-teks05"><b>JUDUL</b></label>
                                         <div class="c-mb20">{{ form.sub_judul }}</div>
                                     </div>
                                     <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
-                                        <div class="c-mb20">{{ form.sub_deskripsi }}</div>
+                                        <label class="jarak-teks05"><b>DOKUMEN</b></label>
+                                        <div class="data-tim"><a>Lihat Dokumen</a></div>
                                     </div>
                                     <div class="col-md-3 label-left">
                                         <label class="jarak-teks05"><b>File</b></label>
                                         <div class="c-mb20"><a :href="getRegistrasiImageUrl(form.sub_file)">Lihat
                                                 File</a></div>
                                     </div>
-                                    <div class="col-md-3 label-left">
-                                        <label class="jarak-teks05"><b>LINK VIDEO</b></label>
-                                        <div class="data-tim"><a :href="form.sub_link">Link Video</a></div>
+                                    <div class="col-md-2 label-left">
+                                        <label class="jarak-teks05"><b>LINK</b></label>
+                                        <div class="data-tim"><a :href="form.sub_link">Buka Link</a></div>
+                                    </div>
+                                    <div class="label-left">
+                                        <label class="jarak-teks05"><b>DESKRIPSI</b></label>
+                                        <div class="c-mb20">{{ form.sub_deskripsi }}</div>
                                     </div>
                                 </div>
                             </div>

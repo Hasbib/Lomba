@@ -6,11 +6,11 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img id="logo-img" :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                            class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -96,9 +96,9 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-teks1">Daftar lomba {{ form.nama_lomba }}</h4>
+                        <h4 class="mb-0 jarak-teks1">DAFTAR LOMBA {{ form.nama_lomba }}</h4>
                         <div class="card">
-                            <h5 class="p-3">Info Tim Lomba</h5>
+                            <h5 class="p-3">INFO TIM LOMBA</h5>
                             <hr class="garis">
                             <div class="row">
                                 <div class="col-md-2 jarak-daftar-lomba">
@@ -122,18 +122,13 @@
                                     <div class="data-tim">{{ form.reg_no_whatsapp }}</div>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba">
-                                    <label class="c-mb5-black"><b>STATUS</b></label>
-                                    <div class="data-tim">Verified</div>
-                                </div>
-                                <div class="col-md-2 jarak-daftar-lomba">
                                     <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
                                     <div class="data-tim c-mb-70"> <a
                                             :href="getRegistrasiImageUrl(form.reg_bukti_pembayaran)">Bukti
                                             Pembayaran</a></div>
                                 </div>
-
                                 <div>
-                                    <button onclick="window.location.href='/data-tim'"
+                                    <button @click.prevent="daftar(lomba.id)"
                                         class="btn btn-primary radius-5 isi-data">Isi Data</button>
                                 </div>
                             </div>
@@ -279,6 +274,7 @@
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/inertia-vue3';
 import { ref, watch, onMounted } from 'vue';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const props = defineProps({
@@ -314,6 +310,10 @@ const form = useForm({
 
 function logout() {
     router.post('/logout');
+}
+
+function daftar(lomba_id) {
+    router.get('/' + lomba_id + '/daftar-lomba/data-tim')
 }
 
 const isPopupVisible = ref(false);

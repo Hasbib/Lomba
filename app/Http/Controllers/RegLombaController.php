@@ -43,7 +43,6 @@ class RegLombaController extends Controller
                 'lomba' => [
                     'id' => $lomba->id,
                     'nama_lomba' => $lomba->nama_lomba,
-                    'deskripsi' => $lomba->deskripsi,
                 ],
             ]);
         } else {
@@ -124,7 +123,7 @@ class RegLombaController extends Controller
         }
     }
 
-    public function datatim()
+    public function datatim(Lomba $lomba)
     {
         $user = User::findOrFail(session('id'));
         $regLomba = RegLomba::where('reg_peserta_id', $user->id)->whereStatus('draft')->first();
@@ -148,6 +147,10 @@ class RegLombaController extends Controller
                         'nama_lomba' => $lomba->nama_lomba,
                     ];
                 }),
+                'lomba' => [
+                    'id' => $lomba->id,
+                    'nama_lomba' => $lomba->nama_lomba,
+                ],
             ]);
         } else {
             return;

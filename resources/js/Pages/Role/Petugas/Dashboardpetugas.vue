@@ -6,11 +6,11 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img id="logo-img" :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                            class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -100,12 +100,12 @@
         <div class="page-wrapper">
             <div class="page-content">
                 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
-                    <div class="col">
+                    <div class="col mr-k10">
                         <div class="card radius-10 border-start border-0 border-3 border-info">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>1265 Partisipan</b></h5>
+                                        <h6 class="mb-0"><b>1265 Partisipan</b></h6>
                                         <br>
                                         <p class="mb-0 font-13">1250 Verified</p>
                                     </div>
@@ -113,12 +113,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col mr-k10">
                         <div class="card radius-10 border-start border-0 border-3 border-success">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>987 Tim</b></h5>
+                                        <h6 class="mb-0"><b>987 Tim</b></h6>
                                         <br>
                                         <p class="mb-0 font-13">Semua Lomba</p>
                                     </div>
@@ -126,12 +126,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col mr-k10">
                         <div class="card radius-10 border-start border-0 border-3 border-danger">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>50 Pesan</b></h5>
+                                        <h6 class="mb-0"><b>50 Pesan</b></h6>
                                         <br>
                                         <p class="mb-0 font-13">5 Pesan Belum di Buka</p>
                                     </div>
@@ -139,12 +139,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="col csize">
                         <div class="card radius-10 border-start border-0 border-3 border-warning">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <h5 class="mb-0"><b>30 Akun Adminis</b></h5>
+                                        <h6 class="mb-0"><b>30 Akun Administrator</b></h6>
                                         <br>
                                         <p class="mb-0 font-13">1 Akun Admin</p>
                                     </div>

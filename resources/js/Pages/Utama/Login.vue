@@ -108,7 +108,7 @@ async function submit() {
 				nextRoute = 'dashboard-petugas'
 				break;
 			case 'juri':
-				nextRoute = 'dashboard-juri'
+				nextRoute = 'lomba-juri'
 				break;
 			case 'peserta':
 				nextRoute = 'overview'

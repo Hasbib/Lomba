@@ -6,21 +6,14 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img id="logo-img" :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                            class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
-                <li>
-                    <a href="/dashboard-juri">
-                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                        </div>
-                        <div class="menu-title">Dashboard</div>
-                    </a>
-                </li>
                 <li>
                     <a href="/lomba-juri">
                         <div class="parent-icon"><i class="bx bx-award"></i>
@@ -108,10 +101,11 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id">ID</th>
-                                        <th class="crud-width130">Nama Tim</th>
+                                        <th class="crud-width120">Nama Tim</th>
                                         <th class="crud-width-150">Judul</th>
+                                        <th class="crud-width120">Instansi</th>
                                         <th class="crud-width-50">Status</th>
-                                        <th class="crud-width-150">Aksi</th>
+                                        <th class="crud-width-90">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -119,6 +113,7 @@
                                         <td>{{ item.id }}</td>
                                         <td>{{ item.reg_nama_tim }}</td>
                                         <td>{{ item.sub_judul }}</td>
+                                        <td>UNS</td>
                                         <td>Belum Nilai</td>
                                         <td class="btn-crud">
                                             <button class="btn btn-secondary" @click.prevent="detail(item.id)">
@@ -127,9 +122,9 @@
                                             <button class="btn btn-primary"
                                                 onclick="window.location.href='/lomba-juri/tabel-lomba/edit-nilai'"><i
                                                     class="bi bi-pencil-square"></i></button>
-                                            <button class="btn btn-primary"
+                                            <!-- <button class="btn btn-primary"
                                                 onclick="window.location.href='/lomba-juri/tabel-lomba/nilai'">Beri
-                                                Nilai</button>
+                                                Nilai</button> -->
                                         </td>
                                     </tr>
                                 </tbody>

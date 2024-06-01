@@ -9,7 +9,7 @@
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
                                 <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
-                                    class="logo-icon">
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>

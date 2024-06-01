@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left">
                             <a href="/">
-                                <img src="../../../../../public/bootstrap/images/logocb.png" alt="Logo">
+                                <img src="../../../../../public/bootstrap/images/logocb.png" alt="Logo"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>

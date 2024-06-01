@@ -6,21 +6,14 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
+                        <img id="logo-img" :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                            class="lg2">
                     </a>
                 </div>
-                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
-                </div>
+                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
-                <li>
-                    <a href="/dashboard-juri">
-                        <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                        </div>
-                        <div class="menu-title">Dashboard</div>
-                    </a>
-                </li>
                 <li>
                     <a href="/lomba-juri">
                         <div class="parent-icon"><i class="bx bx-award"></i>
@@ -90,13 +83,13 @@
                         <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
                             <div class="col" v-for="lomba in lombas">
-                                <div class="card radius-15 card-overview">
+                                <div class="card radius-15 card-overview"><span class=" pcount">2/5</span>
                                     <img :src="getLombaImageUrl(lomba.gambar)" :alt="lomba.nama_lomba"
                                         class="border-radius">
                                     <label class="judul-overview">{{ lomba.nama_lomba }}</label>
                                     <button class="btn btn-primary btn-landing-page2"
-                                        @click.prevent="detail(lomba.nama_lomba)">{{ lomba.nama_lomba }}
-                                    </button>
+                                        @click.prevent="detail(lomba.nama_lomba)">Lihat
+                                        Karya</button>
                                 </div>
                             </div>
                         </div>

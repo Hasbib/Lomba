@@ -8,7 +8,8 @@
                     <div class="navbar-tambah">
                         <div class="navbar-left" v-for="setting in settings">
                             <a href="/">
-                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event">
+                                <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
+                                    style="width: 100px; margin-left: -15px;">
                             </a>
                         </div>
                     </div>
@@ -42,38 +43,16 @@
                                 <label class="c-mb5-black"><b>1. Kreativitas</b></label>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Nilai</b></label>
+                                <label class="c-mb5-black">Nilai (Bobot Nilai 30% ) => static</label>
                                 <input type="namalomba" class="form-control c-mb20">
                             </div>
                             <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>2. Estetika dan Komposisi</b></label>
                             </div>
                             <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Nilai</b></label>
+                                <label class="c-mb5-black">Nilai (Bobot Nilai 30% ) => static</label>
                                 <input type="namalomba" class="form-control c-mb20">
                             </div>
-                            <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>3. Kriteria 3</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Nilai</b></label>
-                                <input type="namalomba" class="form-control c-mb20">
-                            </div>
-                            <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>4. Kriteria 4</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Nilai</b></label>
-                                <input type="namalomba" class="form-control c-mb20">
-                            </div>
-                            <div class="col-md-6 c-mb10">
-                                <label class="c-mb5-black"><b>4. Kriteria 5</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="c-mb5-black"><b>Nilai</b></label>
-                                <input type="namalomba" class="form-control c-mb20">
-                            </div>
-
                         </div>
                         <div class="btn-posisi">
                             <button class="btn btn-primary button-tabel-right"
