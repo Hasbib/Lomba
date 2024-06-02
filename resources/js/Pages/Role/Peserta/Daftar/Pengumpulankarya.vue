@@ -58,7 +58,13 @@
                                 </div>
                                 <div>
                                     <label for="formFile" class="form-label jarak-teks12"><b>File</b></label>
-                                    <input class="form-control" type="file" id="formFile" v-on:change="onFileChange">
+                                    <input class="form-control" type="file" id="formFile"
+                                        v-on:change="onFileChange($event, 'sub_file')">
+                                </div>
+                                <div>
+                                    <label for="formFile" class="form-label jarak-teks12"><b>Surat</b></label>
+                                    <input class="form-control" type="file" id="formFile"
+                                        v-on:change="onFileChange($event, 'sub_surat')">
                                 </div>
                             </div>
                             <div class="btn-posisi">
@@ -77,7 +83,7 @@
 
 
 <script setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/inertia-vue3';
 
@@ -94,10 +100,14 @@ const form = useForm({
     sub_deskripsi: props.submission?.sub_deskripsi,
     sub_link: props.submission?.sub_link,
     sub_file: props.submission?.sub_file,
+    sub_surat: props.submission?.sub_surat,
     sub_peserta_id: props.userId
 })
 
-const selectedFile = ref(null);
+const files = reactive({
+    sub_file: null,
+    sub_surat: null,
+})
 
 function submit() {
     const formData = new FormData();
@@ -105,16 +115,16 @@ function submit() {
     formData.append('sub_judul', form.sub_judul);
     formData.append('sub_deskripsi', form.sub_deskripsi);
     formData.append('sub_link', form.sub_link);
-    formData.append('sub_file', selectedFile.value);
+    formData.append('sub_file', files.sub_file);
+    formData.append('sub_surat', files.sub_surat);
     formData.append('sub_peserta_id', form.sub_peserta_id);
 
     router.post('/pengumpulan-karya', formData);
 }
 
-function onFileChange(event) {
-    selectedFile.value = event.target.files[0];
+function onFileChange(event, attributeName) {
+    files[attributeName] = event.target.files[0];
 }
-
 const getSettingImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };

@@ -240,6 +240,7 @@ class RegLombaController extends Controller
             if ($request->input('id') !== "undefined") {
                 $SUBmission = Submission::findOrFail($request->input('id'));
                 $oldImage = $SUBmission->sub_file;
+                $oldImage = $SUBmission->sub_surat;
                 $SUBmission->update([
                     'sub_judul' => $request->input('sub_judul'),
                     'sub_deskripsi' => $request->input('sub_deskripsi'),
@@ -259,6 +260,19 @@ class RegLombaController extends Controller
                     $SUBmission->sub_file = $oldImage;
                     $SUBmission->save();
                 }
+                if ($request->hasFile('sub_surat')) {
+                    $image = $request->file('sub_surat');
+                    $imageName = $image->getClientOriginalName();
+                    $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
+                    if ($oldImage) {
+                        Storage::delete('public/uploads/peserta/registrasi/' . $oldImage);
+                    }
+                    $SUBmission->sub_surat = $imageName;
+                    $SUBmission->save();
+                } else {
+                    $SUBmission->sub_surat = $oldImage;
+                    $SUBmission->save();
+                }
                 $message = 'Data tim berhasil diupdate';
             }
         } else {
@@ -268,6 +282,12 @@ class RegLombaController extends Controller
                 $imageName = $image->getClientOriginalName();
                 $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
                 $inputData['sub_file'] = $imageName;
+            }
+            if ($request->hasFile('sub_surat')) {
+                $image = $request->file('sub_surat');
+                $imageName = $image->getClientOriginalName();
+                $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
+                $inputData['sub_surat'] = $imageName;
             }
             Submission::create($inputData);
             $message = 'Data tim berhasil diisi';
