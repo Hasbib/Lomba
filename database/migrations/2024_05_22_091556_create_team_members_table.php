@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->foreignId('team_peserta_id')->constrained('users')->onDelete('cascade');
             $table->string('team_member_name');
             $table->string('team_member_nik');
-            $table->string('team_member_prodi');
+            $table->string('team_member_instansi');
             $table->string('team_member_role');
             $table->string('team_member_picture');
             $table->timestamps();

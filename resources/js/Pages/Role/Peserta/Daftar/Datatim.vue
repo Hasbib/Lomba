@@ -98,20 +98,23 @@ import Swal from 'sweetalert2';
 
 const props = defineProps({
     settings: Object,
-    user: Object,
+    // user: Object,
     reglomba: Object,
     lombas: Object,
     lomba: Object,
+    email: String,
+    whatsapp: String,
+    instansi: String,
     userId: Number
 })
 
 const form = useForm({
     reg_nama_tim: props.reglomba?.reg_nama_tim,
-    reg_instansi: props.reglomba?.reg_instansi,
+    reg_instansi: props.reglomba?.reg_instansi || props.instansi,
     // reg_nama_lomba: props.reglomba?.reg_nama_lomba,
     reg_nama_lomba: props.lombas.length > 0 ? props.lombas[0].nama_lomba : null,
-    reg_no_whatsapp: props.reglomba?.reg_no_whatsapp,
-    reg_email: props.reglomba?.reg_email,
+    reg_no_whatsapp: props.reglomba?.reg_no_whatsapp || props.whatsapp,
+    reg_email: props.reglomba?.reg_email || props.email,
     reg_bukti_pembayaran: props.reglomba?.reg_bukti_pembayaran,
     reg_peserta_id: props.userId,
 
@@ -130,6 +133,7 @@ function submit() {
     formData.append('reg_email', form.reg_email);
     formData.append('reg_bukti_pembayaran', selectedFile.value);
     formData.append('reg_peserta_id', form.reg_peserta_id);
+    formData.append('lomba_id', props.lomba?.id);
 
     router.post('/daftar-lomba', formData);
     // UPDATE DATA

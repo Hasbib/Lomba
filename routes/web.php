@@ -127,6 +127,7 @@ Route::middleware(['admin'])->group(function () {
 
 // juri hanya bisa mengakses
 Route::middleware(['juri'])->group(function () {
+    // Route::get('/dashboard-juri', [PagesController::class, 'dashboardjuri']);
     Route::get('/lomba-juri', [PagesController::class, 'lombajuri'])->name('dashboardjuri');
     Route::get('/lomba-juri/{lomba}/tabel-lomba', [PagesController::class, 'tabellomba']);
     Route::get('/rangking-juri', [PagesController::class, 'rangkingjuri']);

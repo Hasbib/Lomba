@@ -165,10 +165,10 @@
                                             </div>
                                             <div class="row mb-3">
                                                 <div class="col-sm-3">
-                                                    <h6 class="mb-0">Prodi</h6>
+                                                    <h6 class="mb-0">Instansi</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" v-model="form.prodi" />
+                                                    <input type="text" class="form-control" v-model="form.instansi" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -215,7 +215,7 @@ const form = useForm({
     username: props.user.username,
     email: props.user.email,
     nik: props.user.nik,
-    prodi: props.user.prodi,
+    instansi: props.user.instansi,
     kontak: props.user.kontak,
     images: props.user.images,
 })

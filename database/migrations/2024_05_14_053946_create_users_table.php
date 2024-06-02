@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'petugas', 'juri', 'peserta']);
-            $table->string('prodi')->nullable();
+            $table->string('instansi')->nullable();
             $table->string('kontak')->nullable();
             $table->string('nik')->nullable()->unique();
             $table->string('images')->nullable();
