@@ -15,7 +15,7 @@ class TeamMember extends Model
         'team_peserta_id',
         'team_member_name',
         'team_member_nik',
-        'team_member_prodi',
+        'team_member_instansi',
         'team_member_role',
         'team_member_picture'
     ];

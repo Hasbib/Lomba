@@ -567,7 +567,7 @@ class PagesController extends Controller
                     'name' => $user->name,
                     'username' => $user->username,
                     'email' => $user->email,
-                    'prodi' => $user->prodi,
+                    'instansi' => $user->instansi,
                     'status' => $user->status,
                     'created_at' => $user->created_at->format('Y-m-d')
                 ];

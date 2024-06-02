@@ -72,7 +72,7 @@ class RegLombaController extends Controller
             'team_peserta_id' => $teamId,
             'team_member_name' => $ketua['name'],
             'team_member_nik' => $ketua['nik'],
-            'team_member_prodi' => $ketua['prodi'],
+            'team_member_instansi' => $ketua['instansi'],
             'team_member_role' => $ketua['role'],
             'team_member_picture' => $ketuaImagePath
         ]);
@@ -92,7 +92,7 @@ class RegLombaController extends Controller
                 'team_peserta_id' => $teamId,
                 'team_member_name' => $member['team_member_name'],
                 'team_member_nik' => $member['team_member_nik'],
-                'team_member_prodi' => $member['team_member_prodi'],
+                'team_member_instansi' => $member['team_member_instansi'],
                 'team_member_role' => $member['role'],
                 'team_member_picture' => $memberImagePath
             ]);

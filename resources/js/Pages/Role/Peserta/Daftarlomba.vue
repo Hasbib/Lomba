@@ -162,7 +162,7 @@
                                             <h6><b>{{ form.name }}</b></h6>
                                             <br>
                                             <div class="posisi-mb7">{{ form.nik }}</div>
-                                            <div class="text-muted">{{ form.prodi }}</div>
+                                            <div class="text-muted">{{ form.instansi }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -185,7 +185,7 @@
                                             <h6><b>{{ member.team_member_name }}</b></h6>
                                             <br>
                                             <div class="posisi-mb7">{{ member.team_member_nik }}</div>
-                                            <div class="text-muted">{{ member.team_member_prodi }}</div>
+                                            <div class="text-muted">{{ member.team_member_instansi }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -299,7 +299,7 @@ const props = defineProps({
 const form = useForm({
     name: props.user.name,
     nik: props.user.nik,
-    prodi: props.user.prodi,
+    instansi: props.user.instansi,
     images: props.user.images,
 
     reg_nama_tim: props.reglomba ? props.reglomba.reg_nama_tim : null,
@@ -372,7 +372,7 @@ function addMember() {
         const newMember = {
             team_member_name: selectedUser.value.name,
             team_member_nik: selectedUser.value.nik,
-            team_member_prodi: selectedUser.value.prodi,
+            team_member_instansi: selectedUser.value.instansi,
             team_member_picture: selectedUser.value.images,
         }
 
@@ -401,14 +401,14 @@ function saveTeamMembers() {
         ketua: {
             name: form.name,
             nik: form.nik,
-            prodi: form.prodi,
+            instansi: form.instansi,
             images: form.images,
             role: 'Ketua'
         },
         members: members.value.map((member, index) => ({
             team_member_name: member.team_member_name,
             team_member_nik: member.team_member_nik,
-            team_member_prodi: member.team_member_prodi,
+            team_member_instansi: member.team_member_instansi,
             team_member_picture: member.team_member_picture,
             role: `Anggota ${index + 1}`
         }))

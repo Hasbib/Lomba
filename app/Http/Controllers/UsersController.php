@@ -120,7 +120,7 @@ class UsersController extends Controller
                     'name' => $user->name,
                     'username' => $user->username,
                     'email' => $user->email,
-                    'prodi' => $user->prodi,
+                    'instansi' => $user->instansi,
                     'status' => $user->status,
                     'created_at' => $user->created_at->format('Y-m-d')
                 ];
@@ -165,7 +165,7 @@ class UsersController extends Controller
             'form.name' => 'required|max:225',
             'form.email' => 'required|max:225',
             'form.nik' => 'required|max:225',
-            'form.prodi' => 'required|max:225',
+            'form.instansi' => 'required|max:225',
             'form.kontak' => 'required|max:225',
         ];
 
@@ -190,7 +190,7 @@ class UsersController extends Controller
             $user->name === $validated['form']['name'] &&
             $user->email === $validated['form']['email'] &&
             $user->nik === $validated['form']['nik'] &&
-            $user->prodi === $validated['form']['prodi'] &&
+            $user->instansi === $validated['form']['instansi'] &&
             $user->kontak === $validated['form']['kontak'] &&
             $user->images === $validated['form']['images']
         ) {

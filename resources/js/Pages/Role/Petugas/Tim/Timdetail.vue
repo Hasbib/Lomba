@@ -105,7 +105,7 @@
                                         <h6><b>{{ member.team_member_name }}</b></h6>
                                         <br>
                                         <div class="posisi-mb7">{{ member.team_member_nik }}</div>
-                                        <div class="text-muted">{{ member.team_member_prodi }}</div>
+                                        <div class="text-muted">{{ member.team_member_instansi }}</div>
                                     </div>
                                 </div>
                             </div>

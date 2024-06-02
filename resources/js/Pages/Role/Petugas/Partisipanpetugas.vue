@@ -125,7 +125,7 @@
                                         <th>ID</th>
                                         <th>Nama</th>
                                         <th>Username</th>
-                                        <th>Prodi</th>
+                                        <th>Instansi</th>
                                         <th>Email</th>
                                         <th>Status</th>
                                         <th class="crud-width100">Tanggal</th>
@@ -136,7 +136,7 @@
                                         <td>{{ user.id }}</td>
                                         <td>{{ user.name }}</td>
                                         <td>{{ user.username }}</td>
-                                        <td>{{ user.prodi }}</td>
+                                        <td>{{ user.instansi }}</td>
                                         <td>{{ user.email }}</td>
                                         <td>{{ user.status }}</td>
                                         <td>{{ user.created_at }}</td>
