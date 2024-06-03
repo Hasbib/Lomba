@@ -108,8 +108,12 @@
                                     <img :src="getLombaImageUrl(lomba.gambar)" :alt="lomba.nama_lomba"
                                         class="border-radius">
                                     <label class="judul-overview">{{ lomba.nama_lomba }}</label>
-                                    <button @click.prevent="detail(lomba.id)"
-                                        class="btn btn-primary btn-landing-page2">Detail</button>
+                                    <div class="btn-posisi">
+                                        <button @click.prevent="detail(lomba.id)"
+                                            class="btn btn-primary btn-lomba">Detail</button>
+                                        <button class="btn btn-success button-lomba"
+                                            @click.prevent="daftar(lomba.id)">Daftar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -135,6 +139,9 @@ defineProps({
 
 function detail(id) {
     router.get('/detail/' + id)
+}
+function daftar(lomba_id) {
+    router.get('/' + lomba_id + '/daftar-lomba')
 }
 
 function logout() {

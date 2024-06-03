@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->text('sub_deskripsi');
             $table->string('sub_link');
             $table->string('sub_file');
-            $table->string('sub_surat');
             $table->timestamps();
         });
     }

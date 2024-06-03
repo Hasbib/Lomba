@@ -158,13 +158,13 @@ Route::middleware(['peserta', 'auth', 'verified'])->group(function () {
     Route::get('/notifikasi', [PagesController::class, 'notifikasipeserta']);
     Route::get('/report', [PagesController::class, 'reportpeserta']);
     Route::get('/detail-tim', [PagesController::class, 'detailtimreport']);
-    Route::get('/data-tim', [RegLombaController::class, 'datatim']);
-    Route::get('/daftar-lomba', [RegLombaController::class, 'daftarlomba'])->name('reglomba.index');
+    Route::get('/{lomba}/daftar-lomba/data-tim', [RegLombaController::class, 'datatim']);
+    Route::get('/{lomba}/daftar-lomba', [RegLombaController::class, 'daftarlomba'])->name('reglomba.index');
     Route::post('/daftar-lomba', [RegLombaController::class, 'store']);
     Route::put('/kirim-hasil', [RegLombaController::class, 'kirimHasil']);
     Route::post('/tambah-member', [RegLombaController::class, 'addmember']);
     Route::post('/pengumpulan-karya', [RegLombaController::class, 'kirim']);
-    Route::get('/pengumpulan-karya', [RegLombaController::class, 'pengumpulankarya']);
+    Route::get('/{lomba}/daftar-lomba/pengumpulan-karya', [RegLombaController::class, 'pengumpulankarya']);
 });
 
 Route::get('/search', [UsersController::class, 'search'])->name('users.search');

@@ -51,16 +51,6 @@
                                     <input type="text" class="form-control" v-model="form.reg_instansi">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="c-mb5-black"><b>Nama Lomba</b></label>
-                                    <div class="col-12">
-                                        <select class="form-select" id="inputProductType" v-model="form.reg_nama_lomba">
-                                            <option v-for="lomba in lombas" :key="lomba.id" :value="lomba.nama_lomba">
-                                                {{ lomba.nama_lomba }}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
                                     <label class="jarak-input"><b>No WhatsApp</b></label>
                                     <input type="number" class="form-control c-mb8" v-model="form.reg_no_whatsapp">
                                 </div>
@@ -96,9 +86,13 @@ import Swal from 'sweetalert2';
 
 const props = defineProps({
     settings: Object,
-    user: Object,
+    // user: Object,
     reglomba: Object,
     lombas: Object,
+    lomba: Object,
+    email: String,
+    whatsapp: String,
+    instansi: String,
     userId: Number
 })
 
@@ -120,11 +114,12 @@ function submit() {
     formData.append('id', props.reglomba?.id);
     formData.append('reg_nama_tim', form.reg_nama_tim);
     formData.append('reg_instansi', form.reg_instansi);
-    formData.append('reg_nama_lomba', form.reg_nama_lomba);
+    formData.append('reg_nama_lomba', props.lomba?.nama_lomba);
     formData.append('reg_no_whatsapp', form.reg_no_whatsapp);
     formData.append('reg_email', form.reg_email);
     formData.append('reg_bukti_pembayaran', selectedFile.value);
     formData.append('reg_peserta_id', form.reg_peserta_id);
+    formData.append('lomba_id', props.lomba?.id);
 
     router.post('/daftar-lomba', formData);
     // UPDATE DATA

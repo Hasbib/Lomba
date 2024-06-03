@@ -103,7 +103,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="mb-0 jarak-teks1">Daftar lomba</h4>
+                        <h4 class="mb-0 jarak-teks1">DAFTAR LOMBA {{ form.nama_lomba }}</h4>
                         <div class="card">
                             <h5 class="p-3">Info Tim Lomba</h5>
                             <hr class="garis">
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba">
                                     <label class="c-mb5-black"><b>LOMBA</b></label>
-                                    <div class="data-tim">{{ form.reg_nama_lomba }}</div>
+                                    <div class="data-tim">{{ form.nama_lomba }}</div>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba">
                                     <label class="c-mb5-black"><b>EMAIL</b></label>
@@ -129,18 +129,13 @@
                                     <div class="data-tim">{{ form.reg_no_whatsapp }}</div>
                                 </div>
                                 <div class="col-md-2 jarak-daftar-lomba">
-                                    <label class="c-mb5-black"><b>STATUS</b></label>
-                                    <div class="data-tim">Verified</div>
-                                </div>
-                                <div class="col-md-2 jarak-daftar-lomba">
                                     <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
                                     <div class="data-tim c-mb-70"> <a
                                             :href="getRegistrasiImageUrl(form.reg_bukti_pembayaran)">Bukti
                                             Pembayaran</a></div>
                                 </div>
-
                                 <div>
-                                    <button onclick="window.location.href='/data-tim'"
+                                    <button @click.prevent="daftar(lomba.id)"
                                         class="btn btn-primary radius-5 isi-data">Isi Data</button>
                                 </div>
                             </div>
@@ -264,8 +259,9 @@
                                         <div class="data-tim c-mb-70"><a :href="form.sub_link">Link Video</a></div>
                                     </div>
                                     <div>
-                                        <button onclick="window.location.href='/pengumpulan-karya'"
-                                            class="btn btn-primary radius-5 isi-data jarak-isi-data">Isi Data</button>
+                                        <button @click.prevent="karya(lomba.id)"
+                                            class="btn btn-primary radius-5 isi-data jarak-isi-data">Isi
+                                            Data</button>
                                     </div>
                                 </div>
                             </div>
@@ -286,6 +282,7 @@
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/inertia-vue3';
 import { ref, watch, onMounted } from 'vue';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const props = defineProps({
@@ -294,12 +291,13 @@ const props = defineProps({
     members: Object,
     reglomba: Object,
     submission: Object,
+    lomba: Object,
 })
 
 const form = useForm({
     name: props.user.name,
     nik: props.user.nik,
-    instansi: props.user.instansi,
+    prodi: props.user.prodi,
     images: props.user.images,
 
     reg_nama_tim: props.reglomba ? props.reglomba.reg_nama_tim : null,
@@ -314,10 +312,20 @@ const form = useForm({
     sub_deskripsi: props.submission ? props.submission.sub_deskripsi : null,
     sub_link: props.submission ? props.submission.sub_link : null,
     sub_file: props.submission ? props.submission.sub_file : null,
+
+    nama_lomba: props.lomba.nama_lomba,
 })
 
 function logout() {
     router.post('/logout');
+}
+
+function daftar(lomba_id) {
+    router.get('/' + lomba_id + '/daftar-lomba/data-tim')
+}
+
+function karya(lomba_id) {
+    router.get('/' + lomba_id + '/{lomba}/daftar-lomba/pengumpulan-karya')
 }
 
 const isPopupVisible = ref(false);

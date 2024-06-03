@@ -17,14 +17,16 @@ use Redirect;
 class RegLombaController extends Controller
 {
     //
-    public function daftarlomba(User $user)
+    public function daftarlomba(User $user, Lomba $lomba)
     {
         $user = User::with('teamMembers')->findOrFail(session('id'));
 
         if ($user) {
             $username = session('username');
             $name = session('name');
-            $regLomba = RegLomba::where('reg_peserta_id', $user->id)->whereStatus('draft')->first();
+            $regLomba = RegLomba::where('reg_peserta_id', $user->id)
+                ->where('reg_nama_lomba', $lomba->nama_lomba)
+                ->whereStatus('draft')->first();
             $submission = Submission::where('sub_peserta_id', $user->id)->whereStatus('draft')->first();
             return Inertia::render('Role/Peserta/Daftarlomba', [
                 'user' => $user,
@@ -40,6 +42,10 @@ class RegLombaController extends Controller
                         'logo_1' => $setting->logo_1,
                     ];
                 }),
+                'lomba' => [
+                    'id' => $lomba->id,
+                    'nama_lomba' => $lomba->nama_lomba,
+                ],
             ]);
         } else {
             return;
@@ -119,17 +125,21 @@ class RegLombaController extends Controller
         }
     }
 
-    public function datatim()
+    public function datatim(Lomba $lomba)
     {
         $user = User::findOrFail(session('id'));
-        $regLomba = RegLomba::where('reg_peserta_id', $user->id)->whereStatus('draft')->first();
+        $regLomba = RegLomba::where('reg_peserta_id', $user->id)
+            ->where('reg_nama_lomba', $lomba->nama_lomba)
+            ->whereStatus('draft')->first();
         if ($user) {
             return Inertia::render('Role/Peserta/Daftar/Datatim', [
                 'username' => $user->username,
                 'name' => $user->name,
                 'userId' => $user->id,
                 'reglomba' => $regLomba,
-
+                'email' => $user->email,
+                'whatsapp' => $user->kontak,
+                'instansi' => $user->instansi,
                 'settings' => Setting::all()->map(function ($setting) {
                     return [
                         'id' => $setting->id,
@@ -143,6 +153,10 @@ class RegLombaController extends Controller
                         'nama_lomba' => $lomba->nama_lomba,
                     ];
                 }),
+                'lomba' => [
+                    'id' => $lomba->id,
+                    'nama_lomba' => $lomba->nama_lomba,
+                ],
             ]);
         } else {
             return;
@@ -151,25 +165,7 @@ class RegLombaController extends Controller
 
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'reg_nama_tim' => 'required|max:50',
-        //     'reg_instansi' => 'required|max:50',
-        //     'reg_nama_lomba' => 'required|exists:lombas,nama_lomba',
-        //     'reg_no_whatsapp' => 'required|max:50',
-        //     'reg_email' => 'required|max:50',
-        //     'reg_bukti_pembayaran' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        //     'reg_peserta_id' => 'required|exists:users,id',
-        // ]);
-        // if ($request->hasFile('reg_bukti_pembayaran')) {
-        //     $image = $request->file('reg_bukti_pembayaran');
-        //     $imageName = $image->getClientOriginalName();
-        //     $imagePath = $image->storeAs('public/uploads', $imageName);
-        //     $validated['reg_bukti_pembayaran'] = $imageName;
-        // }
-        // RegLomba::create($validated);
-        // return Redirect::route('reglomba.index')->with('message', 'Data tim berhasil di isi');
-
-
+        $lomba = Lomba::findOrFail($request->input('lomba_id'));
         if ($request->input('id') !== "undefined") {
             if ($request->input('id') !== "undefined") {
                 $regLomba = RegLomba::findOrFail($request->input('id'));
@@ -177,7 +173,8 @@ class RegLombaController extends Controller
                 $regLomba->update([
                     'reg_nama_tim' => $request->input('reg_nama_tim'),
                     'reg_instansi' => $request->input('reg_instansi'),
-                    'reg_nama_lomba' => $request->input('reg_nama_lomba'),
+                    'reg_nama_lomba' => $lomba->nama_lomba
+                ], [
                     'reg_no_whatsapp' => $request->input('reg_no_whatsapp'),
                     'reg_email' => $request->input('reg_email'),
                 ]);
@@ -208,10 +205,10 @@ class RegLombaController extends Controller
             RegLomba::create($inputData);
             $message = 'Data tim berhasil diisi';
         }
-        return Redirect::route('reglomba.index')->with('message', $message);
+        return Redirect::route('reglomba.index', ['lomba' => $lomba->id])->with('message', $message);
     }
 
-    public function pengumpulankarya()
+    public function pengumpulankarya(Lomba $lomba)
     {
         $user = User::findOrFail(session('id'));
         $SUBmission = Submission::where('sub_peserta_id', $user->id)->whereStatus('draft')->first();
@@ -229,6 +226,10 @@ class RegLombaController extends Controller
                         'logo_1' => $setting->logo_1,
                     ];
                 }),
+                'lomba' => [
+                    'id' => $lomba->id,
+                    'nama_lomba' => $lomba->nama_lomba,
+                ],
             ]);
         } else {
             return;
@@ -240,7 +241,6 @@ class RegLombaController extends Controller
             if ($request->input('id') !== "undefined") {
                 $SUBmission = Submission::findOrFail($request->input('id'));
                 $oldImage = $SUBmission->sub_file;
-                $oldImage = $SUBmission->sub_surat;
                 $SUBmission->update([
                     'sub_judul' => $request->input('sub_judul'),
                     'sub_deskripsi' => $request->input('sub_deskripsi'),
@@ -260,19 +260,6 @@ class RegLombaController extends Controller
                     $SUBmission->sub_file = $oldImage;
                     $SUBmission->save();
                 }
-                if ($request->hasFile('sub_surat')) {
-                    $image = $request->file('sub_surat');
-                    $imageName = $image->getClientOriginalName();
-                    $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
-                    if ($oldImage) {
-                        Storage::delete('public/uploads/peserta/registrasi/' . $oldImage);
-                    }
-                    $SUBmission->sub_surat = $imageName;
-                    $SUBmission->save();
-                } else {
-                    $SUBmission->sub_surat = $oldImage;
-                    $SUBmission->save();
-                }
                 $message = 'Data tim berhasil diupdate';
             }
         } else {
@@ -282,12 +269,6 @@ class RegLombaController extends Controller
                 $imageName = $image->getClientOriginalName();
                 $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
                 $inputData['sub_file'] = $imageName;
-            }
-            if ($request->hasFile('sub_surat')) {
-                $image = $request->file('sub_surat');
-                $imageName = $image->getClientOriginalName();
-                $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
-                $inputData['sub_surat'] = $imageName;
             }
             Submission::create($inputData);
             $message = 'Data tim berhasil diisi';
