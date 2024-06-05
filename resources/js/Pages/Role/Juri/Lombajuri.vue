@@ -84,12 +84,10 @@
         <!--start page wrapper -->
         <div class="page-wrapper">
             <div class="page-content">
-                <!--breadcrumb-->
                 <div class="tf__activities_slider_area">
                     <div class="container">
-                        <!--breadcrumb-->
                         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                            <div class="col" v-for="lomba in lombas">
+                            <div class="col" v-for="lomba in lombas" :key="lomba.id">
                                 <div class="card radius-15 card-overview">
                                     <img :src="getLombaImageUrl(lomba.gambar)" :alt="lomba.nama_lomba"
                                         class="border-radius">
@@ -100,10 +98,8 @@
                                 </div>
                             </div>
                         </div>
-                        <!--end row-->
                     </div>
                 </div>
-                <!--end row-->
             </div>
         </div>
     </div>
@@ -113,8 +109,9 @@
 import { router } from '@inertiajs/vue3'
 
 defineProps({
-    settings: Object,
-    lombas: Object
+    settings: Array,
+    lombas: Array,
+    username: String,
 })
 
 function logout() {
@@ -122,11 +119,13 @@ function logout() {
 }
 
 function detail(nama_lomba) {
-    router.get('/lomba-juri/' + nama_lomba + '/tabel-lomba')
+    router.get('/lomba-juri/' + nama_lomba + '/tabel-lomba');
 }
+
 const getLombaImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/admin/lomba/${imageName}` : '';
 };
+
 const getSettingImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';
 };

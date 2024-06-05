@@ -91,7 +91,6 @@
                                                     kriteria.name }}</label>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="btn-posisi">
