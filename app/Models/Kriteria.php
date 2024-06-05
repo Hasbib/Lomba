@@ -13,7 +13,8 @@ class Kriteria extends Model
 
     protected $fillable = [
         'id',
-        'name'
+        'name',
+        'bobot'
     ];
 
     public function lombas()

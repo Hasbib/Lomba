@@ -44,6 +44,10 @@
                                 <label class="c-mb5-black"><b>NAMA KRITERIA</b></label>
                                 <div class="data-tim">{{ form.name }}</div>
                             </div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>BOBOT</b></label>
+                                <div class="data-tim">{{ form.bobot }}</div>
+                            </div>
                         </div>
                         <div class="btn-posisi">
                             <button class="btn btn-danger btn-kembali"
@@ -66,7 +70,8 @@ const props = defineProps({
 })
 
 const form = useForm({
-    name: props.kriteria.name
+    name: props.kriteria.name,
+    bobot: props.kriteria.bobot
 })
 const getSettingImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/admin/setting/${imageName}` : '';

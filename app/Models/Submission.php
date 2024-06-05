@@ -17,7 +17,6 @@ class Submission extends Model
         'sub_deskripsi',
         'sub_link',
         'sub_file',
-        'sub_surat'
     ];
 
     public function peserta()

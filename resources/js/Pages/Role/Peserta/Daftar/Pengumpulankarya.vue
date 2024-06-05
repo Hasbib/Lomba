@@ -77,7 +77,7 @@
 
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/inertia-vue3';
 
@@ -86,7 +86,6 @@ const props = defineProps({
     user: Object,
     submission: Object,
     lombas: Object,
-    lomba: Object,
     userId: Number
 })
 
@@ -106,7 +105,6 @@ function submit() {
     formData.append('sub_link', form.sub_link);
     formData.append('sub_file', selectedFile.value);
     formData.append('sub_peserta_id', form.sub_peserta_id);
-    formData.append('lomba_id', props.lomba?.id);
 
     router.post('/pengumpulan-karya', formData);
 }

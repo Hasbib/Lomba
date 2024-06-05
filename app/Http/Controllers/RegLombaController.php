@@ -208,10 +208,11 @@ class RegLombaController extends Controller
         return Redirect::route('reglomba.index', ['lomba' => $lomba->id])->with('message', $message);
     }
 
-    public function pengumpulankarya(Lomba $lomba)
+    public function pengumpulankarya()
     {
         $user = User::findOrFail(session('id'));
-        $SUBmission = Submission::where('sub_peserta_id', $user->id)->whereStatus('draft')->first();
+        $SUBmission = Submission::where('sub_peserta_id', $user->id)
+            ->whereStatus('draft')->first();
         if ($user) {
             return Inertia::render('Role/Peserta/Daftar/Pengumpulankarya', [
                 'username' => $user->username,
@@ -226,10 +227,6 @@ class RegLombaController extends Controller
                         'logo_1' => $setting->logo_1,
                     ];
                 }),
-                'lomba' => [
-                    'id' => $lomba->id,
-                    'nama_lomba' => $lomba->nama_lomba,
-                ],
             ]);
         } else {
             return;
@@ -237,11 +234,14 @@ class RegLombaController extends Controller
     }
     public function kirim(Request $request)
     {
+        $regislomba = RegLomba::findOrFail($request->input('reglomba_id'));
         if ($request->input('id') !== "undefined") {
             if ($request->input('id') !== "undefined") {
                 $SUBmission = Submission::findOrFail($request->input('id'));
                 $oldImage = $SUBmission->sub_file;
                 $SUBmission->update([
+                    'sub_peserta_id' => $regislomba->id
+                ], [
                     'sub_judul' => $request->input('sub_judul'),
                     'sub_deskripsi' => $request->input('sub_deskripsi'),
                     'sub_link' => $request->input('sub_link'),

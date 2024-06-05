@@ -36,7 +36,8 @@ class KriteriaController extends Controller
             'kriterias' => Kriteria::all()->map(function ($kriteria) {
                 return [
                     'id' => $kriteria->id,
-                    'name' => $kriteria->name
+                    'name' => $kriteria->name,
+                    'bobot' => (int) $kriteria->bobot . '%'
                 ];
             })
         ]);
@@ -62,7 +63,8 @@ class KriteriaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|max:225'
+            'name' => 'required|max:225',
+            'bobot' => 'required|max:225'
         ]);
 
         Kriteria::create($validated);
@@ -92,7 +94,8 @@ class KriteriaController extends Controller
     public function update(Request $request, Kriteria $kriteria)
     {
         $validated = $request->validate([
-            'name' => 'required|max:225'
+            'name' => 'required|max:225',
+            'bobot' => 'required|max:225'
         ]);
 
         $kriteria->update($validated);
@@ -114,8 +117,11 @@ class KriteriaController extends Controller
                     'logo_1' => $setting->logo_1,
                 ];
             }),
-
-            'kriteria' => $kriteria
+            'kriteria' => [
+                'id' => $kriteria->id,
+                'name' => $kriteria->name,
+                'bobot' => (int) $kriteria->bobot . '%'
+            ]
         ]);
     }
 

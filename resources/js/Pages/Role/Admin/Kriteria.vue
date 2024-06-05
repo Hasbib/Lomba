@@ -139,7 +139,8 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th class="width-id2">ID</th>
-                                        <th class="crud-width-400">Kritera</th>
+                                        <th class="crud-width-290">Kritera</th>
+                                        <th class="crud-width-40">Kritera</th>
                                         <th class="crud-width120">Aksi</th>
                                     </tr>
                                 </thead>
@@ -147,6 +148,7 @@
                                     <tr v-for="kriteria in kriterias">
                                         <td>{{ kriteria.id }}</td>
                                         <td>{{ kriteria.name }}</td>
+                                        <td>{{ kriteria.bobot }}</td>
                                         <td class="btn-crud">
                                             <button class="btn btn-secondary"
                                                 @click.prevent="detailkriteria(kriteria.id)"><i
