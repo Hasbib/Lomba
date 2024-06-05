@@ -292,7 +292,6 @@ const props = defineProps({
     reglomba: Object,
     submission: Object,
     lomba: Object,
-    regislomba: Object
 })
 
 const form = useForm({
@@ -315,7 +314,6 @@ const form = useForm({
     sub_file: props.submission ? props.submission.sub_file : null,
 
     nama_lomba: props.lomba.nama_lomba,
-    id: props.regislomba.id
 })
 
 function logout() {
