@@ -22,6 +22,6 @@ class TeamMember extends Model
 
     public function peserta()
     {
-        return $this->belongsTo(User::class, 'team_peserta_id', 'id');
+        return $this->belongsTo(RegLomba::class, 'team_peserta_id', 'id');
     }
 }

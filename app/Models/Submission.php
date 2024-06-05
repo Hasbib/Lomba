@@ -21,6 +21,6 @@ class Submission extends Model
 
     public function peserta()
     {
-        return $this->belongsTo(User::class, 'sub_peserta_id', 'id');
+        return $this->belongsTo(RegLomba::class, 'sub_peserta_id', 'id');
     }
 }

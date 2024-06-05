@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('team_members', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('team_peserta_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('team_peserta_id')->constrained('reg_lombas')->onDelete('cascade');
             $table->string('team_member_name');
             $table->string('team_member_nik');
             $table->string('team_member_instansi');
@@ -28,6 +28,6 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists('team_members');
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('reg_lombas');
     }
 };

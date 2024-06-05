@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sub_peserta_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('sub_peserta_id')->constrained('reg_lombas')->onDelete('cascade');
             $table->string('sub_judul');
             $table->text('sub_deskripsi');
             $table->string('sub_link');
@@ -27,6 +27,6 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists('submissions');
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('reg_lombas');
     }
 };
