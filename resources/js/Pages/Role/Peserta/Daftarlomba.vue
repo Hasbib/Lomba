@@ -6,11 +6,11 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img id="logo-img" :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
-                            class="lg2">
+                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
                     </a>
                 </div>
-                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
+                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
+                </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -19,6 +19,13 @@
                         <div class="parent-icon"><i class='bx bx-category'></i>
                         </div>
                         <div class="menu-title">Overview</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/daftar-lomba">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        </div>
+                        <div class="menu-title">Daftar Lomba</div>
                     </a>
                 </li>
                 <li>
@@ -98,7 +105,7 @@
                     <div class="card-body">
                         <h4 class="mb-0 jarak-teks1">DAFTAR LOMBA {{ form.nama_lomba }}</h4>
                         <div class="card">
-                            <h5 class="p-3">INFO TIM LOMBA</h5>
+                            <h5 class="p-3">Info Tim Lomba</h5>
                             <hr class="garis">
                             <div class="row">
                                 <div class="col-md-2 jarak-daftar-lomba">
@@ -150,7 +157,7 @@
                                             <h6><b>{{ form.name }}</b></h6>
                                             <br>
                                             <div class="posisi-mb7">{{ form.nik }}</div>
-                                            <div class="text-muted">{{ form.prodi }}</div>
+                                            <div class="text-muted">{{ form.instansi }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -173,7 +180,7 @@
                                             <h6><b>{{ member.team_member_name }}</b></h6>
                                             <br>
                                             <div class="posisi-mb7">{{ member.team_member_nik }}</div>
-                                            <div class="text-muted">{{ member.team_member_prodi }}</div>
+                                            <div class="text-muted">{{ member.team_member_instansi }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -252,8 +259,9 @@
                                         <div class="data-tim c-mb-70"><a :href="form.sub_link">Link Video</a></div>
                                     </div>
                                     <div>
-                                        <button onclick="window.location.href='/pengumpulan-karya'"
-                                            class="btn btn-primary radius-5 isi-data jarak-isi-data">Isi Data</button>
+                                        <button @click.prevent="karya(lomba.id)"
+                                            class="btn btn-primary radius-5 isi-data jarak-isi-data">Isi
+                                            Data</button>
                                     </div>
                                 </div>
                             </div>
@@ -316,6 +324,10 @@ function daftar(lomba_id) {
     router.get('/' + lomba_id + '/daftar-lomba/data-tim')
 }
 
+function karya(lomba_id) {
+    router.get('/' + lomba_id + '/daftar-lomba/pengumpulan-karya')
+}
+
 const isPopupVisible = ref(false);
 const searchQuery = ref('');
 const searchResults = ref([]);
@@ -368,7 +380,7 @@ function addMember() {
         const newMember = {
             team_member_name: selectedUser.value.name,
             team_member_nik: selectedUser.value.nik,
-            team_member_prodi: selectedUser.value.prodi,
+            team_member_instansi: selectedUser.value.instansi,
             team_member_picture: selectedUser.value.images,
         }
 
@@ -397,14 +409,14 @@ function saveTeamMembers() {
         ketua: {
             name: form.name,
             nik: form.nik,
-            prodi: form.prodi,
+            instansi: form.instansi,
             images: form.images,
             role: 'Ketua'
         },
         members: members.value.map((member, index) => ({
             team_member_name: member.team_member_name,
             team_member_nik: member.team_member_nik,
-            team_member_prodi: member.team_member_prodi,
+            team_member_instansi: member.team_member_instansi,
             team_member_picture: member.team_member_picture,
             role: `Anggota ${index + 1}`
         }))

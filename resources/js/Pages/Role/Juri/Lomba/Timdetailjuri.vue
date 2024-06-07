@@ -60,7 +60,27 @@
                             </div>
                         </div>
                         <br><br><br>
-
+                        <div class="row row-cards justify-content-center">
+                            <div v-for="member in teammembers" :key="member.id"
+                                class="col-md-6 col-lg-3 crud-max-width260">
+                                <div class="card">
+                                    <div class="card-header btn-crud">
+                                        <h6><b>{{ member.team_member_role }}</b></h6>
+                                    </div>
+                                    <div class="card-body p-4 text-center posisi-mb23">
+                                        <div class="btn-crud">
+                                            <img :src="getProfilImageUrl(member.team_member_picture)" height="120"
+                                                :alt="member.team_member_name" class="img-fluidc rounded">
+                                        </div>
+                                        <br>
+                                        <h6><b>{{ member.team_member_name }}</b></h6>
+                                        <br>
+                                        <div class="posisi-mb7">{{ member.team_member_nik }}</div>
+                                        <div class="text-muted">{{ member.team_member_instansi }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="card card-height400">
                             <div class="card-body p-4 text-center">
                                 <h6 class="sub-judul-tim">KARYA TIM</h6>

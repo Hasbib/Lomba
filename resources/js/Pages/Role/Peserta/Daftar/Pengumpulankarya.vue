@@ -104,9 +104,7 @@ const form = useForm({
     sub_file: props.submission?.sub_file,
     sub_peserta_id: props.userId
 })
-
-const selectedFile = ref(null);
-
+const selectedFile = ref(null)
 function submit() {
     const formData = new FormData();
     formData.append('id', props.submission?.id);

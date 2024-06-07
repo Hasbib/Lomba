@@ -133,6 +133,9 @@ defineProps({
 function detail(id) {
     router.get('/detail/' + id)
 }
+function daftar(lomba_id) {
+    router.get('/' + lomba_id + '/daftar-lomba')
+}
 
 function daftar(lomba_id) {
     router.get('/' + lomba_id + '/daftar-lomba')

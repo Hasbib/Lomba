@@ -165,113 +165,54 @@ class RegLombaController extends Controller
 
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'reg_nama_tim' => 'required|max:50',
-        //     'reg_instansi' => 'required|max:50',
-        //     'reg_nama_lomba' => 'required|exists:lombas,nama_lomba',
-        //     'reg_no_whatsapp' => 'required|max:50',
-        //     'reg_email' => 'required|max:50',
-        //     'reg_bukti_pembayaran' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        //     'reg_peserta_id' => 'required|exists:users,id',
-        // ]);
-        // if ($request->hasFile('reg_bukti_pembayaran')) {
-        //     $image = $request->file('reg_bukti_pembayaran');
-        //     $imageName = $image->getClientOriginalName();
-        //     $imagePath = $image->storeAs('public/uploads', $imageName);
-        //     $validated['reg_bukti_pembayaran'] = $imageName;
-        // }
-        // RegLomba::create($validated);
-        // return Redirect::route('reglomba.index')->with('message', 'Data tim berhasil di isi');
-
-
-        // if ($request->input('id') !== "undefined") {
-        //     // if ($request->input('id') !== "undefined") {
-        //     $regLomba = RegLomba::findOrFail($request->input('id'));
-        //     $oldImage = $regLomba->reg_bukti_pembayaran;
-        //     $regLomba->update([
-        //         'reg_nama_tim' => $request->input('reg_nama_tim'),
-        //         'reg_instansi' => $request->input('reg_instansi'),
-        //         'reg_nama_lomba' => $request->input('reg_nama_lomba'),
-        //         'reg_no_whatsapp' => $request->input('reg_no_whatsapp'),
-        //         'reg_email' => $request->input('reg_email'),
-        //     ]);
-
-        //     if ($request->hasFile('reg_bukti_pembayaran')) {
-        //         $image = $request->file('reg_bukti_pembayaran');
-        //         $imageName = $image->getClientOriginalName();
-        //         $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
-        //         if ($oldImage) {
-        //             Storage::delete('public/uploads/peserta/registrasi/' . $oldImage);
-        //         }
-        //         $regLomba->reg_bukti_pembayaran = $imageName;
-        //         $regLomba->save();
-        //     } else {
-        //         $regLomba->reg_bukti_pembayaran = $oldImage;
-        //         $regLomba->save();
-        //     }
-        //     $message = 'Data tim berhasil diupdate';
-        //     // }
-        // } else {
-        //     $inputData = $request->all();
-        //     if ($request->hasFile('reg_bukti_pembayaran')) {
-        //         $image = $request->file('reg_bukti_pembayaran');
-        //         $imageName = $image->getClientOriginalName();
-        //         $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
-        //         $inputData['reg_bukti_pembayaran'] = $imageName;
-        //     }
-        //     $regLomba = RegLomba::create($inputData);
-        //     $message = 'Data tim berhasil diisi';
-        // }
-
-        // TODO: Ujicoba
-        $isNew = true;
-        $findOld = RegLomba::find($request->input('id'));
-        if ($findOld) {
-            $isNew = false;
-            $oldImage = $findOld->reg_bukti_pembayaran;
-        } else {
-            $oldImage = null;
-        }
-
         $lomba = Lomba::findOrFail($request->input('lomba_id'));
+        if ($request->input('id') !== "undefined") {
+            if ($request->input('id') !== "undefined") {
+                $regLomba = RegLomba::findOrFail($request->input('id'));
+                $oldImage = $regLomba->reg_bukti_pembayaran;
+                $regLomba->update([
+                    'reg_nama_tim' => $request->input('reg_nama_tim'),
+                    'reg_instansi' => $request->input('reg_instansi'),
+                    'reg_nama_lomba' => $lomba->nama_lomba
+                ], [
+                    'reg_no_whatsapp' => $request->input('reg_no_whatsapp'),
+                    'reg_email' => $request->input('reg_email'),
+                ]);
 
-        // hande file
-        $imageTemp = null;
-        if ($request->hasFile('reg_bukti_pembayaran')) {
-            $image = $request->file('reg_bukti_pembayaran');
-            $imageName = $image->getClientOriginalName();
-            $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
-            // delete if has old image
-            if ($oldImage) {
-                Storage::delete('public/uploads/peserta/registrasi/' . $oldImage);
+                if ($request->hasFile('reg_bukti_pembayaran')) {
+                    $image = $request->file('reg_bukti_pembayaran');
+                    $imageName = $image->getClientOriginalName();
+                    $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
+                    if ($oldImage) {
+                        Storage::delete('public/uploads/peserta/registrasi/' . $oldImage);
+                    }
+                    $regLomba->reg_bukti_pembayaran = $imageName;
+                    $regLomba->save();
+                } else {
+                    $regLomba->reg_bukti_pembayaran = $oldImage;
+                    $regLomba->save();
+                }
+                $message = 'Data tim berhasil diupdate';
             }
-            $imageTemp = $imageName;
         } else {
-            $imageTemp = $oldImage;
+            $inputData = $request->all();
+            if ($request->hasFile('reg_bukti_pembayaran')) {
+                $image = $request->file('reg_bukti_pembayaran');
+                $imageName = $image->getClientOriginalName();
+                $imagePath = $image->storeAs('public/uploads/peserta/registrasi', $imageName);
+                $inputData['reg_bukti_pembayaran'] = $imageName;
+            }
+            RegLomba::create($inputData);
+            $message = 'Data tim berhasil diisi';
         }
-
-        RegLomba::updateOrCreate([
-            'reg_peserta_id' => $request->input('reg_peserta_id'),
-            'reg_nama_lomba' => $lomba->nama_lomba
-        ], [
-            'reg_nama_tim' => $request->input('reg_nama_tim'),
-            'reg_instansi' => $request->input('reg_instansi'),
-            'reg_no_whatsapp' => $request->input('reg_no_whatsapp'),
-            'reg_email' => $request->input('reg_email'),
-            'reg_bukti_pembayaran' => $imageTemp
-        ]);
-
-        $message = "Data tim berhasil ";
-        $message .= $isNew ? 'diisi' : 'diupdate';
-
-
         return Redirect::route('reglomba.index', ['lomba' => $lomba->id])->with('message', $message);
     }
 
     public function pengumpulankarya()
     {
         $user = User::findOrFail(session('id'));
-        $SUBmission = Submission::where('sub_peserta_id', $user->id)->whereStatus('draft')->first();
+        $SUBmission = Submission::where('sub_peserta_id', $user->id)
+            ->whereStatus('draft')->first();
         if ($user) {
             return Inertia::render('Role/Peserta/Daftar/Pengumpulankarya', [
                 'username' => $user->username,
@@ -293,11 +234,14 @@ class RegLombaController extends Controller
     }
     public function kirim(Request $request)
     {
+        $regislomba = RegLomba::findOrFail($request->input('reglomba_id'));
         if ($request->input('id') !== "undefined") {
             if ($request->input('id') !== "undefined") {
                 $SUBmission = Submission::findOrFail($request->input('id'));
                 $oldImage = $SUBmission->sub_file;
                 $SUBmission->update([
+                    'sub_peserta_id' => $regislomba->id
+                ], [
                     'sub_judul' => $request->input('sub_judul'),
                     'sub_deskripsi' => $request->input('sub_deskripsi'),
                     'sub_link' => $request->input('sub_link'),

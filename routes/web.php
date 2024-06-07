@@ -164,7 +164,7 @@ Route::middleware(['peserta', 'auth', 'verified'])->group(function () {
     Route::put('/kirim-hasil', [RegLombaController::class, 'kirimHasil']);
     Route::post('/tambah-member', [RegLombaController::class, 'addmember']);
     Route::post('/pengumpulan-karya', [RegLombaController::class, 'kirim']);
-    Route::get('/pengumpulan-karya', [RegLombaController::class, 'pengumpulankarya']);
+    Route::get('/{lomba}/daftar-lomba/pengumpulan-karya', [RegLombaController::class, 'pengumpulankarya']);
 });
 
 Route::get('/search', [UsersController::class, 'search'])->name('users.search');

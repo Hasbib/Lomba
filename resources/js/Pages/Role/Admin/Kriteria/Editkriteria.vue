@@ -41,9 +41,13 @@
                         <hr />
                         <form @submit.prevent="submit(kriteria.id)">
                             <div class="row">
-                                <div class=" c-mb10">
+                                <div class="col-md-6 c-mb10">
                                     <label class="c-mb5-black"><b>Nama Kriteria</b></label>
                                     <input type="namalomba" class="form-control" v-model="form.name" required>
+                                </div>
+                                <div class="col-md-6 c-mb10">
+                                    <label class="c-mb5-black"><b>Bobot</b></label>
+                                    <input type="namalomba" class="form-control" v-model="form.bobot" required>
                                 </div>
                             </div>
                             <div class="btn-posisi">
@@ -70,7 +74,8 @@ const props = defineProps({
 })
 
 const form = useForm({
-    name: props.kriteria.name
+    name: props.kriteria.name,
+    bobot: props.kriteria.bobot
 })
 
 function submit(id) {

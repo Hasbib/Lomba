@@ -40,9 +40,13 @@
                         <h4 class="mb-0">TAMBAH KRITERIA LOMBA</h4>
                         <hr />
                         <form @submit.prevent="submit">
-                            <div class=" c-mb10">
+                            <div class="col-md-6 c-mb10">
                                 <label class="c-mb5-black"><b>Nama Kriteria</b></label>
                                 <input type="namalomba" class="form-control" v-model="form.name">
+                            </div>
+                            <div class="col-md-6 c-mb10">
+                                <label class="c-mb5-black"><b>Bobot</b></label>
+                                <input type="bobot" class="form-control" v-model="form.bobot">
                             </div>
                             <div class="btn-posisi">
                                 <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
@@ -66,7 +70,8 @@ import Swal from 'sweetalert2';
 defineProps({ settings: Object })
 
 const form = reactive({
-    name: null
+    name: null,
+    bobot: null
 })
 
 function submit() {
