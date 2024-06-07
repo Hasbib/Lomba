@@ -6,11 +6,11 @@
             <div class="sidebar-header">
                 <div v-for="setting in settings">
                     <a href="/">
-                        <img id="logo-img" :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event"
-                            class="lg2">
+                        <img :src="getSettingImageUrl(setting.logo_1)" :alt="setting.nama_event" class="logo-icon">
                     </a>
                 </div>
-                <div id="menu-toggle" class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i></div>
+                <div class="toggle-icon ms-auto"><i class="fadeIn animated bx bx-menu"></i>
+                </div>
             </div>
             <!--navigation-->
             <ul class="metismenu" id="menu">
@@ -19,6 +19,13 @@
                         <div class="parent-icon"><i class='bx bx-category'></i>
                         </div>
                         <div class="menu-title">Overview</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/daftar-lomba">
+                        <div class="parent-icon"><i class="fadeIn animated bx bx-street-view"></i>
+                        </div>
+                        <div class="menu-title">Daftar Lomba</div>
                     </a>
                 </li>
                 <li>
@@ -136,11 +143,6 @@ function detail(id) {
 function daftar(lomba_id) {
     router.get('/' + lomba_id + '/daftar-lomba')
 }
-
-function daftar(lomba_id) {
-    router.get('/' + lomba_id + '/daftar-lomba')
-}
-
 
 function logout() {
     router.post('/logout');
