@@ -281,16 +281,17 @@
 <script setup>
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/inertia-vue3';
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, defineProps } from 'vue';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const props = defineProps({
     settings: Object,
     user: Object,
-    members: Object,
+    members: Array,
     reglomba: Object,
     submission: Object,
+    teammember: Object,
     lomba: Object,
 })
 
@@ -407,10 +408,10 @@ const Toast = Swal.mixin({
 function saveTeamMembers() {
     const teamData = {
         ketua: {
-            name: form.name,
-            nik: form.nik,
-            instansi: form.instansi,
-            images: form.images,
+            name: props.user.name,
+            nik: props.user.nik,
+            instansi: props.user.instansi,
+            images: props.user.images,
             role: 'Ketua'
         },
         members: members.value.map((member, index) => ({
@@ -458,7 +459,6 @@ function save() {
                         icon: "success",
                         title: response.data.message
                     });
-                    // Handle success response
                     if (response.data.isConfirmed) {
                         Swal.fire("Karya anda berhasil dikirim!", "", "success");
                     }
@@ -466,10 +466,8 @@ function save() {
                 .catch(error => {
                     console.error(error);
                     Swal.fire("Karya anda gagal dikirim", "", "info");
-                    // Handle error response
                 });
         } else if (result.isDenied) {
-            // Lakukan sesuatu jika pengguna memilih untuk tidak menyimpan perubahan
             Swal.fire("Karya anda gagal dikirim", "", "info");
         }
     });

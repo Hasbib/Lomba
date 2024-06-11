@@ -86,10 +86,13 @@ const props = defineProps({
     user: Object,
     submission: Object,
     lombas: Object,
-    userId: Number
+    userId: Number,
+    lomba: Object,
+    lombas: Object,
 })
 
 const form = useForm({
+    sub_nama_lomba: props.lombas.length > 0 ? props.lombas[0].nama_lomba : null,
     sub_judul: props.submission?.sub_judul,
     sub_deskripsi: props.submission?.sub_deskripsi,
     sub_link: props.submission?.sub_link,
@@ -100,11 +103,13 @@ const selectedFile = ref(null)
 function submit() {
     const formData = new FormData();
     formData.append('id', props.submission?.id);
+    formData.append('sub_nama_lomba', props.lomba?.nama_lomba);
     formData.append('sub_judul', form.sub_judul);
     formData.append('sub_deskripsi', form.sub_deskripsi);
     formData.append('sub_link', form.sub_link);
     formData.append('sub_file', selectedFile.value);
     formData.append('sub_peserta_id', form.sub_peserta_id);
+    formData.append('lomba_id', props.lomba?.id);
 
     router.post('/pengumpulan-karya', formData);
 }

@@ -44,4 +44,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(TeamMember::class, 'team_peserta_id')
             ->where('team_member_role', '<>', 'ketua');
     }
+
+    public function userlomba()
+    {
+        return $this->belongsToMany(Lomba::class, 'juri_lomba');
+    }
 }

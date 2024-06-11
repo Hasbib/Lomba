@@ -33,40 +33,28 @@ class UsersController extends Controller
             'username' => ['required', 'max:50'],
             'email' => ['required', 'max:50', 'email'],
             'password' => ['required'],
+            'role' => ['required', 'in:admin,juri,petugas,peserta'],
+            'selectedLombas' => 'required_if:role,juri|array',
         ]);
 
         $existingUser = User::where('email', $validatedData['email'])->first();
         if ($existingUser) {
-            return redirect()->back()->withErrors(['email' => 'Email sudah terdaftar', 'username' => 'Username sudah terdaftar']);
+            return redirect()->back()->withErrors(['email' => 'Email sudah terdaftar']);
         }
         $existingUserUsername = User::where('username', $validatedData['username'])->first();
         if ($existingUserUsername) {
-            return redirect()->back()->withErrors(['username' => 'Username sudah terdaftar', 'email' => 'Email sudah terdaftar']);
+            return redirect()->back()->withErrors(['username' => 'Username sudah terdaftar']);
         }
 
         $validatedData['password'] = bcrypt($validatedData['password']);
-        $validatedData['role'] = $request->input('role', 'peserta');
 
         $user = User::create($validatedData);
 
-        switch ($validatedData['role']) {
-            case 'admin':
-                return redirect()->route('administrator')->with('message', 'Akun berhasil dibuat');
-            case 'juri':
-                return redirect()->route('administrator')->with('message', 'Akun berhasil dibuat');
-            case 'petugas':
-                return redirect()->route('administrator')->with('message', 'Akun berhasil dibuat');
-            case 'peserta':
-                Auth::login($user);
-                $request->session()->put('id', $user->id);
-                $request->session()->put('username', $user->username);
-                $request->session()->put('name', $user->name);
-                $request->session()->put('role', $user->role);
-                $request->session()->put('isLoggedIn', true);
-                return redirect()->route('overview')->with('message', 'Akun berhasil dibuat');
-            default:
-                return redirect('/')->with('error', 'Unauthorized access.');
+        if ($validatedData['role'] == 'juri') {
+            $user->userlomba()->attach($request->selectedLombas);
         }
+
+        return redirect()->route('administrator')->with('message', 'Akun berhasil dibuat');
     }
 
 
