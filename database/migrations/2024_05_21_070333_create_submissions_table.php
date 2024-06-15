@@ -13,11 +13,14 @@ return new class extends Migration {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sub_peserta_id')->constrained('users')->onDelete('cascade');
+            $table->string('sub_nama_lomba');
             $table->string('sub_judul');
             $table->text('sub_deskripsi');
             $table->string('sub_link');
             $table->string('sub_file');
             $table->timestamps();
+
+            $table->foreign('sub_nama_lomba')->references('nama_lomba')->on('lombas')->onDelete('cascade');
         });
     }
 

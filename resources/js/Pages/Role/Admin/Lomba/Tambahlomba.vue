@@ -80,10 +80,11 @@
                                             v-model="form.biaya_pendaftaran" required>
                                     </div>
                                     <div>
-                                        <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
+                                        <label class="role-add"><b class="warna-hitam">Kriteria Lomba
+                                                (0/100)</b></label>
                                         <div v-for="kriteria in kriterias" :key="kriteria.id">
                                             <div class="form-check">
-                                                <!-- Checkbox untuk setiap kriteria -->
+                                                <!-- Checkbox for each kriteria -->
                                                 <input class="form-check-input" type="checkbox"
                                                     :id="'kriteria_' + kriteria.id" :value="kriteria.id"
                                                     v-model="form.selectedKriterias" name="selectedKriterias[]">
@@ -91,8 +92,11 @@
                                                 <label class="form-check-label" :for="'kriteria_' + kriteria.id">{{
                                                     kriteria.name }}</label>
                                             </div>
+                                            <!-- Input for bobot value for each kriteria -->
+                                            <input type="number" class="form-control" v-model="form.bobot[kriteria.id]"
+                                                :disabled="!form.selectedKriterias.includes(kriteria.id)"
+                                                placeholder="Bobot">
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="btn-posisi">
@@ -128,7 +132,8 @@ const form = reactive({
     biaya_pendaftaran: null,
     gambar: null,
     sertifikat: null,
-    selectedKriterias: []
+    selectedKriterias: [],
+    bobot: {}
 })
 
 const files = reactive({
@@ -149,6 +154,7 @@ function submit() {
 
     form.selectedKriterias.forEach(kriteria => {
         formData.append('selectedKriterias[]', kriteria);
+        formData.append('bobot[]', form.bobot[kriteria]); // Include bobot values
     });
 
     router.post('/event/lomba', formData);

@@ -14,7 +14,6 @@ class Kriteria extends Model
     protected $fillable = [
         'id',
         'name',
-        'bobot'
     ];
 
     public function lombas()

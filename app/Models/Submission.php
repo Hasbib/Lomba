@@ -13,6 +13,7 @@ class Submission extends Model
 
     protected $fillable = [
         'sub_peserta_id',
+        'sub_nama_lomba',
         'sub_judul',
         'sub_deskripsi',
         'sub_link',
@@ -23,4 +24,9 @@ class Submission extends Model
     {
         return $this->belongsTo(User::class, 'sub_peserta_id', 'id');
     }
+    public function lombasub()
+    {
+        return $this->belongsTo(Lomba::class, 'sub_nama_lomba', 'nama_lomba');
+    }
+
 }

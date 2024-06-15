@@ -281,17 +281,21 @@
 <script setup>
 import { router } from '@inertiajs/vue3'
 import { useForm } from '@inertiajs/inertia-vue3';
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, defineProps } from 'vue';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const props = defineProps({
     settings: Object,
     user: Object,
-    members: Object,
+    members: Array,
     reglomba: Object,
     submission: Object,
+    teammember: Object,
     lomba: Object,
+    email: String,
+    whatsapp: String,
+    instansi: String,
 })
 
 const form = useForm({
@@ -301,10 +305,13 @@ const form = useForm({
     images: props.user.images,
 
     reg_nama_tim: props.reglomba ? props.reglomba.reg_nama_tim : null,
-    reg_instansi: props.reglomba ? props.reglomba.reg_instansi : null,
+    // reg_instansi: props.reglomba ? props.reglomba.reg_instansi : null,
+    reg_instansi: props.reglomba?.reg_instansi || props.instansi,
     reg_nama_lomba: props.reglomba ? props.reglomba.reg_nama_lomba : null,
-    reg_no_whatsapp: props.reglomba ? props.reglomba.reg_no_whatsapp : null,
-    reg_email: props.reglomba ? props.reglomba.reg_email : null,
+    // reg_no_whatsapp: props.reglomba ? props.reglomba.reg_no_whatsapp : null,
+    reg_no_whatsapp: props.reglomba?.reg_no_whatsapp || props.whatsapp,
+    // reg_email: props.reglomba ? props.reglomba.reg_email || props.email,
+    reg_email: props.reglomba?.reg_email || props.email,
     reg_bukti_pembayaran: props.reglomba ? props.reglomba.reg_bukti_pembayaran : null,
     // reg_peserta_id: props.userId
 
@@ -407,10 +414,10 @@ const Toast = Swal.mixin({
 function saveTeamMembers() {
     const teamData = {
         ketua: {
-            name: form.name,
-            nik: form.nik,
-            instansi: form.instansi,
-            images: form.images,
+            name: props.user.name,
+            nik: props.user.nik,
+            instansi: props.user.instansi,
+            images: props.user.images,
             role: 'Ketua'
         },
         members: members.value.map((member, index) => ({
@@ -458,18 +465,17 @@ function save() {
                         icon: "success",
                         title: response.data.message
                     });
-                    // Handle success response
                     if (response.data.isConfirmed) {
-                        Swal.fire("Karya anda berhasil dikirim!", "", "success");
+                        Swal.fire("Karya anda berhasil dikirim!", "", "success").then(() => {
+                            window.location.href = '/overview';
+                        });
                     }
                 })
                 .catch(error => {
                     console.error(error);
                     Swal.fire("Karya anda gagal dikirim", "", "info");
-                    // Handle error response
                 });
         } else if (result.isDenied) {
-            // Lakukan sesuatu jika pengguna memilih untuk tidak menyimpan perubahan
             Swal.fire("Karya anda gagal dikirim", "", "info");
         }
     });

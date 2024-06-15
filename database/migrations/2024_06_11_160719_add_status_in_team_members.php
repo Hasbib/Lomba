@@ -10,9 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('reg_lombas', function (Blueprint $table) {
+        Schema::table('team_members', function (Blueprint $table) {
             $table->enum('status', ['draft', 'submitted', 'on_verification', 'result'])
-                ->after('reg_bukti_pembayaran')
+                ->after('team_member_picture')
                 ->comment('status from the competition');
         });
     }
@@ -22,7 +22,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('reg_lombas', function (Blueprint $table) {
+        Schema::table('team_members', function (Blueprint $table) {
             $table->dropColumn('status');
         });
     }

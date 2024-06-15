@@ -64,7 +64,7 @@ class KriteriaController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|max:225',
-            'bobot' => 'required|max:225'
+            // 'bobot' => 'required|max:225'
         ]);
 
         Kriteria::create($validated);
@@ -95,7 +95,7 @@ class KriteriaController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|max:225',
-            'bobot' => 'required|max:225'
+            // 'bobot' => 'required|max:225'
         ]);
 
         $kriteria->update($validated);

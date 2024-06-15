@@ -65,6 +65,9 @@
         <div class="des-biru">
             <a v-html="form.deskripsi"></a>
         </div>
+        <div class=" des-biru"><br>
+
+        </div>
         <!--end page wrapper -->
     </div>
 

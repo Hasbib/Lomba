@@ -17,7 +17,8 @@ class TeamMember extends Model
         'team_member_nik',
         'team_member_instansi',
         'team_member_role',
-        'team_member_picture'
+        'team_member_picture',
+        'status',
     ];
 
     public function peserta()

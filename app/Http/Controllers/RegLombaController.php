@@ -27,14 +27,21 @@ class RegLombaController extends Controller
             $regLomba = RegLomba::where('reg_peserta_id', $user->id)
                 ->where('reg_nama_lomba', $lomba->nama_lomba)
                 ->whereStatus('draft')->first();
-            $submission = Submission::where('sub_peserta_id', $user->id)->whereStatus('draft')->first();
+            $submission = Submission::where('sub_peserta_id', $user->id)
+                ->where('sub_nama_lomba', $lomba->nama_lomba)
+                ->whereStatus('draft')->first();
+            $teamMembers = $user->teamMembers->where('status', 'draft');
             return Inertia::render('Role/Peserta/Daftarlomba', [
                 'user' => $user,
                 'username' => $username,
                 'name' => $name,
                 'reglomba' => $regLomba,
                 'submission' => $submission,
-                'members' => $user->teamMembers,
+                'members' => $teamMembers,
+
+                'email' => $user->email,
+                'whatsapp' => $user->kontak,
+                'instansi' => $user->instansi,
                 'settings' => Setting::all()->map(function ($setting) {
                     return [
                         'id' => $setting->id,
@@ -208,10 +215,11 @@ class RegLombaController extends Controller
         return Redirect::route('reglomba.index', ['lomba' => $lomba->id])->with('message', $message);
     }
 
-    public function pengumpulankarya()
+    public function pengumpulankarya(Lomba $lomba)
     {
         $user = User::findOrFail(session('id'));
         $SUBmission = Submission::where('sub_peserta_id', $user->id)
+            ->where('sub_nama_lomba', $lomba->nama_lomba)
             ->whereStatus('draft')->first();
         if ($user) {
             return Inertia::render('Role/Peserta/Daftar/Pengumpulankarya', [
@@ -227,6 +235,16 @@ class RegLombaController extends Controller
                         'logo_1' => $setting->logo_1,
                     ];
                 }),
+                'lombas' => Lomba::all()->map(function ($lomba) {
+                    return [
+                        'id' => $lomba->id,
+                        'nama_lomba' => $lomba->nama_lomba,
+                    ];
+                }),
+                'lomba' => [
+                    'id' => $lomba->id,
+                    'nama_lomba' => $lomba->nama_lomba,
+                ],
             ]);
         } else {
             return;
@@ -234,13 +252,13 @@ class RegLombaController extends Controller
     }
     public function kirim(Request $request)
     {
-        $regislomba = RegLomba::findOrFail($request->input('reglomba_id'));
+        $lomba = Lomba::findOrFail($request->input('lomba_id'));
         if ($request->input('id') !== "undefined") {
             if ($request->input('id') !== "undefined") {
                 $SUBmission = Submission::findOrFail($request->input('id'));
                 $oldImage = $SUBmission->sub_file;
                 $SUBmission->update([
-                    'sub_peserta_id' => $regislomba->id
+                    'sub_nama_lomba' => $lomba->nama_lomba
                 ], [
                     'sub_judul' => $request->input('sub_judul'),
                     'sub_deskripsi' => $request->input('sub_deskripsi'),
@@ -273,22 +291,29 @@ class RegLombaController extends Controller
             Submission::create($inputData);
             $message = 'Data tim berhasil diisi';
         }
-        return Redirect::route('reglomba.index')->with('message', $message);
+        return Redirect::route('reglomba.index', ['lomba' => $lomba->id])->with('message', $message);
     }
 
     public function kirimHasil(Request $request)
     {
         $regLombaId = $request->input('regLombaId');
+        // $teammemberId = $request->input('teammebersId');
         $submissionId = $request->input('submissionId');
 
         $regLomba = RegLomba::findOrFail($regLombaId);
+        // $teammember = TeamMember::findOrFail($teammemberId);
         $submission = Submission::findOrFail($submissionId);
 
         $regLomba->status = 'submitted';
+        // $teammember->status = 'submitted';
         $submission->status = 'submitted';
 
         $regLomba->save();
+        // $teammember->save();
         $submission->save();
+
+        TeamMember::where('team_peserta_id', $regLomba->reg_peserta_id)
+            ->update(['status' => 'submitted']);
 
         return response()->json(['isConfirmed' => true, 'message' => 'Karya berhasil dikirim']);
     }

@@ -71,6 +71,17 @@
                                         <option value="petugas">Petugas</option>
                                     </select>
                                 </div>
+                                <div v-if="form.role === 'juri'">
+                                    <label class="role-add"><b class="warna-hitam">Juri Lomba</b></label>
+                                    <div v-for="lomba in lombas" :key="lomba.id">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" :id="'lomba_' + lomba.id"
+                                                :value="lomba.id" v-model="form.selectedLombas">
+                                            <label class="form-check-label" :for="'lomba_' + lomba.id">{{
+                                                lomba.nama_lomba }}</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="btn-posisi">
                                     <button class="btn btn-primary button-tabel-right" type="submit">Tambah</button>
                                     <a class="btn btn-danger button-tabel-left"
@@ -92,7 +103,7 @@ import { reactive } from 'vue'
 import { router } from '@inertiajs/vue3'
 import Swal from 'sweetalert2';
 
-defineProps({ settings: Object })
+defineProps({ settings: Object, lombas: Array })
 
 const form = reactive({
     name: null,
@@ -100,6 +111,7 @@ const form = reactive({
     email: null,
     password: null,
     role: 'admin',
+    selectedLombas: []
 })
 
 

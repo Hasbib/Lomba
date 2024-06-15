@@ -151,6 +151,12 @@ class PagesController extends Controller
                     'nama_event' => $setting->nama_event,
                     'logo_1' => $setting->logo_1,
                 ];
+            }),
+            'lombas' => Lomba::all()->map(function ($lomba) {
+                return [
+                    'id' => $lomba->id,
+                    'nama_lomba' => $lomba->nama_lomba,
+                ];
             })
         ]);
     }
@@ -374,6 +380,16 @@ class PagesController extends Controller
     public function lombajuri()
     {
         $username = session('username');
+        $user = User::where('username', $username)->first();
+
+        $lombas = $user->userlomba->map(function ($lomba) {
+            return [
+                'id' => $lomba->id,
+                'nama_lomba' => $lomba->nama_lomba,
+                'gambar' => $lomba->gambar,
+            ];
+        });
+
         return Inertia::render('Role/Juri/Lombajuri', [
             'username' => $username,
 
@@ -384,13 +400,7 @@ class PagesController extends Controller
                     'logo_1' => $setting->logo_1,
                 ];
             }),
-            'lombas' => Lomba::all()->map(function ($lomba) {
-                return [
-                    'id' => $lomba->id,
-                    'nama_lomba' => $lomba->nama_lomba,
-                    'gambar' => $lomba->gambar,
-                ];
-            })
+            'lombas' => $lombas,
         ]);
     }
     public function tabellomba($lomba)
