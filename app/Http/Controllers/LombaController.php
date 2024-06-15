@@ -57,6 +57,7 @@ class LombaController extends Controller
                 return [
                     'id' => $kriteria->id,
                     'name' => $kriteria->name,
+                    'bobot' => $kriteria->lombas()->wherePivot('lomba_id', 1)->first()?->pivot?->bobot ?? 0,
                 ];
             }),
 
@@ -81,7 +82,8 @@ class LombaController extends Controller
             'biaya_pendaftaran' => 'required|max:225',
             'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'sertifikat' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'selectedKriterias' => 'required|array'
+            'selectedKriterias' => 'required|array',
+            'bobot.*' => 'required|numeric|max:100'
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -98,9 +100,15 @@ class LombaController extends Controller
         }
 
         $lomba = Lomba::create($validated);
-        // Simpan relasi antara lomba dan kriteria
-        $lomba->kriterias()->attach($request->selectedKriterias);
-        // Lomba::create($validated);
+
+        // Save the relation between lomba and kriteria with bobot
+        $kriteriaIds = $request->input('selectedKriterias');
+        $bobotValues = $request->input('bobot');
+
+        foreach ($kriteriaIds as $index => $kriteriaId) {
+            $lomba->kriterias()->attach($kriteriaId, ['bobot' => $bobotValues[$index]]);
+        }
+
         return Redirect::route('lomba.index')->with('message', 'Created succes');
     }
 
@@ -109,14 +117,13 @@ class LombaController extends Controller
         $username = session('username');
         $name = session('name');
 
+        // Load the kriteria with pivot data
         $lomba->load('kriterias');
 
         return Inertia::render('Role/Admin/Lomba/Editlomba', [
             'username' => $username,
             'name' => $name,
-
             'lomba' => $lomba,
-
             'kriterias' => Kriteria::all()->map(function ($kriteria) {
                 return [
                     'id' => $kriteria->id,
@@ -124,7 +131,6 @@ class LombaController extends Controller
                 ];
             }),
             'selectedKriterias' => $lomba->kriterias->pluck('id'),
-
             'settings' => Setting::all()->map(function ($setting) {
                 return [
                     'id' => $setting->id,
@@ -134,6 +140,7 @@ class LombaController extends Controller
             })
         ]);
     }
+
 
     public function update(Request $request, Lomba $lomba)
     {
@@ -156,13 +163,11 @@ class LombaController extends Controller
         $validated = $request->validate($validations);
 
         if ($request->hasFile('form.gambar')) {
-            // Jika ada file baru yang diunggah, hapus foto lama
             if ($lomba->gambar) {
                 Storage::delete('public/uploads/admin/lomba/' . $lomba->gambar);
             }
             $image = $request->file('form.gambar');
             $imageName = $image->getClientOriginalName();
-            // Menggunakan hanya nama file sebagai nama yang disimpan
             $imagePath = $request->file('form.gambar')->storeAs('public/uploads/admin/lomba', $imageName);
             $validated['form']['gambar'] = $imageName;
         } else {
@@ -170,13 +175,11 @@ class LombaController extends Controller
         }
 
         if ($request->hasFile('form.sertifikat')) {
-            // Jika ada file baru yang diunggah, hapus foto lama
             if ($lomba->sertifikat) {
                 Storage::delete('public/uploads/admin/lomba/' . $lomba->sertifikat);
             }
             $image = $request->file('form.sertifikat');
             $imageName = $image->getClientOriginalName();
-            // Menggunakan hanya nama file sebagai nama yang disimpan
             $imagePath = $request->file('form.sertifikat')->storeAs('public/uploads/admin/lomba', $imageName);
             $validated['form']['sertifikat'] = $imageName;
         } else {
@@ -184,9 +187,21 @@ class LombaController extends Controller
         }
 
         $lomba->update($validated['form']);
-        $lomba->kriterias()->sync($request->form['selectedKriterias']);
-        return Redirect::route('lomba.index');
+
+        // Update kriteria and bobot
+        $selectedKriterias = $request->input('form.selectedKriterias');
+        $bobotValues = $request->input('form.bobot', []);
+
+        $kriteriaSyncData = [];
+        foreach ($selectedKriterias as $kriteriaId) {
+            $kriteriaSyncData[$kriteriaId] = ['bobot' => $bobotValues[$kriteriaId]];
+        }
+
+        $lomba->kriterias()->sync($kriteriaSyncData);
+
+        return Redirect::route('lomba.index')->with('message', 'Updated successfully');
     }
+
 
     public function detaillomba(Lomba $lomba)
     {

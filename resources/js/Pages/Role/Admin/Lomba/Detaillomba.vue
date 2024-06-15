@@ -81,8 +81,9 @@
                                     <label class="c-mb5-black"><b>KRITERIA PENILAIAN</b></label>
                                     <div class="data-tim">
                                         <ul>
-                                            <li v-for="kriteria in form.kriterias" :key="kriteria.id">{{ kriteria.name
-                                                }}</li>
+                                            <li v-for="kriteria in form.kriterias" :key="kriteria.id">
+                                                {{ kriteria.name }} - Bobot: {{ kriteria.pivot.bobot }}%
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>

@@ -45,10 +45,10 @@
                                     <label class="c-mb5-black"><b>Nama Kriteria</b></label>
                                     <input type="namalomba" class="form-control" v-model="form.name" required>
                                 </div>
-                                <div class="col-md-6 c-mb10">
+                                <!-- <div class="col-md-6 c-mb10">
                                     <label class="c-mb5-black"><b>Bobot</b></label>
                                     <input type="namalomba" class="form-control" v-model="form.bobot" required>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="btn-posisi">
                                 <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
@@ -70,12 +70,13 @@ import Swal from 'sweetalert2';
 
 const props = defineProps({
     settings: Object,
-    kriteria: Object
+    kriteria: Object,
+    // bobot: Number,
 })
 
 const form = useForm({
     name: props.kriteria.name,
-    bobot: props.kriteria.bobot
+    // bobot: props.bobot
 })
 
 function submit(id) {

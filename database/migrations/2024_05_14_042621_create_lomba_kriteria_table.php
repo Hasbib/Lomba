@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('lomba_id')->constrained()->onDelete('cascade');
             $table->foreignId('kriteria_id')->constrained()->onDelete('cascade');
+            $table->decimal('bobot', 5, 2)->nullable()->default(null);
             $table->timestamps();
         });
 

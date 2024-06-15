@@ -24,9 +24,8 @@ class Lomba extends Model
 
     public function kriterias()
     {
-        return $this->belongsToMany(Kriteria::class, 'lomba_kriteria');
+        return $this->belongsToMany(Kriteria::class, 'lomba_kriteria')->withPivot('bobot');
     }
-
     public function regLombas()
     {
         return $this->hasMany(RegLomba::class, 'reg_nama_lomba', 'nama_lomba');

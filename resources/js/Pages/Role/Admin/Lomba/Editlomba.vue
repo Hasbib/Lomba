@@ -81,18 +81,19 @@
                                         <input type="number" class="form-control label-8"
                                             v-model="form.biaya_pendaftaran" required>
                                     </div>
-                                    <div>
-                                        <label class="role-add"><b class="warna-hitam">Kriteria Lomba</b></label>
-                                        <div v-for="kriteria in kriterias" :key="kriteria.id">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    :id="'kriteria_' + kriteria.id" :value="kriteria.id"
-                                                    v-model="form.selectedKriterias">
-                                                <label class="form-check-label" :for="'kriteria_' + kriteria.id">{{
-                                                    kriteria.name }}</label>
-                                            </div>
+                                    <div v-for="kriteria in kriterias" :key="kriteria.id">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox"
+                                                :id="'kriteria_' + kriteria.id" :value="kriteria.id"
+                                                v-model="form.selectedKriterias">
+                                            <label class="form-check-label" :for="'kriteria_' + kriteria.id">{{
+                                                kriteria.name }}</label>
                                         </div>
+                                        <input type="number" class="form-control" v-model="form.bobot[kriteria.id]"
+                                            :disabled="!form.selectedKriterias.includes(kriteria.id)"
+                                            placeholder="Bobot">
                                     </div>
+
                                 </div>
                                 <div class="btn-posisi">
                                     <button type="submit" class="btn btn-primary button-tabel-right">Simpan</button>
@@ -132,14 +133,18 @@ const form = useForm({
     biaya_pendaftaran: props.lomba.biaya_pendaftaran,
     gambar: null,
     sertifikat: null,
-    selectedKriterias: props.lomba.kriterias.map(kriteria => kriteria.id)
+    selectedKriterias: props.lomba.kriterias.map(kriteria => kriteria.id),
+    bobot: props.lomba.kriterias.reduce((acc, kriteria) => {
+        acc[kriteria.id] = kriteria.pivot.bobot;
+        return acc;
+    }, {})
 })
 
 function submit(id) {
     router.post('/event/lomba/' + id, {
         _method: 'put',
         form
-    })
+    });
     Swal.fire({
         title: "Kerja Bagus!",
         text: "Perubahan anda berhasil disimpan!",
