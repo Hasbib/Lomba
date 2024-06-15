@@ -38,6 +38,10 @@ class RegLombaController extends Controller
                 'reglomba' => $regLomba,
                 'submission' => $submission,
                 'members' => $teamMembers,
+
+                'email' => $user->email,
+                'whatsapp' => $user->kontak,
+                'instansi' => $user->instansi,
                 'settings' => Setting::all()->map(function ($setting) {
                     return [
                         'id' => $setting->id,

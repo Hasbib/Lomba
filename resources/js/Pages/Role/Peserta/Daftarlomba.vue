@@ -293,6 +293,9 @@ const props = defineProps({
     submission: Object,
     teammember: Object,
     lomba: Object,
+    email: String,
+    whatsapp: String,
+    instansi: String,
 })
 
 const form = useForm({
@@ -302,10 +305,13 @@ const form = useForm({
     images: props.user.images,
 
     reg_nama_tim: props.reglomba ? props.reglomba.reg_nama_tim : null,
-    reg_instansi: props.reglomba ? props.reglomba.reg_instansi : null,
+    // reg_instansi: props.reglomba ? props.reglomba.reg_instansi : null,
+    reg_instansi: props.reglomba?.reg_instansi || props.instansi,
     reg_nama_lomba: props.reglomba ? props.reglomba.reg_nama_lomba : null,
-    reg_no_whatsapp: props.reglomba ? props.reglomba.reg_no_whatsapp : null,
-    reg_email: props.reglomba ? props.reglomba.reg_email : null,
+    // reg_no_whatsapp: props.reglomba ? props.reglomba.reg_no_whatsapp : null,
+    reg_no_whatsapp: props.reglomba?.reg_no_whatsapp || props.whatsapp,
+    // reg_email: props.reglomba ? props.reglomba.reg_email || props.email,
+    reg_email: props.reglomba?.reg_email || props.email,
     reg_bukti_pembayaran: props.reglomba ? props.reglomba.reg_bukti_pembayaran : null,
     // reg_peserta_id: props.userId
 
@@ -460,7 +466,9 @@ function save() {
                         title: response.data.message
                     });
                     if (response.data.isConfirmed) {
-                        Swal.fire("Karya anda berhasil dikirim!", "", "success");
+                        Swal.fire("Karya anda berhasil dikirim!", "", "success").then(() => {
+                            window.location.href = '/overview';
+                        });
                     }
                 })
                 .catch(error => {

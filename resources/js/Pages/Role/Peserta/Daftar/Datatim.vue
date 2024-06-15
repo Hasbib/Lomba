@@ -98,11 +98,11 @@ const props = defineProps({
 
 const form = useForm({
     reg_nama_tim: props.reglomba?.reg_nama_tim,
-    reg_instansi: props.reglomba?.reg_instansi,
+    reg_instansi: props.reglomba?.reg_instansi || props.instansi,
     // reg_nama_lomba: props.reglomba?.reg_nama_lomba,
     reg_nama_lomba: props.lombas.length > 0 ? props.lombas[0].nama_lomba : null,
-    reg_no_whatsapp: props.reglomba?.reg_no_whatsapp,
-    reg_email: props.reglomba?.reg_email,
+    reg_no_whatsapp: props.reglomba?.reg_no_whatsapp || props.whatsapp,
+    reg_email: props.reglomba?.reg_email || props.email,
     reg_bukti_pembayaran: props.reglomba?.reg_bukti_pembayaran,
     reg_peserta_id: props.userId
 })
