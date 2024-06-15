@@ -30,4 +30,10 @@ class RegLomba extends Model
     {
         return $this->belongsTo(Lomba::class, 'reg_nama_lomba', 'nama_lomba');
     }
+    public function submission()
+    {
+        return $this->hasOne(Submission::class, 'sub_peserta_id', 'reg_peserta_id')
+            ->where('sub_nama_lomba', $this->reg_nama_lomba);
+    }
+
 }

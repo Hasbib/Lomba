@@ -617,8 +617,12 @@ class PagesController extends Controller
     public function timdetail(RegLomba $reglomba)
     {
         $username = session('username');
-        $submission = Submission::where('sub_peserta_id', $reglomba->reg_peserta_id)->first();
+        $submission = Submission::where('sub_peserta_id', $reglomba->reg_peserta_id)
+            ->where('sub_nama_lomba', $reglomba->reg_nama_lomba)
+            ->first();
+
         $teammembers = TeamMember::where('team_peserta_id', $reglomba->reg_peserta_id)->get();
+
 
         return Inertia::render('Role/Petugas/Tim/Timdetail', [
             'username' => $username,
@@ -639,13 +643,7 @@ class PagesController extends Controller
                 'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
                 'reg_bukti_pembayaaran' => $reglomba->reg_bukti_pembayaran,
             ],
-            'submission' => [
-                'id' => $submission->id,
-                'sub_judul' => $submission->sub_judul,
-                'sub_deskripsi' => $submission->sub_deskripsi,
-                'sub_link' => $submission->sub_link,
-                'sub_file' => $submission->sub_file,
-            ],
+            'submission' => $submission,
             'teammembers' => $teammembers,
         ]);
     }
