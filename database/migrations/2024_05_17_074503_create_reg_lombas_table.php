@@ -18,7 +18,10 @@ return new class extends Migration {
             $table->string('reg_nama_lomba');
             $table->string('reg_no_whatsapp');
             $table->string('reg_email');
-            $table->string('reg_bukti_pembayaran');
+            $table->string('reg_bukti_pembayaran')->nullable();
+            $table->enum('status', ['draft', 'submitted', 'on_verified', 'not_verified', 'result'])
+                ->comment('status from the competition');
+            $table->longText('message')->nullable();
             $table->timestamps();
 
             $table->foreign('reg_nama_lomba')->references('nama_lomba')->on('lombas')->onDelete('cascade');

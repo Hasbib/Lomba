@@ -152,7 +152,7 @@
                                         <td>{{ reglomba.reg_no_whatsapp }}</td>
                                         <td>{{ reglomba.reg_email }}</td>
                                         <td>{{ reglomba.reg_instansi }}</td>
-                                        <td>Verified</td>
+                                        <td>{{ reglomba.status }}</td>
                                         <td class="btn-crud">
                                             <button class="btn btn-secondary" @click.prevent="detail(reglomba.id)"><i
                                                     class="bi bi-eye"></i></button>

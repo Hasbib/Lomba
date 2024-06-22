@@ -58,16 +58,12 @@ class RegLombaController extends Controller
     public function addmember(Request $request)
     {
         $teamId = session('id');
+        $teamLomba = $request->input('team_nama_lomba'); // Ambil team_nama_lomba dari request
 
-        // Hapus semua anggota tim yang sudah ada
-        $existingTeamMembers = TeamMember::where('team_peserta_id', $teamId)->get();
-
-        foreach ($existingTeamMembers as $member) {
-            if ($member->team_member_picture) {
-                $this->deleteImage($member->team_member_picture);
-            }
-        }
-        TeamMember::where('team_peserta_id', $teamId)->delete();
+        // Hapus semua anggota tim yang sudah ada untuk lomba ini
+        TeamMember::where('team_peserta_id', $teamId)
+            ->where('team_nama_lomba', $teamLomba)
+            ->delete();
 
         // Tambahkan ketua tim
         $ketua = $request->input('ketua');
@@ -79,6 +75,7 @@ class RegLombaController extends Controller
 
         TeamMember::create([
             'team_peserta_id' => $teamId,
+            'team_nama_lomba' => $teamLomba,
             'team_member_name' => $ketua['name'],
             'team_member_nik' => $ketua['nik'],
             'team_member_instansi' => $ketua['instansi'],
@@ -89,7 +86,7 @@ class RegLombaController extends Controller
         // Tambahkan anggota baru yang ada dalam form
         $members = $request->input('members');
         foreach ($members as $member) {
-            // update only when has images
+            // Update hanya jika ada gambar
             $memberImagePath = null;
             if (isset($member['team_member_picture'])) {
                 $memberImage = $member['team_member_picture'];
@@ -99,6 +96,7 @@ class RegLombaController extends Controller
             }
             TeamMember::create([
                 'team_peserta_id' => $teamId,
+                'team_nama_lomba' => $teamLomba,
                 'team_member_name' => $member['team_member_name'],
                 'team_member_nik' => $member['team_member_nik'],
                 'team_member_instansi' => $member['team_member_instansi'],

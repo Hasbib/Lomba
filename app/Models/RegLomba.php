@@ -19,7 +19,8 @@ class RegLomba extends Model
         'reg_no_whatsapp',
         'reg_email',
         'reg_bukti_pembayaran',
-        'status'
+        'status',
+        'message'
     ];
 
     public function peserta()
@@ -35,5 +36,13 @@ class RegLomba extends Model
         return $this->hasOne(Submission::class, 'sub_peserta_id', 'reg_peserta_id')
             ->where('sub_nama_lomba', $this->reg_nama_lomba);
     }
-
+    public function teammember()
+    {
+        return $this->hasOne(TeamMember::class, 'team_peserta_id', 'reg_peserta_id')
+            ->where('team_nama_lomba', $this->reg_nama_lomba);
+    }
+    public function scores()
+    {
+        return $this->hasMany(Score::class, 'reg_lomba_id');
+    }
 }

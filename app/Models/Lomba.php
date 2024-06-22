@@ -34,6 +34,10 @@ class Lomba extends Model
     {
         return $this->hasMany(Submission::class, 'sub_nama_lomba', 'nama_lomba');
     }
+    public function teamlombas()
+    {
+        return $this->hasMany(TeamMember::class, 'team_nama_lomba', 'nama_lomba');
+    }
     public function userlomba()
     {
         return $this->belongsToMany(User::class, 'juri_lomba');

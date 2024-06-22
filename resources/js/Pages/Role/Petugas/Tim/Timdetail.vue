@@ -46,16 +46,17 @@
                                 <div>
                                     <label class="c-mb5-black c-ml20"><b>Deskripsi</b></label>
                                     <div class="col-11">
-                                        <textarea class="form-control c-mb10 c-ml20" id="inputProductDescription"
-                                            rows="3" placeholder="Tulis Notifikasi"></textarea>
+                                        <textarea v-model="notificationMessage" class="form-control c-mb10 c-ml20"
+                                            id="inputProductDescription" rows="3"
+                                            placeholder="Tulis Notifikasi"></textarea>
                                     </div>
                                     <button class="btn btn-primary crud-width100 btn-mid c-mt40"
-                                        onclick="window.location.href='/tim-petugas'">Kirim</button>
+                                        @click="submitFailure">Kirim</button>
                                 </div>
                             </div>
                         </div>
                         <button class="btn btn-primary crud-width-150 btn-petugas btn-verifikasi posisi-ver"
-                            onclick="window.location.href='/tim-petugas'">Verifikasi</button>
+                            @click="verifikasi">Verifikasi</button>
                         <hr class="posisi-hr" />
                         <div class="row">
                             <div class="col-md-3 c-mb10">
@@ -80,7 +81,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="c-mb5-black"><b>STATUS</b></label>
-                                <div class="c-mb20">Verified</div>
+                                <div class="c-mb20">{{ form.status }}</div>
                             </div>
                             <div class="col-md-3">
                                 <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
@@ -145,6 +146,9 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3'
+import { ref } from 'vue';
+import axios from 'axios';
+
 
 const props = defineProps({
     settings: Object,
@@ -160,13 +164,53 @@ const form = useForm({
     reg_email: props.reglomba.reg_email,
     reg_no_whatsapp: props.reglomba.reg_no_whatsapp,
     reg_bukti_pembayaaran: props.reglomba.reg_bukti_pembayaaran,
-
+    status: props.reglomba.status,
 
     sub_judul: props.submission.sub_judul,
     sub_deskripsi: props.submission.sub_deskripsi,
     sub_link: props.submission.sub_link,
     sub_file: props.submission.sub_file,
 })
+let isPopupVisible = ref(false);
+let notificationMessage = ref('');
+
+const showPopup = () => {
+    isPopupVisible.value = true;
+};
+
+const hidePopup = () => {
+    isPopupVisible.value = false;
+};
+
+const verifikasi = () => {
+    axios.post(`/tim-petugas/${props.reglomba.id}/verifikasi`, {
+        regLombaId: props.reglomba.id,
+        verifikasiStatus: 'verified', // or 'on_verified' based on your logic
+    }).then(response => {
+        if (response.data.isConfirmed) {
+            alert('Verifikasi berhasil');
+            // Optionally update UI or perform additional actions
+        }
+    }).catch(error => {
+        console.error('Verifikasi failed', error);
+        // Handle error scenario if needed
+    });
+};
+
+const submitFailure = () => {
+    axios.post(`/tim-petugas/${props.reglomba.id}/verifikasi`, {
+        regLombaId: props.reglomba.id,
+        verifikasiStatus: 'not_verified',
+        message: notificationMessage.value,
+    }).then(response => {
+        if (response.data.isConfirmed) {
+            alert('Status berhasil diubah menjadi not_verified');
+            hidePopup();
+        }
+    }).catch(error => {
+        console.error('Gagal mengubah status', error);
+    });
+};
 
 const getRegistrasiImageUrl = (imageName) => {
     return imageName ? `/storage/uploads/peserta/registrasi/${imageName}` : '';

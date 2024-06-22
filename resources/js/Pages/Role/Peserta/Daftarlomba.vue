@@ -426,7 +426,8 @@ function saveTeamMembers() {
             team_member_instansi: member.team_member_instansi,
             team_member_picture: member.team_member_picture,
             role: `Anggota ${index + 1}`
-        }))
+        })),
+        team_nama_lomba: props.lomba.nama_lomba
     };
 
     axios.post('/tambah-member', teamData)

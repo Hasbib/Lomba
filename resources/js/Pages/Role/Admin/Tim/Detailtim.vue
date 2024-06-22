@@ -66,7 +66,7 @@
                             </div>
                             <div class="col-md-2">
                                 <label class="c-mb5-black"><b>STATUS</b></label>
-                                <div class="c-mb20">Verified</div>
+                                <div class="c-mb20">{{ form.status }}</div>
                             </div>
                             <div class="col-md-3">
                                 <label class="c-mb5-black"><b>PEMBAYARAN</b></label>
@@ -146,6 +146,7 @@ const form = useForm({
     reg_email: props.reglomba.reg_email,
     reg_no_whatsapp: props.reglomba.reg_no_whatsapp,
     reg_bukti_pembayaaran: props.reglomba.reg_bukti_pembayaaran,
+    status: props.reglomba.status,
 
     // team_member_name: props.teammember.team_member_name,
     // team_member_nik: props.teammember.team_member_nik,

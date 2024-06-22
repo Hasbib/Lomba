@@ -49,4 +49,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Lomba::class, 'juri_lomba');
     }
+    public function scores()
+    {
+        return $this->hasMany(Score::class, 'juri_id');
+    }
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

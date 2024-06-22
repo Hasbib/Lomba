@@ -244,6 +244,7 @@ class PagesController extends Controller
                     'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
                     'reg_instansi' => $reglomba->reg_instansi,
                     'reg_email' => $reglomba->reg_email,
+                    'status' => $reglomba->status,
                 ];
             })
         ]);
@@ -253,9 +254,12 @@ class PagesController extends Controller
     {
         $username = session('username');
         $name = session('name');
-        $submission = Submission::where('sub_peserta_id', $reglomba->reg_peserta_id)->first();
-        $teammembers = TeamMember::where('team_peserta_id', $reglomba->reg_peserta_id)->get();
-
+        $submission = Submission::where('sub_peserta_id', $reglomba->reg_peserta_id)
+            ->where('sub_nama_lomba', $reglomba->reg_nama_lomba)
+            ->first();
+        $teammembers = TeamMember::where('team_peserta_id', $reglomba->reg_peserta_id)
+            ->where('team_nama_lomba', $reglomba->reg_nama_lomba)
+            ->get();
         return Inertia::render('Role/Admin/Tim/Detailtim', [
             'username' => $username,
             'name' => $name,
@@ -275,14 +279,9 @@ class PagesController extends Controller
                 'reg_email' => $reglomba->reg_email,
                 'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
                 'reg_bukti_pembayaaran' => $reglomba->reg_bukti_pembayaran,
+                'status' => $reglomba->status,
             ],
-            'submission' => [
-                'id' => $submission->id,
-                'sub_judul' => $submission->sub_judul,
-                'sub_deskripsi' => $submission->sub_deskripsi,
-                'sub_link' => $submission->sub_link,
-                'sub_file' => $submission->sub_file,
-            ],
+            'submission' => $submission,
             'teammembers' => $teammembers,
         ]);
     }
@@ -609,7 +608,7 @@ class PagesController extends Controller
                     'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
                     'reg_instansi' => $reglomba->reg_instansi,
                     'reg_email' => $reglomba->reg_email,
-
+                    'status' => $reglomba->status,
                 ];
             })
         ]);
@@ -620,9 +619,9 @@ class PagesController extends Controller
         $submission = Submission::where('sub_peserta_id', $reglomba->reg_peserta_id)
             ->where('sub_nama_lomba', $reglomba->reg_nama_lomba)
             ->first();
-
-        $teammembers = TeamMember::where('team_peserta_id', $reglomba->reg_peserta_id)->get();
-
+        $teammembers = TeamMember::where('team_peserta_id', $reglomba->reg_peserta_id)
+            ->where('team_nama_lomba', $reglomba->reg_nama_lomba)
+            ->get();
 
         return Inertia::render('Role/Petugas/Tim/Timdetail', [
             'username' => $username,
@@ -642,11 +641,34 @@ class PagesController extends Controller
                 'reg_email' => $reglomba->reg_email,
                 'reg_no_whatsapp' => $reglomba->reg_no_whatsapp,
                 'reg_bukti_pembayaaran' => $reglomba->reg_bukti_pembayaran,
+                'status' => $reglomba->status,
             ],
             'submission' => $submission,
             'teammembers' => $teammembers,
         ]);
     }
+    public function verifikasiTim(Request $request)
+    {
+        $regLombaId = $request->input('regLombaId');
+        $verifikasiStatus = $request->input('verifikasiStatus'); // 'verified' or 'not_verified'
+        $message = $request->input('message'); // Optional reason/message for not verified
+
+        $regLomba = RegLomba::findOrFail($regLombaId);
+
+        if ($verifikasiStatus === 'verified') {
+            $regLomba->status = 'on_verified'; // Set status to 'on_verified' if verified
+            $regLomba->message = 'Selamat TIM anda telah terdaftar lomba.';
+        } elseif ($verifikasiStatus === 'not_verified') {
+            $regLomba->status = 'not_verified';
+            $regLomba->message = $message; // Example: "Mohon maaf TIM anda gagal ke tahap selanjutnya untuk lomba"
+        }
+
+        $regLomba->save();
+
+        return response()->json(['isConfirmed' => true, 'message' => 'Verifikasi berhasil']);
+    }
+
+
     public function pesanpetugas()
     {
         $username = session('username');

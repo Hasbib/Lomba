@@ -143,6 +143,7 @@ Route::middleware(['petugas'])->group(function () {
     Route::get('/partisipan-petugas', [PagesController::class, 'partisipanpetugas']);
     Route::get('/tim-petugas', [PagesController::class, 'timpetugas']);
     Route::get('/tim-petugas/{reglomba}/tim-detail', [PagesController::class, 'timdetail']);
+    Route::post('/tim-petugas/{reglomba}/verifikasi', [PagesController::class, 'verifikasiTim']);
     Route::get('/pesan-petugas', [PagesController::class, 'pesanpetugas']);
     Route::post('/pesan-petugas/update-status/{id}', [PagesController::class, 'updateStatus'])->name('pesan.updateStatus');
     Route::get('/rangking-petugas', [PagesController::class, 'rangkingpetugas']);

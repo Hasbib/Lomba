@@ -13,6 +13,7 @@ class TeamMember extends Model
 
     protected $fillable = [
         'team_peserta_id',
+        'team_nama_lomba',
         'team_member_name',
         'team_member_nik',
         'team_member_instansi',
@@ -24,5 +25,9 @@ class TeamMember extends Model
     public function peserta()
     {
         return $this->belongsTo(User::class, 'team_peserta_id', 'id');
+    }
+    public function lomba()
+    {
+        return $this->belongsTo(Lomba::class, 'team_nama_lomba', 'nama_lomba');
     }
 }

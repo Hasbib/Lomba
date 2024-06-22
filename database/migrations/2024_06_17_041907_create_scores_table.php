@@ -10,11 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('lomba_kriteria', function (Blueprint $table) {
+        Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lomba_id')->constrained()->onDelete('cascade');
-            $table->foreignId('kriteria_id')->constrained()->onDelete('cascade');
-            $table->decimal('bobot', 5, 2)->nullable()->default(null);
+            $table->foreignId('reg_lomba_id')->constrained('reg_lombas')->onDelete('cascade');
+            $table->foreignId('juri_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('kriteria_id')->constrained('kriterias')->onDelete('cascade');
+            $table->decimal('nilai', 5, 2);
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('lomba_kriteria');
+        Schema::dropIfExists('scores');
     }
 };

@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->text('sub_deskripsi');
             $table->string('sub_link');
             $table->string('sub_file');
+            $table->enum('status', ['draft', 'submitted', 'on_verification', 'result'])
+                ->comment('status from the competition');
             $table->timestamps();
 
             $table->foreign('sub_nama_lomba')->references('nama_lomba')->on('lombas')->onDelete('cascade');
